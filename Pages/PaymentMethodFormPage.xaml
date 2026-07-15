@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.PaymentMethodFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    x:DataType="viewModels:PaymentMethodFormViewModel"
+    Title="{Binding Title}">
+
+    <VerticalStackLayout Padding="16" Spacing="10">
+        <Label Text="Nombre" FontAttributes="Bold" />
+        <Entry Text="{Binding Name}" />
+
+        <Label Text="Orden" FontAttributes="Bold" />
+        <Entry Text="{Binding SortOrder}" Keyboard="Numeric" />
+
+        <HorizontalStackLayout Spacing="8">
+            <CheckBox IsChecked="{Binding IsActive}" />
+            <Label Text="Activo" VerticalOptions="Center" />
+        </HorizontalStackLayout>
+
+        <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+
+        <Button Text="Guardar" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+    </VerticalStackLayout>
+</ContentPage>

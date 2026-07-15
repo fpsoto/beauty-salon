@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.ServiceFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:catalog="clr-namespace:BeautySalon.Application.Features.Catalog;assembly=BeautySalon.Application"
+    x:DataType="viewModels:ServiceFormViewModel"
+    Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Label Text="Nombre" FontAttributes="Bold" />
+            <Entry Text="{Binding Name}" />
+
+            <Label Text="Categoría" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}">
+                <Picker.ItemDisplayBinding>
+                    <Binding Path="Name" x:DataType="catalog:ServiceCategoryDto" />
+                </Picker.ItemDisplayBinding>
+            </Picker>
+
+            <Label Text="Precio sugerido" FontAttributes="Bold" />
+            <Entry Text="{Binding SuggestedPrice}" Keyboard="Numeric" />
+
+            <Label Text="Duración (minutos)" FontAttributes="Bold" />
+            <Entry Text="{Binding DurationMinutes}" Keyboard="Numeric" />
+
+            <Label Text="Color (opcional)" FontAttributes="Bold" />
+            <Entry Text="{Binding ColorHex}" Placeholder="#512BD4" />
+
+            <Label Text="Descripción" FontAttributes="Bold" />
+            <Editor Text="{Binding Description}" HeightRequest="80" />
+
+            <HorizontalStackLayout Spacing="8">
+                <CheckBox IsChecked="{Binding IsActive}" />
+                <Label Text="Activo" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+
+            <Button Text="Guardar" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

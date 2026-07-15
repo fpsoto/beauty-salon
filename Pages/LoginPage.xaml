@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    x:DataType="viewModels:LoginViewModel"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*, Auto, *" Padding="32">
+        <VerticalStackLayout Grid.Row="1" Spacing="20" VerticalOptions="Center">
+            <Label Text="Beauty Salon" Style="{StaticResource Headline}" />
+            <Label Text="Ingresa tus credenciales" Style="{StaticResource SubHeadline}" FontSize="16" />
+
+            <Entry Placeholder="Usuario" Text="{Binding Username}" ReturnType="Next" />
+            <Entry Placeholder="Contraseña" Text="{Binding Password}" IsPassword="True" ReturnType="Done" Completed="OnPasswordCompleted" />
+
+            <Label
+                Text="{Binding ErrorMessage}"
+                TextColor="Red"
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                HorizontalTextAlignment="Center" />
+
+            <Button Text="Ingresar" Clicked="OnLoginClicked" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

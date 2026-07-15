@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Beauty_Salon.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Beauty_Salon.Pages"
+    Title="Beauty Salon"
+    FlyoutBehavior="Disabled">
+
+    <TabBar>
+        <ShellContent Title="Agenda" Route="agenda" ContentTemplate="{DataTemplate pages:AgendaPage}" />
+        <ShellContent Title="Clientes" Route="clients" ContentTemplate="{DataTemplate pages:ClientListPage}" />
+        <ShellContent Title="Catálogo" Route="catalog" ContentTemplate="{DataTemplate pages:CatalogPage}" />
+        <ShellContent Title="Pagos" Route="paymentmethods" ContentTemplate="{DataTemplate pages:PaymentMethodsPage}" />
+    </TabBar>
+
+</Shell>

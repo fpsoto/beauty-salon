@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.PaymentMethodsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:payments="clr-namespace:BeautySalon.Application.Features.Payments;assembly=BeautySalon.Application"
+    x:DataType="viewModels:PaymentMethodListViewModel"
+    Title="Métodos de pago">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="+" Clicked="OnAddClicked" />
+    </ContentPage.ToolbarItems>
+
+    <RefreshView IsRefreshing="{Binding IsBusy}" Command="{Binding LoadCommand}">
+        <CollectionView x:Name="PaymentMethodsCollectionView" ItemsSource="{Binding PaymentMethods}" SelectionMode="Single" SelectionChanged="OnMethodSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="payments:PaymentMethodDto">
+                    <Grid ColumnDefinitions="*,Auto" Padding="16,10">
+                        <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="Inactivo" TextColor="{StaticResource Gray500}" FontSize="12" VerticalOptions="Center" IsVisible="{Binding IsActive, Converter={StaticResource InvertedBoolConverter}}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

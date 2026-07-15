@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.FinishAppointmentPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:payments="clr-namespace:BeautySalon.Application.Features.Payments;assembly=BeautySalon.Application"
+    x:DataType="viewModels:FinishAppointmentViewModel"
+    Title="Finalizar cita">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Label Text="Precio cobrado" FontAttributes="Bold" />
+            <Entry Text="{Binding ChargedPrice}" Keyboard="Numeric" Placeholder="0" />
+
+            <Label Text="Descuento" FontAttributes="Bold" />
+            <Entry Text="{Binding Discount}" Keyboard="Numeric" Placeholder="0" />
+
+            <Label Text="Propina" FontAttributes="Bold" />
+            <Entry Text="{Binding Tip}" Keyboard="Numeric" Placeholder="0" />
+
+            <Label Text="Método de pago" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding PaymentMethods}" SelectedItem="{Binding SelectedPaymentMethod}">
+                <Picker.ItemDisplayBinding>
+                    <Binding Path="Name" x:DataType="payments:PaymentMethodDto" />
+                </Picker.ItemDisplayBinding>
+            </Picker>
+
+            <Label Text="Observaciones" FontAttributes="Bold" />
+            <Editor Text="{Binding Notes}" HeightRequest="80" Placeholder="Opcional" />
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+
+            <Button Text="Finalizar" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

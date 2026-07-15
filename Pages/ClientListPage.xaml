@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.ClientListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:clients="clr-namespace:BeautySalon.Application.Features.Clients;assembly=BeautySalon.Application"
+    x:DataType="viewModels:ClientListViewModel"
+    Title="Clientes">
+
+    <Grid RowDefinitions="Auto,*">
+        <SearchBar
+            Grid.Row="0"
+            Placeholder="Buscar por nombre, teléfono o RUT"
+            Text="{Binding SearchTerm}"
+            TextChanged="OnSearchTextChanged" />
+
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsBusy}" Command="{Binding SearchCommand}">
+            <CollectionView
+                x:Name="ClientsCollectionView"
+                ItemsSource="{Binding Clients}"
+                SelectionMode="Single"
+                SelectionChanged="OnClientSelected"
+                Margin="0,0,0,80">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="clients:ClientDto">
+                        <Grid ColumnDefinitions="*,Auto" Padding="16,10" ColumnSpacing="8">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                <Label FontAttributes="Bold">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Name" />
+                                            <Binding Path="LastName" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <Label Text="{Binding Phone}" FontSize="13" TextColor="{StaticResource Gray500}" />
+                            </VerticalStackLayout>
+                            <Label
+                                Grid.Column="1"
+                                Text="&#9733;"
+                                FontSize="22"
+                                VerticalOptions="Center"
+                                TextColor="{Binding IsFavorite, Converter={StaticResource FavoriteColorConverter}}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnFavoriteTapped" CommandParameter="{Binding .}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <Button
+            Grid.Row="1"
+            Text="+"
+            FontSize="28"
+            WidthRequest="56"
+            HeightRequest="56"
+            CornerRadius="28"
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            Margin="0,0,20,20"
+            Clicked="OnAddClientClicked" />
+    </Grid>
+</ContentPage>

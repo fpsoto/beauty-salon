@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.ClientFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    x:DataType="viewModels:ClientFormViewModel"
+    Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Label Text="Nombre" FontAttributes="Bold" />
+            <Entry Text="{Binding Name}" />
+
+            <Label Text="Apellidos" FontAttributes="Bold" />
+            <Entry Text="{Binding LastName}" />
+
+            <Label Text="RUT" FontAttributes="Bold" />
+            <Entry Text="{Binding Rut}" Placeholder="12.345.678-9" />
+
+            <Label Text="Teléfono" FontAttributes="Bold" />
+            <Entry Text="{Binding Phone}" Keyboard="Telephone" />
+
+            <Label Text="Correo" FontAttributes="Bold" />
+            <Entry Text="{Binding Email}" Keyboard="Email" />
+
+            <HorizontalStackLayout Spacing="8">
+                <CheckBox IsChecked="{Binding HasDateOfBirth}" />
+                <Label Text="Conozco la fecha de nacimiento" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <DatePicker Date="{Binding DateOfBirth}" IsVisible="{Binding HasDateOfBirth}" />
+
+            <Label Text="Dirección" FontAttributes="Bold" />
+            <Entry Text="{Binding Address}" />
+
+            <Label Text="Observaciones" FontAttributes="Bold" />
+            <Editor Text="{Binding Notes}" HeightRequest="80" />
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+
+            <Button Text="Guardar" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

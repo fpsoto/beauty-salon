@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.ClientDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:clients="clr-namespace:BeautySalon.Application.Features.Clients;assembly=BeautySalon.Application"
+    x:DataType="viewModels:ClientDetailViewModel"
+    Title="Ficha de cliente">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Editar" Clicked="OnEditClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <VerticalStackLayout Spacing="4">
+                <Label FontSize="22" FontAttributes="Bold">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="Detail.Client.Name" />
+                            <Binding Path="Detail.Client.LastName" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Text="{Binding Detail.Client.Rut, StringFormat='RUT: {0}'}" TextColor="{StaticResource Gray500}" />
+                <Label Text="{Binding Detail.Client.Phone}" TextColor="{StaticResource Gray500}" />
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout Spacing="12">
+                <Button Text="Llamar" Command="{Binding CallCommand}" />
+                <Button Text="WhatsApp" Command="{Binding SendWhatsAppCommand}" />
+                <Button Text="Correo" Command="{Binding SendEmailCommand}" />
+            </HorizontalStackLayout>
+
+            <Button Text="Favorito" Command="{Binding ToggleFavoriteCommand}" />
+
+            <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
+
+            <Grid ColumnDefinitions="*,*,*" RowSpacing="4">
+                <VerticalStackLayout Grid.Column="0">
+                    <Label Text="{Binding Detail.VisitCount}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                    <Label Text="Visitas" FontSize="12" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="{Binding Detail.TotalSpent, StringFormat='${0}'}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                    <Label Text="Total gastado" FontSize="12" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2">
+                    <Label Text="{Binding Detail.LastVisit, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                    <Label Text="Última visita" FontSize="12" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
+
+            <Label Text="Historial de citas" FontAttributes="Bold" />
+            <CollectionView ItemsSource="{Binding Detail.Appointments}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="clients:AppointmentSummaryDto">
+                        <Grid Padding="0,6" ColumnDefinitions="Auto,*,Auto">
+                            <Label Grid.Column="0" Text="{Binding Date, StringFormat='{0:dd/MM/yy}'}" FontSize="12" WidthRequest="70" />
+                            <Label Grid.Column="1" Text="{Binding ServicesSummary}" FontSize="13" />
+                            <Label Grid.Column="2" Text="{Binding ChargedPrice, StringFormat='${0}'}" FontSize="12" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
