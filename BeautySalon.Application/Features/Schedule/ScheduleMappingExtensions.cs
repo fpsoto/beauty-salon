@@ -11,6 +11,7 @@ public static class ScheduleMappingExtensions
         appointment.Id,
         appointment.ClientId,
         appointment.Client is not null ? $"{appointment.Client.Name} {appointment.Client.LastName}" : string.Empty,
+        appointment.Client?.Phone ?? string.Empty,
         appointment.ProfessionalId,
         appointment.Date,
         appointment.StartTime,

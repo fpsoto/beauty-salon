@@ -1,3 +1,4 @@
+using Beauty_Salon.Resources.Strings;
 using Beauty_Salon.ViewModels;
 using BeautySalon.Application.Features.Payments;
 
@@ -30,16 +31,11 @@ public partial class PaymentMethodsPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is not PaymentMethodDto method)
             return;
 
-        var choice = await DisplayActionSheetAsync(method.Name, "Cerrar", null, "Editar", "Eliminar");
+        var choice = await DisplayActionSheetAsync(method.Name, AppResources.Close, null, AppResources.Edit, AppResources.Delete);
 
-        switch (choice)
-        {
-            case "Editar":
-                await Shell.Current.GoToAsync("paymentmethods/form", new Dictionary<string, object> { ["PaymentMethod"] = method });
-                break;
-            case "Eliminar":
-                await _viewModel.DeleteCommand.ExecuteAsync(method);
-                break;
-        }
+        if (choice == AppResources.Edit)
+            await Shell.Current.GoToAsync("paymentmethods/form", new Dictionary<string, object> { ["PaymentMethod"] = method });
+        else if (choice == AppResources.Delete)
+            await _viewModel.DeleteCommand.ExecuteAsync(method);
     }
 }

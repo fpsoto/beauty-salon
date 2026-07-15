@@ -4,41 +4,42 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
     x:DataType="viewModels:ClientFormViewModel"
     Title="{Binding Title}">
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="10">
-            <Label Text="Nombre" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.Name}" FontAttributes="Bold" />
             <Entry Text="{Binding Name}" />
 
-            <Label Text="Apellidos" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.LastName}" FontAttributes="Bold" />
             <Entry Text="{Binding LastName}" />
 
-            <Label Text="RUT" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.Rut}" FontAttributes="Bold" />
             <Entry Text="{Binding Rut}" Placeholder="12.345.678-9" />
 
-            <Label Text="Teléfono" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.Phone}" FontAttributes="Bold" />
             <Entry Text="{Binding Phone}" Keyboard="Telephone" />
 
-            <Label Text="Correo" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.Email}" FontAttributes="Bold" />
             <Entry Text="{Binding Email}" Keyboard="Email" />
 
             <HorizontalStackLayout Spacing="8">
                 <CheckBox IsChecked="{Binding HasDateOfBirth}" />
-                <Label Text="Conozco la fecha de nacimiento" VerticalOptions="Center" />
+                <Label Text="{x:Static strings:AppResources.KnowsDateOfBirth}" VerticalOptions="Center" />
             </HorizontalStackLayout>
             <DatePicker Date="{Binding DateOfBirth}" IsVisible="{Binding HasDateOfBirth}" />
 
-            <Label Text="Dirección" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.Address}" FontAttributes="Bold" />
             <Entry Text="{Binding Address}" />
 
-            <Label Text="Observaciones" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.Notes}" FontAttributes="Bold" />
             <Editor Text="{Binding Notes}" HeightRequest="80" />
 
             <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
-            <Button Text="Guardar" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
         </VerticalStackLayout>
     </ScrollView>

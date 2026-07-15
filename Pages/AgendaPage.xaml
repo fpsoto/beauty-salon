@@ -4,8 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
     x:DataType="viewModels:AgendaViewModel"
-    Title="Agenda">
+    Title="{x:Static strings:AppResources.AgendaTitle}">
 
     <Grid RowDefinitions="Auto, *">
         <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="12,8" ColumnSpacing="8">
@@ -19,7 +20,7 @@
                         </MultiBinding>
                     </Label.Text>
                 </Label>
-                <Button Text="Hoy" Command="{Binding GoToTodayCommand}" Padding="10,2" FontSize="12" />
+                <Button Text="{x:Static strings:AppResources.Today}" Command="{Binding GoToTodayCommand}" Padding="10,2" FontSize="12" />
             </VerticalStackLayout>
             <Button Grid.Column="2" Text="&#8594;" Command="{Binding GoToNextWeekCommand}" WidthRequest="48" />
         </Grid>

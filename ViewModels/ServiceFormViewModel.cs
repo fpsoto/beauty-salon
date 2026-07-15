@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Beauty_Salon.Resources.Strings;
 using BeautySalon.Application.Features.Catalog;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -85,7 +86,7 @@ public partial class ServiceFormViewModel : ViewModelBase
     {
         if (SelectedCategory is null)
         {
-            ErrorMessage = "Selecciona una categoría.";
+            ErrorMessage = AppResources.SelectCategoryRequired;
             return;
         }
 

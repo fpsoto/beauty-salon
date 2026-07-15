@@ -23,6 +23,7 @@ public class AppointmentRepository : EfRepository<Appointment>, IAppointmentRepo
         await DbSet
             .Include(a => a.Client)
             .Include(a => a.ServiceItems)
+            .Include(a => a.PaymentMethod)
             .Where(a => a.ProfessionalId == professionalId && a.Date >= from && a.Date <= to)
             .OrderBy(a => a.Date).ThenBy(a => a.StartTime)
             .ToListAsync(cancellationToken);

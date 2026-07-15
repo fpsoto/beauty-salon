@@ -5,12 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
     xmlns:catalog="clr-namespace:BeautySalon.Application.Features.Catalog;assembly=BeautySalon.Application"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
     x:DataType="viewModels:CatalogViewModel"
-    Title="Catálogo">
+    Title="{x:Static strings:AppResources.CatalogTitle}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="+ Categoría" Clicked="OnAddCategoryClicked" />
-        <ToolbarItem Text="+ Servicio" Clicked="OnAddServiceClicked" />
+        <ToolbarItem Text="{x:Static strings:AppResources.AddCategory}" Clicked="OnAddCategoryClicked" />
+        <ToolbarItem Text="{x:Static strings:AppResources.AddService}" Clicked="OnAddServiceClicked" />
     </ContentPage.ToolbarItems>
 
     <RefreshView IsRefreshing="{Binding IsBusy}" Command="{Binding LoadCommand}">

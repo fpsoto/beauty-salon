@@ -4,7 +4,9 @@ using BeautySalon.Application.Features.Auth;
 using BeautySalon.Application.Features.Catalog;
 using BeautySalon.Application.Features.Clients;
 using BeautySalon.Application.Features.Payments;
+using BeautySalon.Application.Features.Reports;
 using BeautySalon.Application.Features.Schedule;
+using BeautySalon.Application.Features.Settings;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +27,8 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<IPaymentMethodAppService, PaymentMethodAppService>();
         services.AddScoped<IAppointmentAppService, AppointmentAppService>();
         services.AddScoped<IScheduleBlockAppService, ScheduleBlockAppService>();
+        services.AddScoped<ISettingsAppService, SettingsAppService>();
+        services.AddScoped<IReportAppService, ReportAppService>();
 
         return services;
     }

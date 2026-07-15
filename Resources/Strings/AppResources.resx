@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Save" xml:space="preserve"><value>Guardar</value></data>
+  <data name="Name" xml:space="preserve"><value>Nombre</value></data>
+  <data name="LastName" xml:space="preserve"><value>Apellidos</value></data>
+  <data name="Rut" xml:space="preserve"><value>RUT</value></data>
+  <data name="Phone" xml:space="preserve"><value>Teléfono</value></data>
+  <data name="Email" xml:space="preserve"><value>Correo</value></data>
+  <data name="Address" xml:space="preserve"><value>Dirección</value></data>
+  <data name="Notes" xml:space="preserve"><value>Observaciones</value></data>
+  <data name="Active" xml:space="preserve"><value>Activo</value></data>
+  <data name="ActiveFeminine" xml:space="preserve"><value>Activa</value></data>
+  <data name="Optional" xml:space="preserve"><value>Opcional</value></data>
+  <data name="Close" xml:space="preserve"><value>Cerrar</value></data>
+  <data name="Edit" xml:space="preserve"><value>Editar</value></data>
+  <data name="Delete" xml:space="preserve"><value>Eliminar</value></data>
+
+  <data name="AgendaTitle" xml:space="preserve"><value>Agenda</value></data>
+  <data name="Today" xml:space="preserve"><value>Hoy</value></data>
+  <data name="ConfirmAction" xml:space="preserve"><value>Confirmar</value></data>
+  <data name="StartAction" xml:space="preserve"><value>Iniciar</value></data>
+  <data name="FinishAction" xml:space="preserve"><value>Finalizar</value></data>
+  <data name="RescheduleAction" xml:space="preserve"><value>Reagendar</value></data>
+  <data name="NoShowAction" xml:space="preserve"><value>No asistió</value></data>
+  <data name="CancelAppointmentAction" xml:space="preserve"><value>Cancelar cita</value></data>
+  <data name="CancelReasonPrompt" xml:space="preserve"><value>Motivo (opcional):</value></data>
+
+  <data name="NewAppointmentTitle" xml:space="preserve"><value>Nueva cita</value></data>
+  <data name="ClientLabel" xml:space="preserve"><value>Cliente</value></data>
+  <data name="SearchClientPlaceholder" xml:space="preserve"><value>Buscar cliente por nombre, teléfono o RUT</value></data>
+  <data name="ClearSelection" xml:space="preserve"><value>Quitar selección</value></data>
+  <data name="SelectClientRequired" xml:space="preserve"><value>Selecciona un cliente.</value></data>
+  <data name="SelectServiceRequired" xml:space="preserve"><value>Selecciona al menos un servicio.</value></data>
+  <data name="SelectCategoryRequired" xml:space="preserve"><value>Selecciona una categoría.</value></data>
+  <data name="SelectPaymentMethodRequired" xml:space="preserve"><value>Selecciona un método de pago.</value></data>
+  <data name="UnexpectedErrorMessage" xml:space="preserve"><value>Ocurrió un error inesperado. Intente nuevamente.</value></data>
+  <data name="ServicesLabel" xml:space="preserve"><value>Servicios</value></data>
+  <data name="DateAndTimeLabel" xml:space="preserve"><value>Fecha y hora</value></data>
+  <data name="SaveAppointment" xml:space="preserve"><value>Guardar cita</value></data>
+
+  <data name="CatalogTitle" xml:space="preserve"><value>Catálogo</value></data>
+  <data name="AddCategory" xml:space="preserve"><value>+ Categoría</value></data>
+  <data name="AddService" xml:space="preserve"><value>+ Servicio</value></data>
+  <data name="CategoryColorLabel" xml:space="preserve"><value>Color (para el calendario)</value></data>
+
+  <data name="ClientDetailTitle" xml:space="preserve"><value>Ficha de cliente</value></data>
+  <data name="Call" xml:space="preserve"><value>Llamar</value></data>
+  <data name="WhatsAppLabel" xml:space="preserve"><value>WhatsApp</value></data>
+  <data name="SendReminderAction" xml:space="preserve"><value>Enviar recordatorio WhatsApp</value></data>
+  <data name="WhatsAppReminderMessageFormat" xml:space="preserve"><value>Hola {0}, te recordamos tu cita el {1:dd/MM/yyyy} a las {2:HH:mm}. ¡Te esperamos!</value></data>
+  <data name="Favorite" xml:space="preserve"><value>Favorito</value></data>
+  <data name="Visits" xml:space="preserve"><value>Visitas</value></data>
+  <data name="TotalSpent" xml:space="preserve"><value>Total gastado</value></data>
+  <data name="LastVisit" xml:space="preserve"><value>Última visita</value></data>
+  <data name="AppointmentHistory" xml:space="preserve"><value>Historial de citas</value></data>
+  <data name="KnowsDateOfBirth" xml:space="preserve"><value>Conozco la fecha de nacimiento</value></data>
+
+  <data name="ClientsTitle" xml:space="preserve"><value>Clientes</value></data>
+  <data name="SearchClientListPlaceholder" xml:space="preserve"><value>Buscar por nombre, teléfono o RUT</value></data>
+
+  <data name="FinishAppointmentTitle" xml:space="preserve"><value>Finalizar cita</value></data>
+  <data name="ChargedPriceLabel" xml:space="preserve"><value>Precio cobrado</value></data>
+  <data name="DiscountLabel" xml:space="preserve"><value>Descuento</value></data>
+  <data name="TipLabel" xml:space="preserve"><value>Propina</value></data>
+  <data name="PaymentMethodLabel" xml:space="preserve"><value>Método de pago</value></data>
+
+  <data name="AppName" xml:space="preserve"><value>Beauty Salon</value></data>
+  <data name="LoginSubtitle" xml:space="preserve"><value>Ingresa tus credenciales</value></data>
+  <data name="UsernamePlaceholder" xml:space="preserve"><value>Usuario</value></data>
+  <data name="PasswordPlaceholder" xml:space="preserve"><value>Contraseña</value></data>
+  <data name="LoginButton" xml:space="preserve"><value>Ingresar</value></data>
+
+  <data name="SortOrderLabel" xml:space="preserve"><value>Orden</value></data>
+  <data name="PaymentMethodsTitle" xml:space="preserve"><value>Métodos de pago</value></data>
+  <data name="Inactive" xml:space="preserve"><value>Inactivo</value></data>
+  <data name="PaymentsTabTitle" xml:space="preserve"><value>Pagos</value></data>
+
+  <data name="ReportsTitle" xml:space="preserve"><value>Reportes</value></data>
+  <data name="Week" xml:space="preserve"><value>Semana</value></data>
+  <data name="Month" xml:space="preserve"><value>Mes</value></data>
+  <data name="Year" xml:space="preserve"><value>Año</value></data>
+  <data name="FromLabel" xml:space="preserve"><value>Desde</value></data>
+  <data name="ToLabel" xml:space="preserve"><value>Hasta</value></data>
+  <data name="Apply" xml:space="preserve"><value>Aplicar</value></data>
+  <data name="Revenue" xml:space="preserve"><value>Ingresos</value></data>
+  <data name="CompletedAppointments" xml:space="preserve"><value>Citas finalizadas</value></data>
+  <data name="NewClients" xml:space="preserve"><value>Clientes nuevos</value></data>
+  <data name="InactiveClients" xml:space="preserve"><value>Clientes inactivos (60+ días)</value></data>
+  <data name="AveragePerAppointment" xml:space="preserve"><value>Promedio por cita</value></data>
+  <data name="Cancellations" xml:space="preserve"><value>Cancelaciones</value></data>
+  <data name="RevenueByPaymentMethod" xml:space="preserve"><value>Ingresos por método de pago</value></data>
+  <data name="TopClients" xml:space="preserve"><value>Top clientes</value></data>
+  <data name="TopServices" xml:space="preserve"><value>Servicios más vendidos</value></data>
+  <data name="TopCategories" xml:space="preserve"><value>Categorías más usadas</value></data>
+  <data name="BusiestHours" xml:space="preserve"><value>Horas más ocupadas</value></data>
+
+  <data name="RescheduleTitle" xml:space="preserve"><value>Reagendar cita</value></data>
+  <data name="NewDateLabel" xml:space="preserve"><value>Nueva fecha</value></data>
+  <data name="NewTimeLabel" xml:space="preserve"><value>Nueva hora</value></data>
+
+  <data name="CategoryLabel" xml:space="preserve"><value>Categoría</value></data>
+  <data name="SuggestedPriceLabel" xml:space="preserve"><value>Precio sugerido</value></data>
+  <data name="DurationMinutesLabel" xml:space="preserve"><value>Duración (minutos)</value></data>
+  <data name="ColorOptionalLabel" xml:space="preserve"><value>Color (opcional)</value></data>
+  <data name="DescriptionLabel" xml:space="preserve"><value>Descripción</value></data>
+
+  <data name="SettingsTitle" xml:space="preserve"><value>Ajustes</value></data>
+  <data name="LanguageLabel" xml:space="preserve"><value>Idioma</value></data>
+  <data name="ThemeLabel" xml:space="preserve"><value>Tema</value></data>
+  <data name="CurrencyLabel" xml:space="preserve"><value>Moneda</value></data>
+  <data name="DateFormatLabel" xml:space="preserve"><value>Formato de fecha</value></data>
+  <data name="TimeFormatLabel" xml:space="preserve"><value>Formato de hora</value></data>
+  <data name="WorkingHoursLabel" xml:space="preserve"><value>Horario laboral</value></data>
+  <data name="NotificationRulesLabel" xml:space="preserve"><value>Recordatorios de citas</value></data>
+  <data name="SpanishLabel" xml:space="preserve"><value>Español</value></data>
+  <data name="EnglishLabel" xml:space="preserve"><value>English</value></data>
+  <data name="ThemeLight" xml:space="preserve"><value>Claro</value></data>
+  <data name="ThemeDark" xml:space="preserve"><value>Oscuro</value></data>
+  <data name="ThemeSystem" xml:space="preserve"><value>Sistema</value></data>
+
+  <data name="StatusBooked" xml:space="preserve"><value>Reservada</value></data>
+  <data name="StatusConfirmed" xml:space="preserve"><value>Confirmada</value></data>
+  <data name="StatusInProgress" xml:space="preserve"><value>En progreso</value></data>
+  <data name="StatusCompleted" xml:space="preserve"><value>Finalizada</value></data>
+  <data name="StatusCancelled" xml:space="preserve"><value>Cancelada</value></data>
+
+  <data name="BlockLunch" xml:space="preserve"><value>Almuerzo</value></data>
+  <data name="BlockVacation" xml:space="preserve"><value>Vacaciones</value></data>
+  <data name="BlockMeeting" xml:space="preserve"><value>Reunión</value></data>
+  <data name="BlockDayOff" xml:space="preserve"><value>Día libre</value></data>
+  <data name="BlockUnavailable" xml:space="preserve"><value>No disponible</value></data>
+  <data name="BlockOther" xml:space="preserve"><value>Otro</value></data>
+
+  <data name="SelectedClientFormat" xml:space="preserve"><value>Seleccionado: RUT {0}</value></data>
+  <data name="AppointmentTotalFormat" xml:space="preserve"><value>Total: ${0} · {1} min</value></data>
+  <data name="RutFormat" xml:space="preserve"><value>RUT: {0}</value></data>
+  <data name="VisitCountFormat" xml:space="preserve"><value>{0} visitas</value></data>
+  <data name="AppointmentCountFormat" xml:space="preserve"><value>{0} citas</value></data>
+</root>

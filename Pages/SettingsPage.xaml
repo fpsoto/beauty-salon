@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
+    x:DataType="viewModels:SettingsViewModel"
+    Title="{x:Static strings:AppResources.SettingsTitle}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <Label Text="{x:Static strings:AppResources.LanguageLabel}" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="16">
+                <RadioButton
+                    Content="{x:Static strings:AppResources.SpanishLabel}"
+                    IsChecked="{Binding Language, Converter={StaticResource StringEqualsConverter}, ConverterParameter=es}" />
+                <RadioButton
+                    Content="{x:Static strings:AppResources.EnglishLabel}"
+                    IsChecked="{Binding Language, Converter={StaticResource StringEqualsConverter}, ConverterParameter=en}" />
+            </HorizontalStackLayout>
+
+            <Label Text="{x:Static strings:AppResources.ThemeLabel}" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="16">
+                <RadioButton
+                    Content="{x:Static strings:AppResources.ThemeLight}"
+                    IsChecked="{Binding Theme, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Light}" />
+                <RadioButton
+                    Content="{x:Static strings:AppResources.ThemeDark}"
+                    IsChecked="{Binding Theme, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Dark}" />
+                <RadioButton
+                    Content="{x:Static strings:AppResources.ThemeSystem}"
+                    IsChecked="{Binding Theme, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=System}" />
+            </HorizontalStackLayout>
+
+            <Label Text="{x:Static strings:AppResources.CurrencyLabel}" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="16">
+                <RadioButton
+                    Content="CLP"
+                    IsChecked="{Binding Currency, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=CLP}" />
+                <RadioButton
+                    Content="USD"
+                    IsChecked="{Binding Currency, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=USD}" />
+            </HorizontalStackLayout>
+
+            <Label Text="{x:Static strings:AppResources.DateFormatLabel}" FontAttributes="Bold" />
+            <Entry Text="{Binding DateFormat}" Placeholder="dd/MM/yyyy" />
+
+            <Label Text="{x:Static strings:AppResources.TimeFormatLabel}" FontAttributes="Bold" />
+            <Entry Text="{Binding TimeFormat}" Placeholder="HH:mm" />
+
+            <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
+
+            <Label Text="{x:Static strings:AppResources.WorkingHoursLabel}" FontAttributes="Bold" />
+            <CollectionView ItemsSource="{Binding WorkingDays}" HeightRequest="340">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:WorkingDayEditItem">
+                        <Grid ColumnDefinitions="Auto,80,Auto,Auto" Padding="0,6" ColumnSpacing="8">
+                            <CheckBox Grid.Column="0" IsChecked="{Binding IsWorkingDay}" />
+                            <Label Grid.Column="1" Text="{Binding DayLabel}" VerticalOptions="Center" />
+                            <TimePicker Grid.Column="2" Time="{Binding StartTime}" Format="HH:mm" IsEnabled="{Binding IsWorkingDay}" />
+                            <TimePicker Grid.Column="3" Time="{Binding EndTime}" Format="HH:mm" IsEnabled="{Binding IsWorkingDay}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
+
+            <Label Text="{x:Static strings:AppResources.NotificationRulesLabel}" FontAttributes="Bold" />
+            <CollectionView ItemsSource="{Binding NotificationRules}" HeightRequest="190">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:NotificationRuleEditItem">
+                        <Grid ColumnDefinitions="Auto,*" Padding="0,4" ColumnSpacing="8">
+                            <CheckBox Grid.Column="0" IsChecked="{Binding IsEnabled}" />
+                            <Label Grid.Column="1" Text="{Binding Label}" VerticalOptions="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+
+            <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

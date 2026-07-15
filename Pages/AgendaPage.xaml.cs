@@ -1,4 +1,6 @@
+using Beauty_Salon.Resources.Strings;
 using Beauty_Salon.ViewModels;
+using BeautySalon.Application.Features.Schedule;
 using BeautySalon.Domain.Enums;
 
 namespace Beauty_Salon.Pages;
@@ -27,57 +29,73 @@ public partial class AgendaPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is not AgendaEntry { IsBlock: false, Appointment: { } appointment })
             return;
 
-        var actions = BuildAvailableActions(appointment.Status);
+        var actions = BuildAvailableActions(appointment.Status, appointment.ClientPhone);
         if (actions.Count == 0)
             return;
 
-        var choice = await DisplayActionSheetAsync($"{appointment.ClientFullName} - {appointment.StartTime:HH:mm}", "Cerrar", null, [.. actions]);
+        var choice = await DisplayActionSheetAsync(
+            $"{appointment.ClientFullName} - {appointment.StartTime:HH:mm}", AppResources.Close, null, [.. actions]);
 
-        switch (choice)
+        if (choice == AppResources.ConfirmAction)
+            await _viewModel.ConfirmAppointmentAsync(appointment.Id);
+        else if (choice == AppResources.StartAction)
+            await _viewModel.StartAppointmentAsync(appointment.Id);
+        else if (choice == AppResources.FinishAction)
+            await Shell.Current.GoToAsync("appointment/finish", new Dictionary<string, object> { ["AppointmentId"] = appointment.Id });
+        else if (choice == AppResources.RescheduleAction)
+            await Shell.Current.GoToAsync("appointment/reschedule", new Dictionary<string, object> { ["AppointmentId"] = appointment.Id });
+        else if (choice == AppResources.NoShowAction)
+            await _viewModel.MarkNoShowAsync(appointment.Id);
+        else if (choice == AppResources.CancelAppointmentAction)
         {
-            case "Confirmar":
-                await _viewModel.ConfirmAppointmentAsync(appointment.Id);
-                break;
-            case "Iniciar":
-                await _viewModel.StartAppointmentAsync(appointment.Id);
-                break;
-            case "Finalizar":
-                await Shell.Current.GoToAsync("appointment/finish", new Dictionary<string, object> { ["AppointmentId"] = appointment.Id });
-                break;
-            case "Reagendar":
-                await Shell.Current.GoToAsync("appointment/reschedule", new Dictionary<string, object> { ["AppointmentId"] = appointment.Id });
-                break;
-            case "No asistió":
-                await _viewModel.MarkNoShowAsync(appointment.Id);
-                break;
-            case "Cancelar cita":
-                var reason = await DisplayPromptAsync("Cancelar cita", "Motivo (opcional):");
-                await _viewModel.CancelAppointmentAsync(appointment.Id, reason);
-                break;
+            var reason = await DisplayPromptAsync(AppResources.CancelAppointmentAction, AppResources.CancelReasonPrompt);
+            await _viewModel.CancelAppointmentAsync(appointment.Id, reason);
         }
+        else if (choice == AppResources.SendReminderAction)
+            await SendWhatsAppReminderAsync(appointment);
     }
 
-    private static List<string> BuildAvailableActions(AppointmentStatus status)
+    private static async Task SendWhatsAppReminderAsync(AppointmentDto appointment)
+    {
+        // wa.me expects digits only (country code + number, no "+"/spaces/dashes).
+        var digitsOnly = new string(appointment.ClientPhone.Where(char.IsDigit).ToArray());
+        if (digitsOnly.Length == 0)
+            return;
+
+        var message = string.Format(
+            AppResources.WhatsAppReminderMessageFormat,
+            appointment.ClientFullName,
+            appointment.Date.ToDateTime(TimeOnly.MinValue),
+            appointment.Date.ToDateTime(appointment.StartTime));
+
+        var uri = new Uri($"https://wa.me/{digitsOnly}?text={Uri.EscapeDataString(message)}");
+        await Launcher.Default.OpenAsync(uri);
+    }
+
+    private static List<string> BuildAvailableActions(AppointmentStatus status, string clientPhone)
     {
         var actions = new List<string>();
 
         if (status == AppointmentStatus.Booked)
-            actions.Add("Confirmar");
+            actions.Add(AppResources.ConfirmAction);
 
         if (status is AppointmentStatus.Booked or AppointmentStatus.Confirmed)
-            actions.Add("Iniciar");
+            actions.Add(AppResources.StartAction);
 
         if (status is AppointmentStatus.Booked or AppointmentStatus.Confirmed or AppointmentStatus.InProgress)
-            actions.Add("Finalizar");
+            actions.Add(AppResources.FinishAction);
 
         if (status is AppointmentStatus.Booked or AppointmentStatus.Confirmed)
         {
-            actions.Add("Reagendar");
-            actions.Add("No asistió");
+            actions.Add(AppResources.RescheduleAction);
+            actions.Add(AppResources.NoShowAction);
+
+            if (!string.IsNullOrWhiteSpace(clientPhone))
+                actions.Add(AppResources.SendReminderAction);
         }
 
         if (status is AppointmentStatus.Booked or AppointmentStatus.Confirmed or AppointmentStatus.InProgress)
-            actions.Add("Cancelar cita");
+            actions.Add(AppResources.CancelAppointmentAction);
 
         return actions;
     }

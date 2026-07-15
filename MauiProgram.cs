@@ -1,11 +1,15 @@
-﻿using BeautySalon.Application;
+﻿using System.Globalization;
+using BeautySalon.Application;
+using BeautySalon.Application.Features.Settings;
 using BeautySalon.Infrastructure;
 using BeautySalon.Persistence;
 using Beauty_Salon.Pages;
 using Beauty_Salon.Services;
 using Beauty_Salon.ViewModels;
 using CommunityToolkit.Maui;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Plugin.LocalNotification;
 
 namespace Beauty_Salon
 {
@@ -52,6 +56,8 @@ namespace Beauty_Salon
             builder.Services.AddTransient<ServiceFormViewModel>();
             builder.Services.AddTransient<PaymentMethodListViewModel>();
             builder.Services.AddTransient<PaymentMethodFormViewModel>();
+            builder.Services.AddTransient<SettingsViewModel>();
+            builder.Services.AddTransient<ReportsViewModel>();
 
             // Pages are transient too - Shell/DI resolves a fresh one per navigation.
             builder.Services.AddTransient<AppShell>();
@@ -68,6 +74,8 @@ namespace Beauty_Salon
             builder.Services.AddTransient<ServiceFormPage>();
             builder.Services.AddTransient<PaymentMethodsPage>();
             builder.Services.AddTransient<PaymentMethodFormPage>();
+            builder.Services.AddTransient<SettingsPage>();
+            builder.Services.AddTransient<ReportsPage>();
 
             var app = builder.Build();
 
@@ -75,7 +83,28 @@ namespace Beauty_Salon
             // data before any page can query the database.
             app.Services.InitializeDatabaseAsync().GetAwaiter().GetResult();
 
+            // x:Static resource bindings are resolved once at page construction, so the
+            // saved language preference must be applied before any page/DataTemplate is built.
+            ApplySavedCulture(app.Services);
+
             return app;
+        }
+
+        private static void ApplySavedCulture(IServiceProvider services)
+        {
+            using var scope = services.CreateScope();
+            var settingsAppService = scope.ServiceProvider.GetRequiredService<ISettingsAppService>();
+            var result = settingsAppService.GetSettingsAsync().GetAwaiter().GetResult();
+            if (!result.IsSuccess)
+            {
+                return;
+            }
+
+            var culture = new CultureInfo(result.Value.Language);
+            CultureInfo.CurrentUICulture = culture;
+            CultureInfo.CurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
         }
     }
 }

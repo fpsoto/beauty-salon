@@ -64,6 +64,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="Plugin.LocalNotification" Version="14.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -79,6 +80,23 @@
 		<Compile Remove="BeautySalon.Application\**\*.cs" />
 		<Compile Remove="BeautySalon.Persistence\**\*.cs" />
 		<Compile Remove="BeautySalon.Infrastructure\**\*.cs" />
+		<!-- The StronglyTypedFileName generator below already adds this file as a Compile
+		     item itself; without this exclusion the default SDK glob includes it a second
+		     time (CS2002: source file specified multiple times). -->
+		<Compile Remove="Resources\Strings\AppResources.Designer.cs" />
+	</ItemGroup>
+
+	<!-- Strongly-typed resx: the default (es) resx generates AppResources.Designer.cs;
+	     the .en.resx is a satellite resource picked up automatically by the ResourceManager
+	     based on CultureInfo.CurrentUICulture - it needs no generator of its own. -->
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\Strings\AppResources.resx">
+			<Generator>MSBuild:Compile</Generator>
+			<StronglyTypedFileName>Resources\Strings\AppResources.Designer.cs</StronglyTypedFileName>
+			<StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+			<StronglyTypedNamespace>Beauty_Salon.Resources.Strings</StronglyTypedNamespace>
+			<StronglyTypedClassName>AppResources</StronglyTypedClassName>
+		</EmbeddedResource>
 	</ItemGroup>
 
 </Project>

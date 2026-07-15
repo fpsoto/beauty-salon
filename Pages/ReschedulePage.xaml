@@ -4,19 +4,20 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
     x:DataType="viewModels:RescheduleViewModel"
-    Title="Reagendar cita">
+    Title="{x:Static strings:AppResources.RescheduleTitle}">
 
     <VerticalStackLayout Padding="16" Spacing="12">
-        <Label Text="Nueva fecha" FontAttributes="Bold" />
+        <Label Text="{x:Static strings:AppResources.NewDateLabel}" FontAttributes="Bold" />
         <DatePicker Date="{Binding NewDate}" />
 
-        <Label Text="Nueva hora" FontAttributes="Bold" />
+        <Label Text="{x:Static strings:AppResources.NewTimeLabel}" FontAttributes="Bold" />
         <TimePicker Time="{Binding NewTime}" Format="HH:mm" />
 
         <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
-        <Button Text="Reagendar" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+        <Button Text="{x:Static strings:AppResources.RescheduleAction}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
         <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
     </VerticalStackLayout>
 </ContentPage>

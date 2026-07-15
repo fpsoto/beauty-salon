@@ -1,3 +1,4 @@
+using Beauty_Salon.Resources.Strings;
 using Beauty_Salon.ViewModels;
 using BeautySalon.Application.Features.Catalog;
 
@@ -31,17 +32,12 @@ public partial class CatalogPage : ContentPage
         if (e.Parameter is not ServiceCategoryDto category)
             return;
 
-        var choice = await DisplayActionSheetAsync(category.Name, "Cerrar", null, "Editar", "Eliminar");
+        var choice = await DisplayActionSheetAsync(category.Name, AppResources.Close, null, AppResources.Edit, AppResources.Delete);
 
-        switch (choice)
-        {
-            case "Editar":
-                await Shell.Current.GoToAsync("catalog/category-form", new Dictionary<string, object> { ["Category"] = category });
-                break;
-            case "Eliminar":
-                await _viewModel.DeleteCategoryCommand.ExecuteAsync(category);
-                break;
-        }
+        if (choice == AppResources.Edit)
+            await Shell.Current.GoToAsync("catalog/category-form", new Dictionary<string, object> { ["Category"] = category });
+        else if (choice == AppResources.Delete)
+            await _viewModel.DeleteCategoryCommand.ExecuteAsync(category);
     }
 
     private async void OnServiceSelected(object? sender, SelectionChangedEventArgs e)
@@ -51,16 +47,11 @@ public partial class CatalogPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is not SalonServiceDto service)
             return;
 
-        var choice = await DisplayActionSheetAsync(service.Name, "Cerrar", null, "Editar", "Eliminar");
+        var choice = await DisplayActionSheetAsync(service.Name, AppResources.Close, null, AppResources.Edit, AppResources.Delete);
 
-        switch (choice)
-        {
-            case "Editar":
-                await Shell.Current.GoToAsync("catalog/service-form", new Dictionary<string, object> { ["Service"] = service });
-                break;
-            case "Eliminar":
-                await _viewModel.DeleteServiceCommand.ExecuteAsync(service);
-                break;
-        }
+        if (choice == AppResources.Edit)
+            await Shell.Current.GoToAsync("catalog/service-form", new Dictionary<string, object> { ["Service"] = service });
+        else if (choice == AppResources.Delete)
+            await _viewModel.DeleteServiceCommand.ExecuteAsync(service);
     }
 }

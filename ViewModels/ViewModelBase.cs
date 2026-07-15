@@ -1,3 +1,4 @@
+using Beauty_Salon.Resources.Strings;
 using BeautySalon.Domain.Common;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
@@ -39,7 +40,7 @@ public abstract partial class ViewModelBase : ObservableObject
         }
         catch (Exception ex)
         {
-            ErrorMessage = "Ocurrió un error inesperado. Intente nuevamente.";
+            ErrorMessage = AppResources.UnexpectedErrorMessage;
             _logger.LogError(ex, "Unhandled error in {ViewModel}", GetType().Name);
         }
         finally

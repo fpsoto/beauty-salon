@@ -5,13 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
     xmlns:clients="clr-namespace:BeautySalon.Application.Features.Clients;assembly=BeautySalon.Application"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
     x:DataType="viewModels:ClientListViewModel"
-    Title="Clientes">
+    Title="{x:Static strings:AppResources.ClientsTitle}">
 
     <Grid RowDefinitions="Auto,*">
         <SearchBar
             Grid.Row="0"
-            Placeholder="Buscar por nombre, teléfono o RUT"
+            Placeholder="{x:Static strings:AppResources.SearchClientListPlaceholder}"
             Text="{Binding SearchTerm}"
             TextChanged="OnSearchTextChanged" />
 

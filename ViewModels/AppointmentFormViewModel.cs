@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Beauty_Salon.Resources.Strings;
 using BeautySalon.Application.Common;
 using BeautySalon.Application.Features.Catalog;
 using BeautySalon.Application.Features.Clients;
@@ -117,14 +118,14 @@ public partial class AppointmentFormViewModel : ViewModelBase
     {
         if (SelectedClient is null)
         {
-            ErrorMessage = "Selecciona un cliente.";
+            ErrorMessage = AppResources.SelectClientRequired;
             return;
         }
 
         var serviceIds = Services.Where(s => s.IsSelected).Select(s => s.Service.Id).ToList();
         if (serviceIds.Count == 0)
         {
-            ErrorMessage = "Selecciona al menos un servicio.";
+            ErrorMessage = AppResources.SelectServiceRequired;
             return;
         }
 

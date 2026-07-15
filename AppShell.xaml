@@ -4,14 +4,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:Beauty_Salon.Pages"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
     Title="Beauty Salon"
     FlyoutBehavior="Disabled">
 
     <TabBar>
-        <ShellContent Title="Agenda" Route="agenda" ContentTemplate="{DataTemplate pages:AgendaPage}" />
-        <ShellContent Title="Clientes" Route="clients" ContentTemplate="{DataTemplate pages:ClientListPage}" />
-        <ShellContent Title="Catálogo" Route="catalog" ContentTemplate="{DataTemplate pages:CatalogPage}" />
-        <ShellContent Title="Pagos" Route="paymentmethods" ContentTemplate="{DataTemplate pages:PaymentMethodsPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.AgendaTitle}" Route="agenda" ContentTemplate="{DataTemplate pages:AgendaPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.ClientsTitle}" Route="clients" ContentTemplate="{DataTemplate pages:ClientListPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.CatalogTitle}" Route="catalog" ContentTemplate="{DataTemplate pages:CatalogPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.PaymentsTabTitle}" Route="paymentmethods" ContentTemplate="{DataTemplate pages:PaymentMethodsPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.ReportsTitle}" Route="reports" ContentTemplate="{DataTemplate pages:ReportsPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.SettingsTitle}" Route="settings" ContentTemplate="{DataTemplate pages:SettingsPage}" />
     </TabBar>
 
 </Shell>

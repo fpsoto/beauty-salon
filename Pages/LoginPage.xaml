@@ -4,16 +4,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
     x:DataType="viewModels:LoginViewModel"
     Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="*, Auto, *" Padding="32">
         <VerticalStackLayout Grid.Row="1" Spacing="20" VerticalOptions="Center">
-            <Label Text="Beauty Salon" Style="{StaticResource Headline}" />
-            <Label Text="Ingresa tus credenciales" Style="{StaticResource SubHeadline}" FontSize="16" />
+            <Label Text="{x:Static strings:AppResources.AppName}" Style="{StaticResource Headline}" />
+            <Label Text="{x:Static strings:AppResources.LoginSubtitle}" Style="{StaticResource SubHeadline}" FontSize="16" />
 
-            <Entry Placeholder="Usuario" Text="{Binding Username}" ReturnType="Next" />
-            <Entry Placeholder="Contraseña" Text="{Binding Password}" IsPassword="True" ReturnType="Done" Completed="OnPasswordCompleted" />
+            <Entry Placeholder="{x:Static strings:AppResources.UsernamePlaceholder}" Text="{Binding Username}" ReturnType="Next" />
+            <Entry Placeholder="{x:Static strings:AppResources.PasswordPlaceholder}" Text="{Binding Password}" IsPassword="True" ReturnType="Done" Completed="OnPasswordCompleted" />
 
             <Label
                 Text="{Binding ErrorMessage}"
@@ -21,7 +22,7 @@
                 IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
                 HorizontalTextAlignment="Center" />
 
-            <Button Text="Ingresar" Clicked="OnLoginClicked" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <Button Text="{x:Static strings:AppResources.LoginButton}" Clicked="OnLoginClicked" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
         </VerticalStackLayout>
     </Grid>

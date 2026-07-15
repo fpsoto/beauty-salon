@@ -4,24 +4,25 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
     x:DataType="viewModels:CategoryFormViewModel"
     Title="{Binding Title}">
 
     <VerticalStackLayout Padding="16" Spacing="10">
-        <Label Text="Nombre" FontAttributes="Bold" />
+        <Label Text="{x:Static strings:AppResources.Name}" FontAttributes="Bold" />
         <Entry Text="{Binding Name}" />
 
-        <Label Text="Color (para el calendario)" FontAttributes="Bold" />
+        <Label Text="{x:Static strings:AppResources.CategoryColorLabel}" FontAttributes="Bold" />
         <Entry Text="{Binding ColorHex}" Placeholder="#512BD4" />
 
         <HorizontalStackLayout Spacing="8">
             <CheckBox IsChecked="{Binding IsActive}" />
-            <Label Text="Activa" VerticalOptions="Center" />
+            <Label Text="{x:Static strings:AppResources.ActiveFeminine}" VerticalOptions="Center" />
         </HorizontalStackLayout>
 
         <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
-        <Button Text="Guardar" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+        <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
         <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
     </VerticalStackLayout>
 </ContentPage>

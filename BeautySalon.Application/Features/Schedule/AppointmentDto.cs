@@ -6,6 +6,7 @@ public sealed record AppointmentDto(
     Guid Id,
     Guid ClientId,
     string ClientFullName,
+    string ClientPhone,
     Guid ProfessionalId,
     DateOnly Date,
     TimeOnly StartTime,

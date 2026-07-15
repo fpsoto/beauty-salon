@@ -5,17 +5,28 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
     xmlns:clients="clr-namespace:BeautySalon.Application.Features.Clients;assembly=BeautySalon.Application"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
     x:DataType="viewModels:AppointmentFormViewModel"
-    Title="Nueva cita">
+    Title="{x:Static strings:AppResources.NewAppointmentTitle}">
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="12">
 
-            <Label Text="Cliente" FontAttributes="Bold" />
-            <Entry Placeholder="Buscar cliente por nombre, teléfono o RUT" Text="{Binding ClientSearchTerm}" TextChanged="OnClientSearchTextChanged" />
+            <Label Text="{x:Static strings:AppResources.ClientLabel}" FontAttributes="Bold" />
+            <Entry Placeholder="{x:Static strings:AppResources.SearchClientPlaceholder}" Text="{Binding ClientSearchTerm}" TextChanged="OnClientSearchTextChanged" />
 
-            <Label Text="{Binding SelectedClient.Rut, StringFormat='Seleccionado: RUT {0}'}" IsVisible="{Binding SelectedClient, Converter={StaticResource IsNotNullConverter}}" TextColor="{StaticResource Gray500}" FontSize="12" />
-            <Button Text="Quitar selección" Command="{Binding ClearSelectedClientCommand}" IsVisible="{Binding SelectedClient, Converter={StaticResource IsNotNullConverter}}" FontSize="12" Padding="8,4" HorizontalOptions="Start" />
+            <Label
+                Text="{Binding SelectedClient.Rut, StringFormat={x:Static strings:AppResources.SelectedClientFormat}}"
+                IsVisible="{Binding SelectedClient, Converter={StaticResource IsNotNullConverter}}"
+                TextColor="{StaticResource Gray500}"
+                FontSize="12" />
+            <Button
+                Text="{x:Static strings:AppResources.ClearSelection}"
+                Command="{Binding ClearSelectedClientCommand}"
+                IsVisible="{Binding SelectedClient, Converter={StaticResource IsNotNullConverter}}"
+                FontSize="12"
+                Padding="8,4"
+                HorizontalOptions="Start" />
 
             <CollectionView
                 ItemsSource="{Binding ClientResults}"
@@ -42,7 +53,7 @@
 
             <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
 
-            <Label Text="Servicios" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.ServicesLabel}" FontAttributes="Bold" />
             <CollectionView ItemsSource="{Binding Services}" HeightRequest="220">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:SelectableService">
@@ -57,7 +68,7 @@
 
             <Label FontAttributes="Bold">
                 <Label.Text>
-                    <MultiBinding StringFormat="Total: ${0} · {1} min">
+                    <MultiBinding StringFormat="{x:Static strings:AppResources.AppointmentTotalFormat}">
                         <Binding Path="TotalPrice" />
                         <Binding Path="TotalDurationMinutes" />
                     </MultiBinding>
@@ -66,16 +77,16 @@
 
             <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
 
-            <Label Text="Fecha y hora" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.DateAndTimeLabel}" FontAttributes="Bold" />
             <DatePicker Date="{Binding AppointmentDate}" />
             <TimePicker Time="{Binding AppointmentTime}" Format="HH:mm" />
 
-            <Label Text="Observaciones" FontAttributes="Bold" />
-            <Editor Text="{Binding Notes}" HeightRequest="80" Placeholder="Opcional" />
+            <Label Text="{x:Static strings:AppResources.Notes}" FontAttributes="Bold" />
+            <Editor Text="{Binding Notes}" HeightRequest="80" Placeholder="{x:Static strings:AppResources.Optional}" />
 
             <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
-            <Button Text="Guardar cita" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <Button Text="{x:Static strings:AppResources.SaveAppointment}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
         </VerticalStackLayout>
     </ScrollView>

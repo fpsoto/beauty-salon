@@ -19,6 +19,8 @@
             <converters:FavoriteColorConverter x:Key="FavoriteColorConverter" />
             <converters:HexToColorConverter x:Key="HexToColorConverter" />
             <converters:CountToBoolConverter x:Key="CountToBoolConverter" />
+            <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+            <converters:StringEqualsConverter x:Key="StringEqualsConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

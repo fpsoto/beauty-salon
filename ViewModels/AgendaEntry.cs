@@ -16,7 +16,7 @@ public sealed class AgendaEntry
 
     public bool IsBlock => Block is not null;
     public string TimeRangeLabel => $"{StartTime:HH:mm} - {EndTime:HH:mm}";
-    public string StatusLabel => Appointment is not null ? AppointmentStatusDisplay.ToSpanishLabel(Appointment.Status) : string.Empty;
+    public string StatusLabel => Appointment is not null ? AppointmentStatusDisplay.ToLabel(Appointment.Status) : string.Empty;
 
     public static AgendaEntry FromAppointment(AppointmentDto appointment) => new()
     {
@@ -32,7 +32,7 @@ public sealed class AgendaEntry
     {
         StartTime = block.StartTime,
         EndTime = block.EndTime,
-        Title = ScheduleBlockTypeDisplay.ToSpanishLabel(block.Type),
+        Title = ScheduleBlockTypeDisplay.ToLabel(block.Type),
         Subtitle = block.Reason,
         AccentColor = Colors.SlateGray,
         Block = block

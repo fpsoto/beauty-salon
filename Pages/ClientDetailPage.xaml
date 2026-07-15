@@ -5,11 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
     xmlns:clients="clr-namespace:BeautySalon.Application.Features.Clients;assembly=BeautySalon.Application"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
     x:DataType="viewModels:ClientDetailViewModel"
-    Title="Ficha de cliente">
+    Title="{x:Static strings:AppResources.ClientDetailTitle}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Editar" Clicked="OnEditClicked" />
+        <ToolbarItem Text="{x:Static strings:AppResources.Edit}" Clicked="OnEditClicked" />
     </ContentPage.ToolbarItems>
 
     <ScrollView>
@@ -23,38 +24,38 @@
                         </MultiBinding>
                     </Label.Text>
                 </Label>
-                <Label Text="{Binding Detail.Client.Rut, StringFormat='RUT: {0}'}" TextColor="{StaticResource Gray500}" />
+                <Label Text="{Binding Detail.Client.Rut, StringFormat={x:Static strings:AppResources.RutFormat}}" TextColor="{StaticResource Gray500}" />
                 <Label Text="{Binding Detail.Client.Phone}" TextColor="{StaticResource Gray500}" />
             </VerticalStackLayout>
 
             <HorizontalStackLayout Spacing="12">
-                <Button Text="Llamar" Command="{Binding CallCommand}" />
-                <Button Text="WhatsApp" Command="{Binding SendWhatsAppCommand}" />
-                <Button Text="Correo" Command="{Binding SendEmailCommand}" />
+                <Button Text="{x:Static strings:AppResources.Call}" Command="{Binding CallCommand}" />
+                <Button Text="{x:Static strings:AppResources.WhatsAppLabel}" Command="{Binding SendWhatsAppCommand}" />
+                <Button Text="{x:Static strings:AppResources.Email}" Command="{Binding SendEmailCommand}" />
             </HorizontalStackLayout>
 
-            <Button Text="Favorito" Command="{Binding ToggleFavoriteCommand}" />
+            <Button Text="{x:Static strings:AppResources.Favorite}" Command="{Binding ToggleFavoriteCommand}" />
 
             <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
 
             <Grid ColumnDefinitions="*,*,*" RowSpacing="4">
                 <VerticalStackLayout Grid.Column="0">
                     <Label Text="{Binding Detail.VisitCount}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                    <Label Text="Visitas" FontSize="12" HorizontalTextAlignment="Center" />
+                    <Label Text="{x:Static strings:AppResources.Visits}" FontSize="12" HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1">
                     <Label Text="{Binding Detail.TotalSpent, StringFormat='${0}'}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                    <Label Text="Total gastado" FontSize="12" HorizontalTextAlignment="Center" />
+                    <Label Text="{x:Static strings:AppResources.TotalSpent}" FontSize="12" HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="2">
                     <Label Text="{Binding Detail.LastVisit, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                    <Label Text="Última visita" FontSize="12" HorizontalTextAlignment="Center" />
+                    <Label Text="{x:Static strings:AppResources.LastVisit}" FontSize="12" HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
             </Grid>
 
             <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
 
-            <Label Text="Historial de citas" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.AppointmentHistory}" FontAttributes="Bold" />
             <CollectionView ItemsSource="{Binding Detail.Appointments}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="clients:AppointmentSummaryDto">

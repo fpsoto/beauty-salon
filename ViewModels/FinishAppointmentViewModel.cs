@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Beauty_Salon.Resources.Strings;
 using BeautySalon.Application.Features.Payments;
 using BeautySalon.Application.Features.Schedule;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -64,7 +65,7 @@ public partial class FinishAppointmentViewModel : ViewModelBase
     {
         if (SelectedPaymentMethod is null)
         {
-            ErrorMessage = "Selecciona un método de pago.";
+            ErrorMessage = AppResources.SelectPaymentMethodRequired;
             return;
         }
 
