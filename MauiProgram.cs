@@ -10,6 +10,7 @@ using CommunityToolkit.Maui;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Plugin.LocalNotification;
+using Plugin.LocalNotification.Core.Models.AndroidOption;
 
 namespace Beauty_Salon
 {
@@ -25,22 +26,45 @@ namespace Beauty_Salon
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseLocalNotification(config =>
+                {
+                    config.AddAndroid(android =>
+                    {
+                        android.AddChannel(new AndroidNotificationChannelRequest
+                        {
+                            Id = LocalNotificationScheduler.AppointmentReminderChannelId,
+                            Name = "Appointment reminders",
+                            Description = "Reminders for upcoming appointments",
+                            Importance = AndroidImportance.High
+                        });
+                    });
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+
+                    // "InterRegular"/"InterSemibold" are the font family names the design
+                    // system's styles reference. Real Inter-*.ttf files couldn't be downloaded
+                    // in this environment (network egress to the font's release/CDN hosts is
+                    // blocked) - OpenSans is aliased here as a visually close substitute. Drop
+                    // real Inter TTFs into Resources/Fonts and repoint these two lines to swap
+                    // in the real typeface; no other file needs to change.
+                    fonts.AddFont("OpenSans-Regular.ttf", "InterRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "InterSemibold");
                 });
 
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
 
-            var databasePath = Path.Combine(FileSystem.AppDataDirectory, "beautysalon.db3");
-            builder.Services.AddPersistence($"Data Source={databasePath};Default Timeout=30");
+            builder.Services.AddPersistence($"Data Source={DatabasePaths.FullPath};Default Timeout=30");
             builder.Services.AddInfrastructure();
             builder.Services.AddApplication();
 
             builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
+            builder.Services.AddSingleton<IAppointmentNotificationScheduler, LocalNotificationScheduler>();
+            builder.Services.AddSingleton<IDataBackupService, DataBackupService>();
 
             // ViewModels are transient - each page navigation gets its own instance.
             builder.Services.AddTransient<LoginViewModel>();
@@ -76,6 +100,7 @@ namespace Beauty_Salon
             builder.Services.AddTransient<PaymentMethodFormPage>();
             builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<ReportsPage>();
+            builder.Services.AddTransient<HelpPage>();
 
             var app = builder.Build();
 

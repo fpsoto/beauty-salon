@@ -22,7 +22,7 @@ public partial class PaymentMethodsPage : ContentPage
     }
 
     private async void OnAddClicked(object? sender, EventArgs e) =>
-        await Shell.Current.GoToAsync("paymentmethods/form");
+        await Shell.Current.GoToAsync("paymentmethod-form");
 
     private async void OnMethodSelected(object? sender, SelectionChangedEventArgs e)
     {
@@ -34,7 +34,7 @@ public partial class PaymentMethodsPage : ContentPage
         var choice = await DisplayActionSheetAsync(method.Name, AppResources.Close, null, AppResources.Edit, AppResources.Delete);
 
         if (choice == AppResources.Edit)
-            await Shell.Current.GoToAsync("paymentmethods/form", new Dictionary<string, object> { ["PaymentMethod"] = method });
+            await Shell.Current.GoToAsync("paymentmethod-form", new Dictionary<string, object> { ["PaymentMethod"] = method });
         else if (choice == AppResources.Delete)
             await _viewModel.DeleteCommand.ExecuteAsync(method);
     }

@@ -10,27 +10,37 @@
     Title="{x:Static strings:AppResources.FinishAppointmentTitle}">
 
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="12">
-            <Label Text="{x:Static strings:AppResources.ChargedPriceLabel}" FontAttributes="Bold" />
-            <Entry Text="{Binding ChargedPrice}" Keyboard="Numeric" Placeholder="0" />
+        <VerticalStackLayout Padding="{StaticResource Space16}" Spacing="{StaticResource Space12}">
+            <Label Text="{x:Static strings:AppResources.ChargedPriceLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding ChargedPrice}" Keyboard="Numeric" Placeholder="0" VerticalOptions="Center" />
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.DiscountLabel}" FontAttributes="Bold" />
-            <Entry Text="{Binding Discount}" Keyboard="Numeric" Placeholder="0" />
+            <Label Text="{x:Static strings:AppResources.DiscountLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding Discount}" Keyboard="Numeric" Placeholder="0" VerticalOptions="Center" />
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.TipLabel}" FontAttributes="Bold" />
-            <Entry Text="{Binding Tip}" Keyboard="Numeric" Placeholder="0" />
+            <Label Text="{x:Static strings:AppResources.TipLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding Tip}" Keyboard="Numeric" Placeholder="0" VerticalOptions="Center" />
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.PaymentMethodLabel}" FontAttributes="Bold" />
-            <Picker ItemsSource="{Binding PaymentMethods}" SelectedItem="{Binding SelectedPaymentMethod}">
-                <Picker.ItemDisplayBinding>
-                    <Binding Path="Name" x:DataType="payments:PaymentMethodDto" />
-                </Picker.ItemDisplayBinding>
-            </Picker>
+            <Label Text="{x:Static strings:AppResources.PaymentMethodLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Picker ItemsSource="{Binding PaymentMethods}" SelectedItem="{Binding SelectedPaymentMethod}" VerticalOptions="Center">
+                    <Picker.ItemDisplayBinding>
+                        <Binding Path="Name" x:DataType="payments:PaymentMethodDto" />
+                    </Picker.ItemDisplayBinding>
+                </Picker>
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.Notes}" FontAttributes="Bold" />
-            <Editor Text="{Binding Notes}" HeightRequest="80" Placeholder="{x:Static strings:AppResources.Optional}" />
+            <Label Text="{x:Static strings:AppResources.Notes}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}" Padding="16" HeightRequest="-1">
+                <Editor Text="{Binding Notes}" HeightRequest="80" Placeholder="{x:Static strings:AppResources.Optional}" />
+            </Border>
 
-            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+            <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
             <Button Text="{x:Static strings:AppResources.FinishAction}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />

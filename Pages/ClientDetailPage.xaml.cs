@@ -25,5 +25,5 @@ public partial class ClientDetailPage : ContentPage
     }
 
     private async void OnEditClicked(object? sender, EventArgs e) =>
-        await Shell.Current.GoToAsync("clients/form", new Dictionary<string, object> { ["ClientId"] = _clientId });
+        await Shell.Current.GoToAsync("client-form", new Dictionary<string, object> { ["ClientId"] = _clientId });
 }

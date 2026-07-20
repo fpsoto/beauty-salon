@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using Beauty_Salon.Resources.Strings;
+using Beauty_Salon.Services;
 using BeautySalon.Application.Features.Payments;
 using BeautySalon.Application.Features.Schedule;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,15 +13,18 @@ public partial class FinishAppointmentViewModel : ViewModelBase
 {
     private readonly IAppointmentAppService _appointmentAppService;
     private readonly IPaymentMethodAppService _paymentMethodAppService;
+    private readonly IAppointmentNotificationScheduler _notificationScheduler;
     private Guid _appointmentId;
 
     public FinishAppointmentViewModel(
         IAppointmentAppService appointmentAppService,
         IPaymentMethodAppService paymentMethodAppService,
+        IAppointmentNotificationScheduler notificationScheduler,
         ILogger<FinishAppointmentViewModel> logger) : base(logger)
     {
         _appointmentAppService = appointmentAppService;
         _paymentMethodAppService = paymentMethodAppService;
+        _notificationScheduler = notificationScheduler;
     }
 
     [ObservableProperty]
@@ -76,6 +80,8 @@ public partial class FinishAppointmentViewModel : ViewModelBase
             SetError(result.Error);
             return;
         }
+
+        await _notificationScheduler.CancelRemindersAsync(_appointmentId);
 
         Finished = true;
     });

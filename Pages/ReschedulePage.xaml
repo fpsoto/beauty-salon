@@ -8,14 +8,18 @@
     x:DataType="viewModels:RescheduleViewModel"
     Title="{x:Static strings:AppResources.RescheduleTitle}">
 
-    <VerticalStackLayout Padding="16" Spacing="12">
-        <Label Text="{x:Static strings:AppResources.NewDateLabel}" FontAttributes="Bold" />
-        <DatePicker Date="{Binding NewDate}" />
+    <VerticalStackLayout Padding="{StaticResource Space16}" Spacing="{StaticResource Space12}">
+        <Label Text="{x:Static strings:AppResources.NewDateLabel}" Style="{StaticResource FieldCaption}" />
+        <Border Style="{StaticResource InputContainer}">
+            <DatePicker Date="{Binding NewDate}" VerticalOptions="Center" />
+        </Border>
 
-        <Label Text="{x:Static strings:AppResources.NewTimeLabel}" FontAttributes="Bold" />
-        <TimePicker Time="{Binding NewTime}" Format="HH:mm" />
+        <Label Text="{x:Static strings:AppResources.NewTimeLabel}" Style="{StaticResource FieldCaption}" />
+        <Border Style="{StaticResource InputContainer}">
+            <TimePicker Time="{Binding NewTime}" Format="HH:mm" VerticalOptions="Center" />
+        </Border>
 
-        <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+        <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
         <Button Text="{x:Static strings:AppResources.RescheduleAction}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
         <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />

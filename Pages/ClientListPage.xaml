@@ -25,29 +25,31 @@
                 Margin="0,0,0,80">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="clients:ClientDto">
-                        <Grid ColumnDefinitions="*,Auto" Padding="16,10" ColumnSpacing="8">
-                            <VerticalStackLayout Grid.Column="0" Spacing="2">
-                                <Label FontAttributes="Bold">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="{}{0} {1}">
-                                            <Binding Path="Name" />
-                                            <Binding Path="LastName" />
-                                        </MultiBinding>
-                                    </Label.Text>
+                        <Border Style="{StaticResource Card}" Margin="16,6">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Style="{StaticResource BodyLarge}" FontAttributes="Bold">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Name" />
+                                                <Binding Path="LastName" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                    <Label Text="{Binding Phone}" Style="{StaticResource BodySmall}" />
+                                </VerticalStackLayout>
+                                <Label
+                                    Grid.Column="1"
+                                    Text="&#9733;"
+                                    FontSize="22"
+                                    VerticalOptions="Center"
+                                    TextColor="{Binding IsFavorite, Converter={StaticResource FavoriteColorConverter}}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnFavoriteTapped" CommandParameter="{Binding .}" />
+                                    </Label.GestureRecognizers>
                                 </Label>
-                                <Label Text="{Binding Phone}" FontSize="13" TextColor="{StaticResource Gray500}" />
-                            </VerticalStackLayout>
-                            <Label
-                                Grid.Column="1"
-                                Text="&#9733;"
-                                FontSize="22"
-                                VerticalOptions="Center"
-                                TextColor="{Binding IsFavorite, Converter={StaticResource FavoriteColorConverter}}">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnFavoriteTapped" CommandParameter="{Binding .}" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </Grid>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -55,11 +57,8 @@
 
         <Button
             Grid.Row="1"
+            Style="{StaticResource Fab}"
             Text="+"
-            FontSize="28"
-            WidthRequest="56"
-            HeightRequest="56"
-            CornerRadius="28"
             VerticalOptions="End"
             HorizontalOptions="End"
             Margin="0,0,20,20"

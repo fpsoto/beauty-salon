@@ -1,6 +1,8 @@
 using System.Collections.ObjectModel;
 using Beauty_Salon.Resources.Strings;
+using Beauty_Salon.Services;
 using BeautySalon.Application.Common;
+using BeautySalon.Application.Common.Interfaces;
 using BeautySalon.Application.Features.Catalog;
 using BeautySalon.Application.Features.Clients;
 using BeautySalon.Application.Features.Schedule;
@@ -15,19 +17,26 @@ public partial class AppointmentFormViewModel : ViewModelBase
     private readonly IAppointmentAppService _appointmentAppService;
     private readonly IClientAppService _clientAppService;
     private readonly ICatalogAppService _catalogAppService;
+    private readonly IAppointmentNotificationScheduler _notificationScheduler;
+    private readonly ICurrentUserContext _currentUserContext;
 
-    // TODO(Fase 4): replace with the signed-in professional's id once login/session wiring exists.
-    private readonly Guid _professionalId = WellKnownIds.AdminUserId;
+    // Falls back to the seeded admin only as a defensive default - this page is only
+    // reachable post-login, so _currentUserContext.UserId should always be set by then.
+    private Guid ProfessionalId => _currentUserContext.UserId ?? WellKnownIds.AdminUserId;
 
     public AppointmentFormViewModel(
         IAppointmentAppService appointmentAppService,
         IClientAppService clientAppService,
         ICatalogAppService catalogAppService,
+        IAppointmentNotificationScheduler notificationScheduler,
+        ICurrentUserContext currentUserContext,
         ILogger<AppointmentFormViewModel> logger) : base(logger)
     {
         _appointmentAppService = appointmentAppService;
         _clientAppService = clientAppService;
         _catalogAppService = catalogAppService;
+        _notificationScheduler = notificationScheduler;
+        _currentUserContext = currentUserContext;
         AppointmentDate = DateTime.Today;
         AppointmentTime = new TimeSpan(9, 0, 0);
     }
@@ -131,7 +140,7 @@ public partial class AppointmentFormViewModel : ViewModelBase
 
         var request = new CreateAppointmentRequest(
             SelectedClient.Id,
-            _professionalId,
+            ProfessionalId,
             DateOnly.FromDateTime(AppointmentDate),
             TimeOnly.FromTimeSpan(AppointmentTime),
             serviceIds,
@@ -143,6 +152,9 @@ public partial class AppointmentFormViewModel : ViewModelBase
             SetError(result.Error);
             return;
         }
+
+        await _notificationScheduler.ScheduleRemindersAsync(
+            result.Value.Id, result.Value.ClientFullName, result.Value.Date, result.Value.StartTime);
 
         Created = true;
     });

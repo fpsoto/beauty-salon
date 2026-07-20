@@ -6,133 +6,169 @@
     xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
     xmlns:reports="clr-namespace:BeautySalon.Application.Features.Reports;assembly=BeautySalon.Application"
     xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
+    xmlns:charts="clr-namespace:Beauty_Salon.Controls.Charts"
     x:DataType="viewModels:ReportsViewModel"
     Title="{x:Static strings:AppResources.ReportsTitle}">
 
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="12">
+        <VerticalStackLayout Padding="16" Spacing="20">
 
             <HorizontalStackLayout Spacing="8">
-                <Button Text="{x:Static strings:AppResources.Today}" Command="{Binding SetTodayCommand}" FontSize="12" Padding="10,4" />
-                <Button Text="{x:Static strings:AppResources.Week}" Command="{Binding SetThisWeekCommand}" FontSize="12" Padding="10,4" />
-                <Button Text="{x:Static strings:AppResources.Month}" Command="{Binding SetThisMonthCommand}" FontSize="12" Padding="10,4" />
-                <Button Text="{x:Static strings:AppResources.Year}" Command="{Binding SetThisYearCommand}" FontSize="12" Padding="10,4" />
+                <Button Text="{x:Static strings:AppResources.Today}" Command="{Binding SetTodayCommand}" Style="{StaticResource SecondaryButton}" FontSize="13" Padding="12,4" HeightRequest="36" MinimumHeightRequest="36" />
+                <Button Text="{x:Static strings:AppResources.Week}" Command="{Binding SetThisWeekCommand}" Style="{StaticResource SecondaryButton}" FontSize="13" Padding="12,4" HeightRequest="36" MinimumHeightRequest="36" />
+                <Button Text="{x:Static strings:AppResources.Month}" Command="{Binding SetThisMonthCommand}" Style="{StaticResource SecondaryButton}" FontSize="13" Padding="12,4" HeightRequest="36" MinimumHeightRequest="36" />
+                <Button Text="{x:Static strings:AppResources.Year}" Command="{Binding SetThisYearCommand}" Style="{StaticResource SecondaryButton}" FontSize="13" Padding="12,4" HeightRequest="36" MinimumHeightRequest="36" />
             </HorizontalStackLayout>
 
             <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                 <VerticalStackLayout Grid.Column="0">
-                    <Label Text="{x:Static strings:AppResources.FromLabel}" FontSize="12" />
+                    <Label Text="{x:Static strings:AppResources.FromLabel}" Style="{StaticResource Caption}" />
                     <DatePicker Date="{Binding FromDate}" />
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1">
-                    <Label Text="{x:Static strings:AppResources.ToLabel}" FontSize="12" />
+                    <Label Text="{x:Static strings:AppResources.ToLabel}" Style="{StaticResource Caption}" />
                     <DatePicker Date="{Binding ToDate}" />
                 </VerticalStackLayout>
             </Grid>
 
             <Button Text="{x:Static strings:AppResources.Apply}" Command="{Binding LoadCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
-            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+            <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
-            <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
-
-            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="12">
-                <VerticalStackLayout Grid.Row="0" Grid.Column="0">
-                    <Label Text="{Binding Summary.TotalRevenue, StringFormat='${0}'}" FontAttributes="Bold" FontSize="20" />
-                    <Label Text="{x:Static strings:AppResources.Revenue}" FontSize="12" />
-                </VerticalStackLayout>
-                <VerticalStackLayout Grid.Row="0" Grid.Column="1">
-                    <Label Text="{Binding Summary.CompletedAppointmentsCount}" FontAttributes="Bold" FontSize="20" />
-                    <Label Text="{x:Static strings:AppResources.CompletedAppointments}" FontSize="12" />
-                </VerticalStackLayout>
-                <VerticalStackLayout Grid.Row="1" Grid.Column="0">
-                    <Label Text="{Binding Summary.NewClientsCount}" FontAttributes="Bold" FontSize="20" />
-                    <Label Text="{x:Static strings:AppResources.NewClients}" FontSize="12" />
-                </VerticalStackLayout>
-                <VerticalStackLayout Grid.Row="1" Grid.Column="1">
-                    <Label Text="{Binding Summary.InactiveClientsCount}" FontAttributes="Bold" FontSize="20" />
-                    <Label Text="{x:Static strings:AppResources.InactiveClients}" FontSize="12" />
-                </VerticalStackLayout>
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="12" ColumnSpacing="12">
+                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding Summary.TotalRevenue, StringFormat='${0}'}" Style="{StaticResource H2}" />
+                        <Label Text="{x:Static strings:AppResources.Revenue}" Style="{StaticResource Caption}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding Summary.CompletedAppointmentsCount}" Style="{StaticResource H2}" />
+                        <Label Text="{x:Static strings:AppResources.CompletedAppointments}" Style="{StaticResource Caption}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding Summary.NewClientsCount}" Style="{StaticResource H2}" />
+                        <Label Text="{x:Static strings:AppResources.NewClients}" Style="{StaticResource Caption}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding Summary.InactiveClientsCount}" Style="{StaticResource H2}" />
+                        <Label Text="{x:Static strings:AppResources.InactiveClients}" Style="{StaticResource Caption}" />
+                    </VerticalStackLayout>
+                </Border>
             </Grid>
 
-            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="4">
-                <VerticalStackLayout Grid.Column="0">
-                    <Label Text="{Binding Summary.AverageRevenuePerAppointment, StringFormat='${0}'}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                    <Label Text="{x:Static strings:AppResources.AveragePerAppointment}" FontSize="11" HorizontalTextAlignment="Center" />
-                </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="1">
-                    <Label Text="{Binding Summary.CancelledCount}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                    <Label Text="{x:Static strings:AppResources.Cancellations}" FontSize="11" HorizontalTextAlignment="Center" />
-                </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="2">
-                    <Label Text="{Binding Summary.NoShowCount}" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                    <Label Text="{x:Static strings:AppResources.NoShowAction}" FontSize="11" HorizontalTextAlignment="Center" />
-                </VerticalStackLayout>
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                <Border Grid.Column="0" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding Summary.AverageRevenuePerAppointment, StringFormat='${0:F1}'}" Style="{StaticResource H3}" HorizontalTextAlignment="Center" />
+                        <Label Text="{x:Static strings:AppResources.AveragePerAppointment}" Style="{StaticResource Caption}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding Summary.CancelledCount}" Style="{StaticResource H3}" HorizontalTextAlignment="Center" TextColor="{StaticResource Error}" />
+                        <Label Text="{x:Static strings:AppResources.Cancellations}" Style="{StaticResource Caption}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding Summary.NoShowCount}" Style="{StaticResource H3}" HorizontalTextAlignment="Center" TextColor="{StaticResource StatusNoShow}" />
+                        <Label Text="{x:Static strings:AppResources.NoShowAction}" Style="{StaticResource Caption}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
             </Grid>
 
-            <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{x:Static strings:AppResources.RevenueByPaymentMethod}" Style="{StaticResource H3}" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                        <charts:DonutChartView Grid.Column="0" ItemsSource="{Binding Summary.RevenueByPaymentMethod}" WidthRequest="96" HeightRequest="96" />
+                        <CollectionView Grid.Column="1" ItemsSource="{Binding Summary.RevenueByPaymentMethod}" HeightRequest="96" VerticalOptions="Center">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="reports:RevenueByPaymentMethodDto">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Padding="0,4">
+                                        <BoxView Grid.Column="0" WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="{StaticResource Primary}" />
+                                        <Label Grid.Column="1" Text="{Binding PaymentMethodName}" Style="{StaticResource BodySmall}" VerticalOptions="Center" />
+                                        <Label Grid.Column="2" Text="{Binding Amount, StringFormat='${0}'}" Style="{StaticResource FieldCaption}" VerticalOptions="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.RevenueByPaymentMethod}" FontAttributes="Bold" />
-            <CollectionView ItemsSource="{Binding Summary.RevenueByPaymentMethod}" HeightRequest="120">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="reports:RevenueByPaymentMethodDto">
-                        <Grid ColumnDefinitions="*,Auto" Padding="0,4">
-                            <Label Grid.Column="0" Text="{Binding PaymentMethodName}" />
-                            <Label Grid.Column="1" Text="{Binding Amount, StringFormat='${0}'}" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static strings:AppResources.TopClients}" Style="{StaticResource H3}" />
+                    <CollectionView ItemsSource="{Binding Summary.TopClients}" HeightRequest="150">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="reports:TopClientDto">
+                                <Grid ColumnDefinitions="*,Auto,Auto" Padding="0,6" ColumnSpacing="8">
+                                    <Label Grid.Column="0" Text="{Binding ClientFullName}" Style="{StaticResource BodySmall}" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource TextPrimaryDark}}" />
+                                    <Label Grid.Column="1" Text="{Binding VisitCount, StringFormat={x:Static strings:AppResources.VisitCountFormat}}" Style="{StaticResource Caption}" />
+                                    <Label Grid.Column="2" Text="{Binding TotalSpent, StringFormat='${0}'}" Style="{StaticResource FieldCaption}" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.TopClients}" FontAttributes="Bold" />
-            <CollectionView ItemsSource="{Binding Summary.TopClients}" HeightRequest="150">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="reports:TopClientDto">
-                        <Grid ColumnDefinitions="*,Auto,Auto" Padding="0,4" ColumnSpacing="8">
-                            <Label Grid.Column="0" Text="{Binding ClientFullName}" />
-                            <Label Grid.Column="1" Text="{Binding VisitCount, StringFormat={x:Static strings:AppResources.VisitCountFormat}}" FontSize="12" />
-                            <Label Grid.Column="2" Text="{Binding TotalSpent, StringFormat='${0}'}" FontSize="12" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static strings:AppResources.TopServices}" Style="{StaticResource H3}" />
+                    <CollectionView ItemsSource="{Binding Summary.TopServices}" HeightRequest="150">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="reports:TopServiceDto">
+                                <Grid ColumnDefinitions="*,Auto,Auto" Padding="0,6" ColumnSpacing="8">
+                                    <Label Grid.Column="0" Text="{Binding ServiceName}" Style="{StaticResource BodySmall}" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource TextPrimaryDark}}" />
+                                    <Label Grid.Column="1" Text="{Binding Count, StringFormat='x{0}'}" Style="{StaticResource Caption}" />
+                                    <Label Grid.Column="2" Text="{Binding Revenue, StringFormat='${0}'}" Style="{StaticResource FieldCaption}" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.TopServices}" FontAttributes="Bold" />
-            <CollectionView ItemsSource="{Binding Summary.TopServices}" HeightRequest="150">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="reports:TopServiceDto">
-                        <Grid ColumnDefinitions="*,Auto,Auto" Padding="0,4" ColumnSpacing="8">
-                            <Label Grid.Column="0" Text="{Binding ServiceName}" />
-                            <Label Grid.Column="1" Text="{Binding Count, StringFormat='x{0}'}" FontSize="12" />
-                            <Label Grid.Column="2" Text="{Binding Revenue, StringFormat='${0}'}" FontSize="12" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static strings:AppResources.TopCategories}" Style="{StaticResource H3}" />
+                    <CollectionView ItemsSource="{Binding Summary.TopCategories}" HeightRequest="150">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="reports:TopCategoryDto">
+                                <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                    <Label Grid.Column="0" Text="{Binding CategoryName}" Style="{StaticResource BodySmall}" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource TextPrimaryDark}}" />
+                                    <Label Grid.Column="1" Text="{Binding Count, StringFormat='x{0}'}" Style="{StaticResource Caption}" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.TopCategories}" FontAttributes="Bold" />
-            <CollectionView ItemsSource="{Binding Summary.TopCategories}" HeightRequest="150">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="reports:TopCategoryDto">
-                        <Grid ColumnDefinitions="*,Auto" Padding="0,4">
-                            <Label Grid.Column="0" Text="{Binding CategoryName}" />
-                            <Label Grid.Column="1" Text="{Binding Count, StringFormat='x{0}'}" FontSize="12" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-            <Label Text="{x:Static strings:AppResources.BusiestHours}" FontAttributes="Bold" />
-            <CollectionView ItemsSource="{Binding Summary.BusiestHours}" HeightRequest="150">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="reports:HourCountDto">
-                        <Grid ColumnDefinitions="*,Auto" Padding="0,4">
-                            <Label Grid.Column="0" Text="{Binding Hour, StringFormat='{0}:00'}" />
-                            <Label Grid.Column="1" Text="{Binding Count, StringFormat={x:Static strings:AppResources.AppointmentCountFormat}}" FontSize="12" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static strings:AppResources.BusiestHours}" Style="{StaticResource H3}" />
+                    <charts:HourHistogramView ItemsSource="{Binding Summary.BusiestHours}" HeightRequest="80" />
+                    <CollectionView ItemsSource="{Binding Summary.BusiestHours}" HeightRequest="120">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="reports:HourCountDto">
+                                <Grid ColumnDefinitions="*,Auto" Padding="0,4">
+                                    <Label Grid.Column="0" Text="{Binding Hour, StringFormat='{0}:00'}" Style="{StaticResource BodySmall}" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource TextPrimaryDark}}" />
+                                    <Label Grid.Column="1" Text="{Binding Count, StringFormat={x:Static strings:AppResources.AppointmentCountFormat}}" Style="{StaticResource Caption}" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

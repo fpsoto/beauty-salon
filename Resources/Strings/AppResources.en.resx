@@ -107,6 +107,8 @@
   <data name="WhatsAppLabel" xml:space="preserve"><value>WhatsApp</value></data>
   <data name="SendReminderAction" xml:space="preserve"><value>Send WhatsApp reminder</value></data>
   <data name="WhatsAppReminderMessageFormat" xml:space="preserve"><value>Hi {0}, this is a reminder of your appointment on {1:MM/dd/yyyy} at {2:HH:mm}. See you soon!</value></data>
+  <data name="AppointmentReminderTitle" xml:space="preserve"><value>Appointment reminder</value></data>
+  <data name="AppointmentReminderMessageFormat" xml:space="preserve"><value>You have an appointment with {0} on {1:MM/dd/yyyy} at {1:HH:mm}.</value></data>
   <data name="Favorite" xml:space="preserve"><value>Favorite</value></data>
   <data name="Visits" xml:space="preserve"><value>Visits</value></data>
   <data name="TotalSpent" xml:space="preserve"><value>Total spent</value></data>
@@ -164,6 +166,46 @@
   <data name="DescriptionLabel" xml:space="preserve"><value>Description</value></data>
 
   <data name="SettingsTitle" xml:space="preserve"><value>Settings</value></data>
+  <data name="HelpTitle" xml:space="preserve"><value>Help</value></data>
+  <data name="BackupTitle" xml:space="preserve"><value>Back up data</value></data>
+  <data name="BackupShareTitle" xml:space="preserve"><value>Share backup</value></data>
+  <data name="BackupErrorMessage" xml:space="preserve"><value>Couldn't create the backup.</value></data>
+  <data name="RestoreTitle" xml:space="preserve"><value>Restore data</value></data>
+  <data name="RestorePickerTitle" xml:space="preserve"><value>Select a backup file</value></data>
+  <data name="RestoreConfirmMessage" xml:space="preserve"><value>This will replace all of the app's current data with the selected file's data. This can't be undone. Continue?</value></data>
+  <data name="RestoreConfirmButton" xml:space="preserve"><value>Restore</value></data>
+  <data name="RestoreSuccessMessage" xml:space="preserve"><value>Data restored. Close and reopen the app to see it.</value></data>
+  <data name="InvalidBackupMessage" xml:space="preserve"><value>The selected file isn't a valid Beauty Salon backup.</value></data>
+  <data name="LogoutButton" xml:space="preserve"><value>Log out</value></data>
+  <data name="LogoutConfirmMessage" xml:space="preserve"><value>Are you sure you want to log out?</value></data>
+  <data name="HelpSectionAgendaTitle" xml:space="preserve"><value>Agenda</value></data>
+  <data name="HelpSectionAgendaBody" xml:space="preserve"><value>• The actions available when tapping an appointment depend on its current status (for example, "Cancel" disappears after Finish).
+• Rescheduling creates a new appointment and marks the original as "Rescheduled" — it doesn't edit it in place. This affects Reports counts.
+• The WhatsApp reminder button only appears if the client has a phone number on file.</value></data>
+  <data name="HelpSectionClientsTitle" xml:space="preserve"><value>Clients</value></data>
+  <data name="HelpSectionClientsBody" xml:space="preserve"><value>• Visit count and total spent are calculated from the client's appointments, not from cancelled appointments.
+• The favorite icon (⭐) is just a visual marker to find clients faster.
+• The RUT (Chilean ID) is validated with the real check digit — an invalid format is rejected when saving.</value></data>
+  <data name="HelpSectionCatalogTitle" xml:space="preserve"><value>Catalog</value></data>
+  <data name="HelpSectionCatalogBody" xml:space="preserve"><value>• A category's color is purely decorative and doesn't affect any business rule.
+• If you delete a category or service that already has appointments linked to it, the history of those appointments doesn't change (a snapshot of the price and name at the time of the appointment is kept).</value></data>
+  <data name="HelpSectionPaymentsTitle" xml:space="preserve"><value>Payment methods</value></data>
+  <data name="HelpSectionPaymentsBody" xml:space="preserve"><value>• Renaming a payment method doesn't update already-recorded history — revenue-by-payment-method reports can end up split between the old and new name.
+• You can disable a payment method without deleting it, to stop using it without losing its history.</value></data>
+  <data name="HelpSectionReportsTitle" xml:space="preserve"><value>Reports</value></data>
+  <data name="HelpSectionReportsBody" xml:space="preserve"><value>• "New" and "inactive" clients are calculated using a 60-day threshold with no visits.
+• The date range filters by the appointment's date, not by when it was created.
+• The busiest-hours chart counts every appointment in the selected range, not just completed ones.</value></data>
+  <data name="HelpSectionSettingsTitle" xml:space="preserve"><value>Settings</value></data>
+  <data name="HelpSectionSettingsBody" xml:space="preserve"><value>• Changing the language requires restarting the app for it to apply across every screen.
+• Set your working hours before booking appointments outside the default range (9:00 to 18:00) — otherwise the appointment will be rejected.
+• Reminder rules (15 min, 30 min, 1 hour, 1 day before) are independent of each other — several can fire for the same appointment.
+• The "Save" button applies every change on this screen at once — if you leave without saving, they're lost.</value></data>
+  <data name="HelpSectionFaqTitle" xml:space="preserve"><value>Frequently asked questions</value></data>
+  <data name="HelpSectionFaqBody" xml:space="preserve"><value>• Why didn't an appointment's reminder arrive? The client may not have a phone number, the rule may be disabled in Settings, or the reminder time may have already passed.
+• Why can't I create a client with this RUT? The check digit isn't valid — double-check the RUT was typed correctly.
+• Why did rescheduling create what looks like a duplicate appointment? That's expected: the original is marked "Rescheduled" and a new one is created (see the Agenda section).
+• Why do reports look off after renaming a payment method? History isn't updated retroactively (see the Payments section).</value></data>
   <data name="LanguageLabel" xml:space="preserve"><value>Language</value></data>
   <data name="ThemeLabel" xml:space="preserve"><value>Theme</value></data>
   <data name="CurrencyLabel" xml:space="preserve"><value>Currency</value></data>

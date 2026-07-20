@@ -2,6 +2,7 @@ using Beauty_Salon.Resources.Strings;
 using Beauty_Salon.ViewModels;
 using BeautySalon.Application.Features.Schedule;
 using BeautySalon.Domain.Enums;
+using Plugin.LocalNotification;
 
 namespace Beauty_Salon.Pages;
 
@@ -20,6 +21,13 @@ public partial class AgendaPage : ContentPage
     {
         base.OnAppearing();
         _ = _viewModel.LoadWeekCommand.ExecuteAsync(null);
+        _ = RequestNotificationPermissionAsync();
+    }
+
+    private static async Task RequestNotificationPermissionAsync()
+    {
+        if (!await LocalNotificationCenter.Current.AreNotificationsEnabled())
+            await LocalNotificationCenter.Current.RequestNotificationPermission();
     }
 
     private async void OnEntrySelected(object? sender, SelectionChangedEventArgs e)

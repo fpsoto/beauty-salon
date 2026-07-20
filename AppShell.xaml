@@ -9,12 +9,12 @@
     FlyoutBehavior="Disabled">
 
     <TabBar>
-        <ShellContent Title="{x:Static strings:AppResources.AgendaTitle}" Route="agenda" ContentTemplate="{DataTemplate pages:AgendaPage}" />
-        <ShellContent Title="{x:Static strings:AppResources.ClientsTitle}" Route="clients" ContentTemplate="{DataTemplate pages:ClientListPage}" />
-        <ShellContent Title="{x:Static strings:AppResources.CatalogTitle}" Route="catalog" ContentTemplate="{DataTemplate pages:CatalogPage}" />
-        <ShellContent Title="{x:Static strings:AppResources.PaymentsTabTitle}" Route="paymentmethods" ContentTemplate="{DataTemplate pages:PaymentMethodsPage}" />
-        <ShellContent Title="{x:Static strings:AppResources.ReportsTitle}" Route="reports" ContentTemplate="{DataTemplate pages:ReportsPage}" />
-        <ShellContent Title="{x:Static strings:AppResources.SettingsTitle}" Route="settings" ContentTemplate="{DataTemplate pages:SettingsPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.AgendaTitle}" Icon="icon_agenda.svg" Route="agenda" ContentTemplate="{DataTemplate pages:AgendaPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.ClientsTitle}" Icon="icon_clients.svg" Route="clients" ContentTemplate="{DataTemplate pages:ClientListPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.CatalogTitle}" Icon="icon_catalog.svg" Route="catalog" ContentTemplate="{DataTemplate pages:CatalogPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.PaymentsTabTitle}" Icon="icon_payments.svg" Route="paymentmethods" ContentTemplate="{DataTemplate pages:PaymentMethodsPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.ReportsTitle}" Icon="icon_reports.svg" Route="reports" ContentTemplate="{DataTemplate pages:ReportsPage}" />
+        <ShellContent Title="{x:Static strings:AppResources.SettingsTitle}" Icon="icon_settings.svg" Route="settings" ContentTemplate="{DataTemplate pages:SettingsPage}" />
     </TabBar>
 
 </Shell>

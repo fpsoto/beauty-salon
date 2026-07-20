@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
+using Beauty_Salon.Services;
 using BeautySalon.Application.Common;
+using BeautySalon.Application.Common.Interfaces;
 using BeautySalon.Application.Features.Schedule;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -13,17 +15,24 @@ public partial class AgendaViewModel : ViewModelBase
 {
     private readonly IAppointmentAppService _appointmentAppService;
     private readonly IScheduleBlockAppService _scheduleBlockAppService;
+    private readonly IAppointmentNotificationScheduler _notificationScheduler;
+    private readonly ICurrentUserContext _currentUserContext;
 
-    // TODO(Fase 4): replace with the signed-in professional's id once login/session wiring exists.
-    private readonly Guid _professionalId = WellKnownIds.AdminUserId;
+    // Falls back to the seeded admin only as a defensive default - this page is only
+    // reachable post-login, so _currentUserContext.UserId should always be set by then.
+    private Guid ProfessionalId => _currentUserContext.UserId ?? WellKnownIds.AdminUserId;
 
     public AgendaViewModel(
         IAppointmentAppService appointmentAppService,
         IScheduleBlockAppService scheduleBlockAppService,
+        IAppointmentNotificationScheduler notificationScheduler,
+        ICurrentUserContext currentUserContext,
         ILogger<AgendaViewModel> logger) : base(logger)
     {
         _appointmentAppService = appointmentAppService;
         _scheduleBlockAppService = scheduleBlockAppService;
+        _notificationScheduler = notificationScheduler;
+        _currentUserContext = currentUserContext;
         SelectedDate = DateOnly.FromDateTime(DateTime.Now);
     }
 
@@ -121,6 +130,7 @@ public partial class AgendaViewModel : ViewModelBase
             return;
         }
 
+        await _notificationScheduler.CancelRemindersAsync(appointmentId);
         await LoadWeekCoreAsync();
     });
 
@@ -133,6 +143,7 @@ public partial class AgendaViewModel : ViewModelBase
             return;
         }
 
+        await _notificationScheduler.CancelRemindersAsync(appointmentId);
         await LoadWeekCoreAsync();
     });
 
@@ -174,7 +185,7 @@ public partial class AgendaViewModel : ViewModelBase
 
     private async Task LoadWeekCoreAsync()
     {
-        var result = await _appointmentAppService.GetWeekAsync(SelectedDate, _professionalId);
+        var result = await _appointmentAppService.GetWeekAsync(SelectedDate, ProfessionalId);
         if (result.IsFailure)
         {
             SetError(result.Error);

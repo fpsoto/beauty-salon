@@ -10,34 +10,50 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="10">
-            <Label Text="{x:Static strings:AppResources.Name}" FontAttributes="Bold" />
-            <Entry Text="{Binding Name}" />
+            <Label Text="{x:Static strings:AppResources.Name}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding Name}" />
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.LastName}" FontAttributes="Bold" />
-            <Entry Text="{Binding LastName}" />
+            <Label Text="{x:Static strings:AppResources.LastName}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding LastName}" />
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.Rut}" FontAttributes="Bold" />
-            <Entry Text="{Binding Rut}" Placeholder="12.345.678-9" />
+            <Label Text="{x:Static strings:AppResources.Rut}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding Rut}" Placeholder="12.345.678-9" />
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.Phone}" FontAttributes="Bold" />
-            <Entry Text="{Binding Phone}" Keyboard="Telephone" />
+            <Label Text="{x:Static strings:AppResources.Phone}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding Phone}" Keyboard="Telephone" />
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.Email}" FontAttributes="Bold" />
-            <Entry Text="{Binding Email}" Keyboard="Email" />
+            <Label Text="{x:Static strings:AppResources.Email}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding Email}" Keyboard="Email" />
+            </Border>
 
             <HorizontalStackLayout Spacing="8">
                 <CheckBox IsChecked="{Binding HasDateOfBirth}" />
                 <Label Text="{x:Static strings:AppResources.KnowsDateOfBirth}" VerticalOptions="Center" />
             </HorizontalStackLayout>
-            <DatePicker Date="{Binding DateOfBirth}" IsVisible="{Binding HasDateOfBirth}" />
+            <Border Style="{StaticResource InputContainer}" IsVisible="{Binding HasDateOfBirth}">
+                <DatePicker Date="{Binding DateOfBirth}" />
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.Address}" FontAttributes="Bold" />
-            <Entry Text="{Binding Address}" />
+            <Label Text="{x:Static strings:AppResources.Address}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding Address}" />
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.Notes}" FontAttributes="Bold" />
-            <Editor Text="{Binding Notes}" HeightRequest="80" />
+            <Label Text="{x:Static strings:AppResources.Notes}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Editor Text="{Binding Notes}" HeightRequest="80" />
+            </Border>
 
-            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+            <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
             <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />

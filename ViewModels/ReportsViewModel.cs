@@ -1,4 +1,5 @@
 using BeautySalon.Application.Common;
+using BeautySalon.Application.Common.Interfaces;
 using BeautySalon.Application.Features.Reports;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -9,13 +10,16 @@ namespace Beauty_Salon.ViewModels;
 public partial class ReportsViewModel : ViewModelBase
 {
     private readonly IReportAppService _reportAppService;
+    private readonly ICurrentUserContext _currentUserContext;
 
-    // TODO(Fase 5+): replace with the signed-in professional's id once login/session wiring supports it.
-    private readonly Guid _professionalId = WellKnownIds.AdminUserId;
+    // Falls back to the seeded admin only as a defensive default - this page is only
+    // reachable post-login, so _currentUserContext.UserId should always be set by then.
+    private Guid ProfessionalId => _currentUserContext.UserId ?? WellKnownIds.AdminUserId;
 
-    public ReportsViewModel(IReportAppService reportAppService, ILogger<ReportsViewModel> logger) : base(logger)
+    public ReportsViewModel(IReportAppService reportAppService, ICurrentUserContext currentUserContext, ILogger<ReportsViewModel> logger) : base(logger)
     {
         _reportAppService = reportAppService;
+        _currentUserContext = currentUserContext;
         FromDate = DateTime.Today;
         ToDate = DateTime.Today;
     }
@@ -72,7 +76,7 @@ public partial class ReportsViewModel : ViewModelBase
     private async Task LoadCoreAsync()
     {
         var result = await _reportAppService.GetSummaryAsync(
-            DateOnly.FromDateTime(FromDate), DateOnly.FromDateTime(ToDate), _professionalId);
+            DateOnly.FromDateTime(FromDate), DateOnly.FromDateTime(ToDate), ProfessionalId);
         if (result.IsFailure)
         {
             SetError(result.Error);

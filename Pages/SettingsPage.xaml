@@ -8,11 +8,15 @@
     x:DataType="viewModels:SettingsViewModel"
     Title="{x:Static strings:AppResources.SettingsTitle}">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{x:Static strings:AppResources.HelpTitle}" Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="16">
 
-            <Label Text="{x:Static strings:AppResources.LanguageLabel}" FontAttributes="Bold" />
-            <HorizontalStackLayout Spacing="16">
+            <Label Text="{x:Static strings:AppResources.LanguageLabel}" Style="{StaticResource H3}" />
+            <HorizontalStackLayout Spacing="{StaticResource Space16}">
                 <RadioButton
                     Content="{x:Static strings:AppResources.SpanishLabel}"
                     IsChecked="{Binding Language, Converter={StaticResource StringEqualsConverter}, ConverterParameter=es}" />
@@ -21,8 +25,8 @@
                     IsChecked="{Binding Language, Converter={StaticResource StringEqualsConverter}, ConverterParameter=en}" />
             </HorizontalStackLayout>
 
-            <Label Text="{x:Static strings:AppResources.ThemeLabel}" FontAttributes="Bold" />
-            <HorizontalStackLayout Spacing="16">
+            <Label Text="{x:Static strings:AppResources.ThemeLabel}" Style="{StaticResource H3}" />
+            <HorizontalStackLayout Spacing="{StaticResource Space16}">
                 <RadioButton
                     Content="{x:Static strings:AppResources.ThemeLight}"
                     IsChecked="{Binding Theme, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Light}" />
@@ -34,8 +38,8 @@
                     IsChecked="{Binding Theme, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=System}" />
             </HorizontalStackLayout>
 
-            <Label Text="{x:Static strings:AppResources.CurrencyLabel}" FontAttributes="Bold" />
-            <HorizontalStackLayout Spacing="16">
+            <Label Text="{x:Static strings:AppResources.CurrencyLabel}" Style="{StaticResource H3}" />
+            <HorizontalStackLayout Spacing="{StaticResource Space16}">
                 <RadioButton
                     Content="CLP"
                     IsChecked="{Binding Currency, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=CLP}" />
@@ -44,46 +48,69 @@
                     IsChecked="{Binding Currency, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=USD}" />
             </HorizontalStackLayout>
 
-            <Label Text="{x:Static strings:AppResources.DateFormatLabel}" FontAttributes="Bold" />
-            <Entry Text="{Binding DateFormat}" Placeholder="dd/MM/yyyy" />
+            <Label Text="{x:Static strings:AppResources.DateFormatLabel}" Style="{StaticResource H3}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding DateFormat}" Placeholder="dd/MM/yyyy" VerticalOptions="Center" />
+            </Border>
 
-            <Label Text="{x:Static strings:AppResources.TimeFormatLabel}" FontAttributes="Bold" />
-            <Entry Text="{Binding TimeFormat}" Placeholder="HH:mm" />
+            <Label Text="{x:Static strings:AppResources.TimeFormatLabel}" Style="{StaticResource H3}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding TimeFormat}" Placeholder="HH:mm" VerticalOptions="Center" />
+            </Border>
 
-            <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
+            <BoxView HeightRequest="1" />
 
-            <Label Text="{x:Static strings:AppResources.WorkingHoursLabel}" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.WorkingHoursLabel}" Style="{StaticResource H3}" />
             <CollectionView ItemsSource="{Binding WorkingDays}" HeightRequest="340">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:WorkingDayEditItem">
-                        <Grid ColumnDefinitions="Auto,80,Auto,Auto" Padding="0,6" ColumnSpacing="8">
-                            <CheckBox Grid.Column="0" IsChecked="{Binding IsWorkingDay}" />
-                            <Label Grid.Column="1" Text="{Binding DayLabel}" VerticalOptions="Center" />
-                            <TimePicker Grid.Column="2" Time="{Binding StartTime}" Format="HH:mm" IsEnabled="{Binding IsWorkingDay}" />
-                            <TimePicker Grid.Column="3" Time="{Binding EndTime}" Format="HH:mm" IsEnabled="{Binding IsWorkingDay}" />
-                        </Grid>
+                        <VerticalStackLayout Spacing="{StaticResource Space4}">
+                            <Grid ColumnDefinitions="Auto,80,Auto,Auto" Padding="0,6" ColumnSpacing="{StaticResource Space12}">
+                                <CheckBox Grid.Column="0" IsChecked="{Binding IsWorkingDay}" />
+                                <Label Grid.Column="1" Text="{Binding DayLabel}" Style="{StaticResource BodyLarge}" VerticalOptions="Center" />
+                                <TimePicker Grid.Column="2" Time="{Binding StartTime}" Format="HH:mm" IsEnabled="{Binding IsWorkingDay}" />
+                                <TimePicker Grid.Column="3" Time="{Binding EndTime}" Format="HH:mm" IsEnabled="{Binding IsWorkingDay}" />
+                            </Grid>
+                            <BoxView HeightRequest="1" />
+                        </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <BoxView HeightRequest="1" BackgroundColor="{StaticResource Gray200}" />
+            <BoxView HeightRequest="1" />
 
-            <Label Text="{x:Static strings:AppResources.NotificationRulesLabel}" FontAttributes="Bold" />
+            <Label Text="{x:Static strings:AppResources.NotificationRulesLabel}" Style="{StaticResource H3}" />
             <CollectionView ItemsSource="{Binding NotificationRules}" HeightRequest="190">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:NotificationRuleEditItem">
-                        <Grid ColumnDefinitions="Auto,*" Padding="0,4" ColumnSpacing="8">
-                            <CheckBox Grid.Column="0" IsChecked="{Binding IsEnabled}" />
-                            <Label Grid.Column="1" Text="{Binding Label}" VerticalOptions="Center" />
-                        </Grid>
+                        <VerticalStackLayout Spacing="{StaticResource Space4}">
+                            <Grid ColumnDefinitions="Auto,*" Padding="0,4" ColumnSpacing="{StaticResource Space12}">
+                                <CheckBox Grid.Column="0" IsChecked="{Binding IsEnabled}" />
+                                <Label Grid.Column="1" Text="{Binding Label}" Style="{StaticResource BodyLarge}" VerticalOptions="Center" />
+                            </Grid>
+                            <BoxView HeightRequest="1" />
+                        </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+            <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
             <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+
+            <BoxView HeightRequest="1" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="{StaticResource Space12}">
+                <Button Grid.Column="0" Text="{x:Static strings:AppResources.BackupTitle}" Style="{StaticResource SecondaryButton}" Clicked="OnBackupClicked" />
+                <Button Grid.Column="1" Text="{x:Static strings:AppResources.RestoreTitle}" Style="{StaticResource SecondaryButton}" Clicked="OnRestoreClicked" />
+            </Grid>
+            <Button Text="{x:Static strings:AppResources.LogoutButton}" Style="{StaticResource TertiaryButton}" Clicked="OnLogoutClicked" />
+
+            <!-- TEMPORARY: debug-only seeder for manual testing - remove this block, SeedTestDataCommand,
+                 SeedResultMessage, and the extra AppService dependencies in SettingsViewModel once done. -->
+            <BoxView HeightRequest="1" />
+            <Button Text="Sembrar datos de prueba" Command="{Binding SeedTestDataCommand}" Style="{StaticResource SecondaryButton}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <Label Text="{Binding SeedResultMessage}" Style="{StaticResource Caption}" IsVisible="{Binding SeedResultMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

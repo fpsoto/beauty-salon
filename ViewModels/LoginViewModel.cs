@@ -1,3 +1,4 @@
+using BeautySalon.Application.Common.Interfaces;
 using BeautySalon.Application.Features.Auth;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -8,10 +9,12 @@ namespace Beauty_Salon.ViewModels;
 public partial class LoginViewModel : ViewModelBase
 {
     private readonly IAuthAppService _authAppService;
+    private readonly ISessionService _sessionService;
 
-    public LoginViewModel(IAuthAppService authAppService, ILogger<LoginViewModel> logger) : base(logger)
+    public LoginViewModel(IAuthAppService authAppService, ISessionService sessionService, ILogger<LoginViewModel> logger) : base(logger)
     {
         _authAppService = authAppService;
+        _sessionService = sessionService;
     }
 
     [ObservableProperty]
@@ -34,6 +37,7 @@ public partial class LoginViewModel : ViewModelBase
             return;
         }
 
+        _sessionService.SignIn(result.Value.UserId, result.Value.Username);
         LoginSucceeded = true;
     });
 }

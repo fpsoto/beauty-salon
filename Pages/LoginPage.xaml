@@ -8,17 +8,17 @@
     x:DataType="viewModels:LoginViewModel"
     Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="*, Auto, *" Padding="32">
-        <VerticalStackLayout Grid.Row="1" Spacing="20" VerticalOptions="Center">
-            <Label Text="{x:Static strings:AppResources.AppName}" Style="{StaticResource Headline}" />
-            <Label Text="{x:Static strings:AppResources.LoginSubtitle}" Style="{StaticResource SubHeadline}" FontSize="16" />
+    <Grid RowDefinitions="*, Auto, *" Padding="{StaticResource Space32}">
+        <VerticalStackLayout Grid.Row="1" Spacing="{StaticResource Space24}" VerticalOptions="Center">
+            <Label Text="{x:Static strings:AppResources.AppName}" Style="{StaticResource H1}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            <Label Text="{x:Static strings:AppResources.LoginSubtitle}" Style="{StaticResource BodyLarge}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
 
             <Entry Placeholder="{x:Static strings:AppResources.UsernamePlaceholder}" Text="{Binding Username}" ReturnType="Next" />
             <Entry Placeholder="{x:Static strings:AppResources.PasswordPlaceholder}" Text="{Binding Password}" IsPassword="True" ReturnType="Done" Completed="OnPasswordCompleted" />
 
             <Label
                 Text="{Binding ErrorMessage}"
-                TextColor="Red"
+                TextColor="{StaticResource Error}"
                 IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
                 HorizontalTextAlignment="Center" />
 

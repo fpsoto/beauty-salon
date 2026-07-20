@@ -22,10 +22,10 @@ public partial class CatalogPage : ContentPage
     }
 
     private async void OnAddCategoryClicked(object? sender, EventArgs e) =>
-        await Shell.Current.GoToAsync("catalog/category-form");
+        await Shell.Current.GoToAsync("category-form");
 
     private async void OnAddServiceClicked(object? sender, EventArgs e) =>
-        await Shell.Current.GoToAsync("catalog/service-form");
+        await Shell.Current.GoToAsync("service-form");
 
     private async void OnCategoryOptionsTapped(object? sender, TappedEventArgs e)
     {
@@ -35,7 +35,7 @@ public partial class CatalogPage : ContentPage
         var choice = await DisplayActionSheetAsync(category.Name, AppResources.Close, null, AppResources.Edit, AppResources.Delete);
 
         if (choice == AppResources.Edit)
-            await Shell.Current.GoToAsync("catalog/category-form", new Dictionary<string, object> { ["Category"] = category });
+            await Shell.Current.GoToAsync("category-form", new Dictionary<string, object> { ["Category"] = category });
         else if (choice == AppResources.Delete)
             await _viewModel.DeleteCategoryCommand.ExecuteAsync(category);
     }
@@ -50,7 +50,7 @@ public partial class CatalogPage : ContentPage
         var choice = await DisplayActionSheetAsync(service.Name, AppResources.Close, null, AppResources.Edit, AppResources.Delete);
 
         if (choice == AppResources.Edit)
-            await Shell.Current.GoToAsync("catalog/service-form", new Dictionary<string, object> { ["Service"] = service });
+            await Shell.Current.GoToAsync("service-form", new Dictionary<string, object> { ["Service"] = service });
         else if (choice == AppResources.Delete)
             await _viewModel.DeleteServiceCommand.ExecuteAsync(service);
     }

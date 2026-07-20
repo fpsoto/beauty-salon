@@ -107,6 +107,8 @@
   <data name="WhatsAppLabel" xml:space="preserve"><value>WhatsApp</value></data>
   <data name="SendReminderAction" xml:space="preserve"><value>Enviar recordatorio WhatsApp</value></data>
   <data name="WhatsAppReminderMessageFormat" xml:space="preserve"><value>Hola {0}, te recordamos tu cita el {1:dd/MM/yyyy} a las {2:HH:mm}. ¡Te esperamos!</value></data>
+  <data name="AppointmentReminderTitle" xml:space="preserve"><value>Recordatorio de cita</value></data>
+  <data name="AppointmentReminderMessageFormat" xml:space="preserve"><value>Tienes una cita con {0} el {1:dd/MM/yyyy} a las {1:HH:mm}.</value></data>
   <data name="Favorite" xml:space="preserve"><value>Favorito</value></data>
   <data name="Visits" xml:space="preserve"><value>Visitas</value></data>
   <data name="TotalSpent" xml:space="preserve"><value>Total gastado</value></data>
@@ -164,6 +166,46 @@
   <data name="DescriptionLabel" xml:space="preserve"><value>Descripción</value></data>
 
   <data name="SettingsTitle" xml:space="preserve"><value>Ajustes</value></data>
+  <data name="HelpTitle" xml:space="preserve"><value>Ayuda</value></data>
+  <data name="BackupTitle" xml:space="preserve"><value>Respaldar datos</value></data>
+  <data name="BackupShareTitle" xml:space="preserve"><value>Compartir respaldo</value></data>
+  <data name="BackupErrorMessage" xml:space="preserve"><value>No se pudo generar el respaldo.</value></data>
+  <data name="RestoreTitle" xml:space="preserve"><value>Restaurar datos</value></data>
+  <data name="RestorePickerTitle" xml:space="preserve"><value>Selecciona un archivo de respaldo</value></data>
+  <data name="RestoreConfirmMessage" xml:space="preserve"><value>Esto reemplazará todos los datos actuales de la app con los del archivo seleccionado. Esta acción no se puede deshacer. ¿Continuar?</value></data>
+  <data name="RestoreConfirmButton" xml:space="preserve"><value>Restaurar</value></data>
+  <data name="RestoreSuccessMessage" xml:space="preserve"><value>Datos restaurados. Cierra y vuelve a abrir la app para verlos.</value></data>
+  <data name="InvalidBackupMessage" xml:space="preserve"><value>El archivo seleccionado no es un respaldo válido de Beauty Salon.</value></data>
+  <data name="LogoutButton" xml:space="preserve"><value>Cerrar sesión</value></data>
+  <data name="LogoutConfirmMessage" xml:space="preserve"><value>¿Seguro que quieres cerrar sesión?</value></data>
+  <data name="HelpSectionAgendaTitle" xml:space="preserve"><value>Agenda</value></data>
+  <data name="HelpSectionAgendaBody" xml:space="preserve"><value>• Las acciones disponibles al tocar una cita dependen de su estado actual (por ejemplo, "Cancelar" desaparece después de Finalizar).
+• Reagendar crea una cita nueva y marca la original como "Reagendada" — no la edita en el mismo lugar. Esto afecta los conteos de Reportes.
+• El botón de recordatorio de WhatsApp solo aparece si el cliente tiene un teléfono registrado.</value></data>
+  <data name="HelpSectionClientsTitle" xml:space="preserve"><value>Clientes</value></data>
+  <data name="HelpSectionClientsBody" xml:space="preserve"><value>• El contador de visitas y el total gastado se calculan sobre las citas del cliente, no sobre las citas canceladas.
+• El ícono de favorito (⭐) es solo una marca visual para encontrar clientes más rápido.
+• El RUT se valida con el dígito verificador chileno real — un formato inválido se rechaza al guardar.</value></data>
+  <data name="HelpSectionCatalogTitle" xml:space="preserve"><value>Catálogo</value></data>
+  <data name="HelpSectionCatalogBody" xml:space="preserve"><value>• El color de una categoría es solo decorativo, no afecta ninguna regla de negocio.
+• Si borras una categoría o servicio que ya tiene citas asociadas, el historial de esas citas no cambia (queda una copia guardada del precio y nombre al momento de la cita).</value></data>
+  <data name="HelpSectionPaymentsTitle" xml:space="preserve"><value>Pagos</value></data>
+  <data name="HelpSectionPaymentsBody" xml:space="preserve"><value>• Renombrar un método de pago no actualiza el historial ya registrado — los reportes por método de pago pueden quedar divididos entre el nombre viejo y el nuevo.
+• Puedes desactivar un método de pago sin borrarlo, para dejar de usarlo sin perder el historial.</value></data>
+  <data name="HelpSectionReportsTitle" xml:space="preserve"><value>Reportes</value></data>
+  <data name="HelpSectionReportsBody" xml:space="preserve"><value>• "Cliente nuevo" e "inactivo" se calculan sobre un umbral de 60 días sin visitas.
+• El rango de fechas filtra por la fecha de la cita, no por la fecha en que se creó.
+• El gráfico de horas más ocupadas cuenta todas las citas del rango seleccionado, no solo las finalizadas.</value></data>
+  <data name="HelpSectionSettingsTitle" xml:space="preserve"><value>Ajustes</value></data>
+  <data name="HelpSectionSettingsBody" xml:space="preserve"><value>• Cambiar el idioma requiere reiniciar la app para que se aplique en todas las pantallas.
+• Define tu horario laboral antes de agendar citas fuera del rango por defecto (9:00 a 18:00) — de lo contrario la cita será rechazada.
+• Las reglas de recordatorio (15 min, 30 min, 1 hora, 1 día antes) son independientes entre sí — pueden dispararse varias para la misma cita.
+• El botón "Guardar" aplica todos los cambios de esta pantalla a la vez — si sales sin guardar, se pierden.</value></data>
+  <data name="HelpSectionFaqTitle" xml:space="preserve"><value>Preguntas frecuentes</value></data>
+  <data name="HelpSectionFaqBody" xml:space="preserve"><value>• ¿Por qué no llegó el recordatorio de una cita? Puede ser que el cliente no tenga teléfono, que la regla esté desactivada en Ajustes, o que la hora del recordatorio ya haya pasado.
+• ¿Por qué no puedo crear un cliente con este RUT? El dígito verificador no es válido — revisa que el RUT esté bien escrito.
+• ¿Por qué reagendar creó una cita que parece duplicada? Es el comportamiento esperado: la cita original queda marcada como "Reagendada" y se crea una nueva (ver sección Agenda).
+• ¿Por qué los reportes se ven raros después de renombrar un método de pago? El historial no se actualiza retroactivamente (ver sección Pagos).</value></data>
   <data name="LanguageLabel" xml:space="preserve"><value>Idioma</value></data>
   <data name="ThemeLabel" xml:space="preserve"><value>Tema</value></data>
   <data name="CurrencyLabel" xml:space="preserve"><value>Moneda</value></data>

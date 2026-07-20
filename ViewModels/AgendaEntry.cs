@@ -34,7 +34,7 @@ public sealed class AgendaEntry
         EndTime = block.EndTime,
         Title = ScheduleBlockTypeDisplay.ToLabel(block.Type),
         Subtitle = block.Reason,
-        AccentColor = Colors.SlateGray,
+        AccentColor = Color.FromArgb("#475569"),
         Block = block
     };
 }

@@ -28,7 +28,7 @@ public partial class ClientListPage : ContentPage
         ClientsCollectionView.SelectedItem = null;
 
         if (e.CurrentSelection.FirstOrDefault() is ClientDto client)
-            await Shell.Current.GoToAsync("clients/detail", new Dictionary<string, object> { ["ClientId"] = client.Id });
+            await Shell.Current.GoToAsync("client-detail", new Dictionary<string, object> { ["ClientId"] = client.Id });
     }
 
     private void OnFavoriteTapped(object? sender, TappedEventArgs e)
@@ -38,5 +38,5 @@ public partial class ClientListPage : ContentPage
     }
 
     private async void OnAddClientClicked(object? sender, EventArgs e) =>
-        await Shell.Current.GoToAsync("clients/form");
+        await Shell.Current.GoToAsync("client-form");
 }

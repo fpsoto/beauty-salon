@@ -14,8 +14,16 @@ public partial class ClientDetailViewModel : ViewModelBase
         _clientAppService = clientAppService;
     }
 
+    [NotifyPropertyChangedFor(nameof(Initials))]
     [ObservableProperty]
     private ClientDetailDto? detail;
+
+    public string Initials => Detail is null
+        ? "?"
+        : $"{FirstLetter(Detail.Client.Name)}{FirstLetter(Detail.Client.LastName)}";
+
+    private static string FirstLetter(string value) =>
+        string.IsNullOrEmpty(value) ? string.Empty : value[..1].ToUpperInvariant();
 
     public Task LoadAsync(Guid clientId) => SafeExecuteAsync(async () =>
     {

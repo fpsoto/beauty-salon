@@ -1,3 +1,4 @@
+using Beauty_Salon.Services;
 using BeautySalon.Application.Features.Schedule;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -8,11 +9,16 @@ namespace Beauty_Salon.ViewModels;
 public partial class RescheduleViewModel : ViewModelBase
 {
     private readonly IAppointmentAppService _appointmentAppService;
+    private readonly IAppointmentNotificationScheduler _notificationScheduler;
     private Guid _appointmentId;
 
-    public RescheduleViewModel(IAppointmentAppService appointmentAppService, ILogger<RescheduleViewModel> logger) : base(logger)
+    public RescheduleViewModel(
+        IAppointmentAppService appointmentAppService,
+        IAppointmentNotificationScheduler notificationScheduler,
+        ILogger<RescheduleViewModel> logger) : base(logger)
     {
         _appointmentAppService = appointmentAppService;
+        _notificationScheduler = notificationScheduler;
         NewDate = DateTime.Today;
         NewTime = new TimeSpan(9, 0, 0);
     }
@@ -38,6 +44,10 @@ public partial class RescheduleViewModel : ViewModelBase
             SetError(result.Error);
             return;
         }
+
+        await _notificationScheduler.CancelRemindersAsync(_appointmentId);
+        await _notificationScheduler.ScheduleRemindersAsync(
+            result.Value.Id, result.Value.ClientFullName, result.Value.Date, result.Value.StartTime);
 
         Rescheduled = true;
     });

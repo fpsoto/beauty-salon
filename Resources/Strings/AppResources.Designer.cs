@@ -130,11 +130,38 @@ namespace Beauty_Salon.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} citas.
+        /// </summary>
+        internal static string AppointmentCountFormat {
+            get {
+                return ResourceManager.GetString("AppointmentCountFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Historial de citas.
         /// </summary>
         internal static string AppointmentHistory {
             get {
                 return ResourceManager.GetString("AppointmentHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tienes una cita con {0} el {1:dd/MM/yyyy} a las {1:HH:mm}..
+        /// </summary>
+        internal static string AppointmentReminderMessageFormat {
+            get {
+                return ResourceManager.GetString("AppointmentReminderMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recordatorio de cita.
+        /// </summary>
+        internal static string AppointmentReminderTitle {
+            get {
+                return ResourceManager.GetString("AppointmentReminderTitle", resourceCulture);
             }
         }
         
@@ -153,6 +180,33 @@ namespace Beauty_Salon.Resources.Strings {
         internal static string AveragePerAppointment {
             get {
                 return ResourceManager.GetString("AveragePerAppointment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se pudo generar el respaldo..
+        /// </summary>
+        internal static string BackupErrorMessage {
+            get {
+                return ResourceManager.GetString("BackupErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compartir respaldo.
+        /// </summary>
+        internal static string BackupShareTitle {
+            get {
+                return ResourceManager.GetString("BackupShareTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Respaldar datos.
+        /// </summary>
+        internal static string BackupTitle {
+            get {
+                return ResourceManager.GetString("BackupTitle", resourceCulture);
             }
         }
         
@@ -490,6 +544,155 @@ namespace Beauty_Salon.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to • Las acciones disponibles al tocar una cita dependen de su estado actual (por ejemplo, &quot;Cancelar&quot; desaparece después de Finalizar).
+        ///• Reagendar crea una cita nueva y marca la original como &quot;Reagendada&quot; — no la edita en el mismo lugar. Esto afecta los conteos de Reportes.
+        ///• El botón de recordatorio de WhatsApp solo aparece si el cliente tiene un teléfono registrado..
+        /// </summary>
+        internal static string HelpSectionAgendaBody {
+            get {
+                return ResourceManager.GetString("HelpSectionAgendaBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agenda.
+        /// </summary>
+        internal static string HelpSectionAgendaTitle {
+            get {
+                return ResourceManager.GetString("HelpSectionAgendaTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to • El color de una categoría es solo decorativo, no afecta ninguna regla de negocio.
+        ///• Si borras una categoría o servicio que ya tiene citas asociadas, el historial de esas citas no cambia (queda una copia guardada del precio y nombre al momento de la cita)..
+        /// </summary>
+        internal static string HelpSectionCatalogBody {
+            get {
+                return ResourceManager.GetString("HelpSectionCatalogBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Catálogo.
+        /// </summary>
+        internal static string HelpSectionCatalogTitle {
+            get {
+                return ResourceManager.GetString("HelpSectionCatalogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to • El contador de visitas y el total gastado se calculan sobre las citas del cliente, no sobre las citas canceladas.
+        ///• El ícono de favorito (⭐) es solo una marca visual para encontrar clientes más rápido.
+        ///• El RUT se valida con el dígito verificador chileno real — un formato inválido se rechaza al guardar..
+        /// </summary>
+        internal static string HelpSectionClientsBody {
+            get {
+                return ResourceManager.GetString("HelpSectionClientsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clientes.
+        /// </summary>
+        internal static string HelpSectionClientsTitle {
+            get {
+                return ResourceManager.GetString("HelpSectionClientsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to • ¿Por qué no llegó el recordatorio de una cita? Puede ser que el cliente no tenga teléfono, que la regla esté desactivada en Ajustes, o que la hora del recordatorio ya haya pasado.
+        ///• ¿Por qué no puedo crear un cliente con este RUT? El dígito verificador no es válido — revisa que el RUT esté bien escrito.
+        ///• ¿Por qué reagendar creó una cita que parece duplicada? Es el comportamiento esperado: la cita original queda marcada como &quot;Reagendada&quot; y se crea una nueva (ver sección Agenda).
+        ///• ¿Por qué los reportes se [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string HelpSectionFaqBody {
+            get {
+                return ResourceManager.GetString("HelpSectionFaqBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preguntas frecuentes.
+        /// </summary>
+        internal static string HelpSectionFaqTitle {
+            get {
+                return ResourceManager.GetString("HelpSectionFaqTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to • Renombrar un método de pago no actualiza el historial ya registrado — los reportes por método de pago pueden quedar divididos entre el nombre viejo y el nuevo.
+        ///• Puedes desactivar un método de pago sin borrarlo, para dejar de usarlo sin perder el historial..
+        /// </summary>
+        internal static string HelpSectionPaymentsBody {
+            get {
+                return ResourceManager.GetString("HelpSectionPaymentsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pagos.
+        /// </summary>
+        internal static string HelpSectionPaymentsTitle {
+            get {
+                return ResourceManager.GetString("HelpSectionPaymentsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to • &quot;Cliente nuevo&quot; e &quot;inactivo&quot; se calculan sobre un umbral de 60 días sin visitas.
+        ///• El rango de fechas filtra por la fecha de la cita, no por la fecha en que se creó.
+        ///• El gráfico de horas más ocupadas cuenta todas las citas del rango seleccionado, no solo las finalizadas..
+        /// </summary>
+        internal static string HelpSectionReportsBody {
+            get {
+                return ResourceManager.GetString("HelpSectionReportsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reportes.
+        /// </summary>
+        internal static string HelpSectionReportsTitle {
+            get {
+                return ResourceManager.GetString("HelpSectionReportsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to • Cambiar el idioma requiere reiniciar la app para que se aplique en todas las pantallas.
+        ///• Define tu horario laboral antes de agendar citas fuera del rango por defecto (9:00 a 18:00) — de lo contrario la cita será rechazada.
+        ///• Las reglas de recordatorio (15 min, 30 min, 1 hora, 1 día antes) son independientes entre sí — pueden dispararse varias para la misma cita.
+        ///• El botón &quot;Guardar&quot; aplica todos los cambios de esta pantalla a la vez — si sales sin guardar, se pierden..
+        /// </summary>
+        internal static string HelpSectionSettingsBody {
+            get {
+                return ResourceManager.GetString("HelpSectionSettingsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ajustes.
+        /// </summary>
+        internal static string HelpSectionSettingsTitle {
+            get {
+                return ResourceManager.GetString("HelpSectionSettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ayuda.
+        /// </summary>
+        internal static string HelpTitle {
+            get {
+                return ResourceManager.GetString("HelpTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inactivo.
         /// </summary>
         internal static string Inactive {
@@ -504,6 +707,15 @@ namespace Beauty_Salon.Resources.Strings {
         internal static string InactiveClients {
             get {
                 return ResourceManager.GetString("InactiveClients", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El archivo seleccionado no es un respaldo válido de Beauty Salon..
+        /// </summary>
+        internal static string InvalidBackupMessage {
+            get {
+                return ResourceManager.GetString("InvalidBackupMessage", resourceCulture);
             }
         }
         
@@ -558,6 +770,24 @@ namespace Beauty_Salon.Resources.Strings {
         internal static string LoginSubtitle {
             get {
                 return ResourceManager.GetString("LoginSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cerrar sesión.
+        /// </summary>
+        internal static string LogoutButton {
+            get {
+                return ResourceManager.GetString("LogoutButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Seguro que quieres cerrar sesión?.
+        /// </summary>
+        internal static string LogoutConfirmMessage {
+            get {
+                return ResourceManager.GetString("LogoutConfirmMessage", resourceCulture);
             }
         }
         
@@ -724,6 +954,51 @@ namespace Beauty_Salon.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restaurar.
+        /// </summary>
+        internal static string RestoreConfirmButton {
+            get {
+                return ResourceManager.GetString("RestoreConfirmButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esto reemplazará todos los datos actuales de la app con los del archivo seleccionado. Esta acción no se puede deshacer. ¿Continuar?.
+        /// </summary>
+        internal static string RestoreConfirmMessage {
+            get {
+                return ResourceManager.GetString("RestoreConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecciona un archivo de respaldo.
+        /// </summary>
+        internal static string RestorePickerTitle {
+            get {
+                return ResourceManager.GetString("RestorePickerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datos restaurados. Cierra y vuelve a abrir la app para verlos..
+        /// </summary>
+        internal static string RestoreSuccessMessage {
+            get {
+                return ResourceManager.GetString("RestoreSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restaurar datos.
+        /// </summary>
+        internal static string RestoreTitle {
+            get {
+                return ResourceManager.GetString("RestoreTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingresos.
         /// </summary>
         internal static string Revenue {
@@ -747,6 +1022,15 @@ namespace Beauty_Salon.Resources.Strings {
         internal static string Rut {
             get {
                 return ResourceManager.GetString("Rut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUT: {0}.
+        /// </summary>
+        internal static string RutFormat {
+            get {
+                return ResourceManager.GetString("RutFormat", resourceCulture);
             }
         }
         
@@ -787,11 +1071,56 @@ namespace Beauty_Salon.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecciona una categoría..
+        /// </summary>
+        internal static string SelectCategoryRequired {
+            get {
+                return ResourceManager.GetString("SelectCategoryRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecciona un cliente..
+        /// </summary>
+        internal static string SelectClientRequired {
+            get {
+                return ResourceManager.GetString("SelectClientRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seleccionado: RUT {0}.
         /// </summary>
         internal static string SelectedClientFormat {
             get {
                 return ResourceManager.GetString("SelectedClientFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecciona un método de pago..
+        /// </summary>
+        internal static string SelectPaymentMethodRequired {
+            get {
+                return ResourceManager.GetString("SelectPaymentMethodRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecciona al menos un servicio..
+        /// </summary>
+        internal static string SelectServiceRequired {
+            get {
+                return ResourceManager.GetString("SelectServiceRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enviar recordatorio WhatsApp.
+        /// </summary>
+        internal static string SendReminderAction {
+            get {
+                return ResourceManager.GetString("SendReminderAction", resourceCulture);
             }
         }
         
@@ -1003,11 +1332,29 @@ namespace Beauty_Salon.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ocurrió un error inesperado. Intente nuevamente..
+        /// </summary>
+        internal static string UnexpectedErrorMessage {
+            get {
+                return ResourceManager.GetString("UnexpectedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usuario.
         /// </summary>
         internal static string UsernamePlaceholder {
             get {
                 return ResourceManager.GetString("UsernamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} visitas.
+        /// </summary>
+        internal static string VisitCountFormat {
+            get {
+                return ResourceManager.GetString("VisitCountFormat", resourceCulture);
             }
         }
         
@@ -1035,6 +1382,15 @@ namespace Beauty_Salon.Resources.Strings {
         internal static string WhatsAppLabel {
             get {
                 return ResourceManager.GetString("WhatsAppLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hola {0}, te recordamos tu cita el {1:dd/MM/yyyy} a las {2:HH:mm}. ¡Te esperamos!.
+        /// </summary>
+        internal static string WhatsAppReminderMessageFormat {
+            get {
+                return ResourceManager.GetString("WhatsAppReminderMessageFormat", resourceCulture);
             }
         }
         

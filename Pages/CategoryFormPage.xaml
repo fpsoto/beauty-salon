@@ -8,19 +8,23 @@
     x:DataType="viewModels:CategoryFormViewModel"
     Title="{Binding Title}">
 
-    <VerticalStackLayout Padding="16" Spacing="10">
-        <Label Text="{x:Static strings:AppResources.Name}" FontAttributes="Bold" />
-        <Entry Text="{Binding Name}" />
+    <VerticalStackLayout Padding="{StaticResource Space16}" Spacing="{StaticResource Space12}">
+        <Label Text="{x:Static strings:AppResources.Name}" Style="{StaticResource FieldCaption}" />
+        <Border Style="{StaticResource InputContainer}">
+            <Entry Text="{Binding Name}" />
+        </Border>
 
-        <Label Text="{x:Static strings:AppResources.CategoryColorLabel}" FontAttributes="Bold" />
-        <Entry Text="{Binding ColorHex}" Placeholder="#512BD4" />
+        <Label Text="{x:Static strings:AppResources.CategoryColorLabel}" Style="{StaticResource FieldCaption}" />
+        <Border Style="{StaticResource InputContainer}">
+            <Entry Text="{Binding ColorHex}" Placeholder="#512BD4" />
+        </Border>
 
-        <HorizontalStackLayout Spacing="8">
+        <HorizontalStackLayout Spacing="{StaticResource Space8}">
             <CheckBox IsChecked="{Binding IsActive}" />
             <Label Text="{x:Static strings:AppResources.ActiveFeminine}" VerticalOptions="Center" />
         </HorizontalStackLayout>
 
-        <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+        <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
         <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
         <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />

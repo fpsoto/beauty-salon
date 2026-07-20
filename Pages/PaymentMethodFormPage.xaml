@@ -9,18 +9,22 @@
     Title="{Binding Title}">
 
     <VerticalStackLayout Padding="16" Spacing="10">
-        <Label Text="{x:Static strings:AppResources.Name}" FontAttributes="Bold" />
-        <Entry Text="{Binding Name}" />
+        <Label Text="{x:Static strings:AppResources.Name}" Style="{StaticResource FieldCaption}" />
+        <Border Style="{StaticResource InputContainer}">
+            <Entry Text="{Binding Name}" VerticalOptions="Center" />
+        </Border>
 
-        <Label Text="{x:Static strings:AppResources.SortOrderLabel}" FontAttributes="Bold" />
-        <Entry Text="{Binding SortOrder}" Keyboard="Numeric" />
+        <Label Text="{x:Static strings:AppResources.SortOrderLabel}" Style="{StaticResource FieldCaption}" />
+        <Border Style="{StaticResource InputContainer}">
+            <Entry Text="{Binding SortOrder}" Keyboard="Numeric" VerticalOptions="Center" />
+        </Border>
 
         <HorizontalStackLayout Spacing="8">
             <CheckBox IsChecked="{Binding IsActive}" />
             <Label Text="{x:Static strings:AppResources.Active}" VerticalOptions="Center" />
         </HorizontalStackLayout>
 
-        <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+        <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
         <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
         <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />

@@ -17,10 +17,12 @@
         <CollectionView x:Name="PaymentMethodsCollectionView" ItemsSource="{Binding PaymentMethods}" SelectionMode="Single" SelectionChanged="OnMethodSelected">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="payments:PaymentMethodDto">
-                    <Grid ColumnDefinitions="*,Auto" Padding="16,10">
-                        <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center" />
-                        <Label Grid.Column="1" Text="{x:Static strings:AppResources.Inactive}" TextColor="{StaticResource Gray500}" FontSize="12" VerticalOptions="Center" IsVisible="{Binding IsActive, Converter={StaticResource InvertedBoolConverter}}" />
-                    </Grid>
+                    <Border Style="{StaticResource Card}" Margin="16,4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="{x:Static strings:AppResources.Inactive}" Style="{StaticResource Caption}" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource TextSecondaryDark}}" VerticalOptions="Center" IsVisible="{Binding IsActive, Converter={StaticResource InvertedBoolConverter}}" />
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
