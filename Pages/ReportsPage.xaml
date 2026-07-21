@@ -77,7 +77,7 @@
                 </Border>
                 <Border Grid.Column="2" Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="2">
-                        <Label Text="{Binding Summary.NoShowCount}" Style="{StaticResource H3}" HorizontalTextAlignment="Center" TextColor="{StaticResource StatusNoShow}" />
+                        <Label Text="{Binding Summary.NoShowCount}" Style="{StaticResource H3}" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light={StaticResource StatusNoShow}, Dark={StaticResource StatusNoShowDark}}" />
                         <Label Text="{x:Static strings:AppResources.NoShowAction}" Style="{StaticResource Caption}" HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                 </Border>

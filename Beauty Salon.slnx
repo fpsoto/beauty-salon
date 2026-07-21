@@ -4,4 +4,5 @@
   <Project Path="BeautySalon.Application/BeautySalon.Application.csproj" />
   <Project Path="BeautySalon.Persistence/BeautySalon.Persistence.csproj" />
   <Project Path="BeautySalon.Infrastructure/BeautySalon.Infrastructure.csproj" />
+  <Project Path="BeautySalon.Application.Tests/BeautySalon.Application.Tests.csproj" />
 </Solution>

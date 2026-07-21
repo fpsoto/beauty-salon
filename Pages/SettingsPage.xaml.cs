@@ -11,18 +11,21 @@ public partial class SettingsPage : ContentPage
     private readonly SettingsViewModel _viewModel;
     private readonly IDataBackupService _dataBackupService;
     private readonly ISessionService _sessionService;
+    private readonly IPersistedSessionStore _persistedSessionStore;
     private readonly IServiceProvider _serviceProvider;
 
     public SettingsPage(
         SettingsViewModel viewModel,
         IDataBackupService dataBackupService,
         ISessionService sessionService,
+        IPersistedSessionStore persistedSessionStore,
         IServiceProvider serviceProvider)
     {
         InitializeComponent();
         _viewModel = viewModel;
         _dataBackupService = dataBackupService;
         _sessionService = sessionService;
+        _persistedSessionStore = persistedSessionStore;
         _serviceProvider = serviceProvider;
         BindingContext = viewModel;
     }
@@ -90,6 +93,7 @@ public partial class SettingsPage : ContentPage
             return;
 
         _sessionService.SignOut();
+        _persistedSessionStore.Clear();
         var loginPage = _serviceProvider.GetRequiredService<LoginPage>();
         Application.Current!.Windows[0].Page = loginPage;
     }

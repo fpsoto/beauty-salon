@@ -31,16 +31,65 @@
     <Color x:Key="Placeholder">#9CA3AF</Color>
     <Color x:Key="PlaceholderDark">#6B7280</Color>
 
-    <!-- Appointment status accents (kept constant across themes - already vivid enough to
-         read on both light and dark surfaces; only neutrals/surfaces invert for dark mode) -->
-    <Color x:Key="StatusBooked">#3B82F6</Color>
-    <Color x:Key="StatusConfirmed">#10B981</Color>
-    <Color x:Key="StatusInProgress">#F59E0B</Color>
-    <Color x:Key="StatusCompleted">#64748B</Color>
-    <Color x:Key="StatusCancelled">#EF4444</Color>
-    <Color x:Key="StatusNoShow">#991B1B</Color>
-    <Color x:Key="StatusRescheduled">#8B5CF6</Color>
-    <Color x:Key="StatusBlock">#475569</Color>
+    <!-- Appointment status colors: accent (agenda card's left bar), container (badge
+         background), and on-container (badge text) - each with its own light/dark pair
+         instead of one flat value shared across themes. AppointmentStatusDisplay mirrors
+         these as literal hex (see that class for why) - update both together. -->
+    <Color x:Key="StatusBooked">#2563EB</Color>
+    <Color x:Key="StatusBookedDark">#60A5FA</Color>
+    <Color x:Key="StatusBookedContainer">#DBEAFE</Color>
+    <Color x:Key="StatusBookedContainerDark">#172554</Color>
+    <Color x:Key="StatusBookedOnContainer">#1E3A8A</Color>
+    <Color x:Key="StatusBookedOnContainerDark">#BFDBFE</Color>
+
+    <Color x:Key="StatusConfirmed">#047857</Color>
+    <Color x:Key="StatusConfirmedDark">#34D399</Color>
+    <Color x:Key="StatusConfirmedContainer">#D1FAE5</Color>
+    <Color x:Key="StatusConfirmedContainerDark">#064E3B</Color>
+    <Color x:Key="StatusConfirmedOnContainer">#065F46</Color>
+    <Color x:Key="StatusConfirmedOnContainerDark">#A7F3D0</Color>
+
+    <Color x:Key="StatusInProgress">#B45309</Color>
+    <Color x:Key="StatusInProgressDark">#FBBF24</Color>
+    <Color x:Key="StatusInProgressContainer">#FEF3C7</Color>
+    <Color x:Key="StatusInProgressContainerDark">#78350F</Color>
+    <Color x:Key="StatusInProgressOnContainer">#92400E</Color>
+    <Color x:Key="StatusInProgressOnContainerDark">#FDE68A</Color>
+
+    <Color x:Key="StatusCompleted">#475569</Color>
+    <Color x:Key="StatusCompletedDark">#94A3B8</Color>
+    <Color x:Key="StatusCompletedContainer">#E2E8F0</Color>
+    <Color x:Key="StatusCompletedContainerDark">#334155</Color>
+    <Color x:Key="StatusCompletedOnContainer">#334155</Color>
+    <Color x:Key="StatusCompletedOnContainerDark">#E2E8F0</Color>
+
+    <Color x:Key="StatusCancelled">#DC2626</Color>
+    <Color x:Key="StatusCancelledDark">#F87171</Color>
+    <Color x:Key="StatusCancelledContainer">#FEE2E2</Color>
+    <Color x:Key="StatusCancelledContainerDark">#7F1D1D</Color>
+    <Color x:Key="StatusCancelledOnContainer">#991B1B</Color>
+    <Color x:Key="StatusCancelledOnContainerDark">#FECACA</Color>
+
+    <Color x:Key="StatusNoShow">#7F1D1D</Color>
+    <Color x:Key="StatusNoShowDark">#FDA4AF</Color>
+    <Color x:Key="StatusNoShowContainer">#FECACA</Color>
+    <Color x:Key="StatusNoShowContainerDark">#881337</Color>
+    <Color x:Key="StatusNoShowOnContainer">#7F1D1D</Color>
+    <Color x:Key="StatusNoShowOnContainerDark">#FECDD3</Color>
+
+    <Color x:Key="StatusRescheduled">#7C3AED</Color>
+    <Color x:Key="StatusRescheduledDark">#C4B5FD</Color>
+    <Color x:Key="StatusRescheduledContainer">#EDE9FE</Color>
+    <Color x:Key="StatusRescheduledContainerDark">#4C1D95</Color>
+    <Color x:Key="StatusRescheduledOnContainer">#5B21B6</Color>
+    <Color x:Key="StatusRescheduledOnContainerDark">#EDE9FE</Color>
+
+    <Color x:Key="StatusBlock">#334155</Color>
+    <Color x:Key="StatusBlockDark">#94A3B8</Color>
+    <Color x:Key="StatusBlockContainer">#E2E8F0</Color>
+    <Color x:Key="StatusBlockContainerDark">#334155</Color>
+    <Color x:Key="StatusBlockOnContainer">#1E293B</Color>
+    <Color x:Key="StatusBlockOnContainerDark">#E2E8F0</Color>
 
     <!-- Semantic -->
     <Color x:Key="Success">#22C55E</Color>

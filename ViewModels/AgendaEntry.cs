@@ -11,6 +11,8 @@ public sealed class AgendaEntry
     public required string Title { get; init; }
     public string? Subtitle { get; init; }
     public required Color AccentColor { get; init; }
+    public Color BadgeBackgroundColor { get; init; } = Colors.Transparent;
+    public Color BadgeTextColor { get; init; } = Colors.Transparent;
     public AppointmentDto? Appointment { get; init; }
     public ScheduleBlockDto? Block { get; init; }
 
@@ -24,7 +26,9 @@ public sealed class AgendaEntry
         EndTime = appointment.EndTime,
         Title = appointment.ClientFullName,
         Subtitle = string.Join(" + ", appointment.Services.Select(s => s.Name)),
-        AccentColor = AppointmentStatusDisplay.ToColor(appointment.Status),
+        AccentColor = AppointmentStatusDisplay.ToAccentColor(appointment.Status),
+        BadgeBackgroundColor = AppointmentStatusDisplay.ToBadgeBackgroundColor(appointment.Status),
+        BadgeTextColor = AppointmentStatusDisplay.ToBadgeTextColor(appointment.Status),
         Appointment = appointment
     };
 

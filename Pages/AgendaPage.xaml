@@ -58,10 +58,10 @@
                                         IsVisible="{Binding Subtitle, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
                                     <Border
                                         Style="{StaticResource Badge}"
-                                        BackgroundColor="{Binding AccentColor}"
+                                        BackgroundColor="{Binding BadgeBackgroundColor}"
                                         HorizontalOptions="Start"
                                         IsVisible="{Binding IsBlock, Converter={StaticResource InvertedBoolConverter}}">
-                                        <Label Text="{Binding StatusLabel}" TextColor="White" FontSize="11" FontFamily="InterSemibold" VerticalOptions="Center" />
+                                        <Label Text="{Binding StatusLabel}" TextColor="{Binding BadgeTextColor}" FontSize="11" FontFamily="InterSemibold" VerticalOptions="Center" />
                                     </Border>
                                 </VerticalStackLayout>
                             </Grid>

@@ -65,6 +65,7 @@ namespace Beauty_Salon
             builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
             builder.Services.AddSingleton<IAppointmentNotificationScheduler, LocalNotificationScheduler>();
             builder.Services.AddSingleton<IDataBackupService, DataBackupService>();
+            builder.Services.AddSingleton<IPersistedSessionStore, PersistedSessionStore>();
 
             // ViewModels are transient - each page navigation gets its own instance.
             builder.Services.AddTransient<LoginViewModel>();
