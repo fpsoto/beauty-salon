@@ -15,6 +15,8 @@ public sealed class DayAgendaGroup : List<AgendaEntry>
 
     public DateOnly Date { get; }
 
+    public bool IsToday => Date == DateOnly.FromDateTime(DateTime.Today);
+
     public string DayLabel
     {
         get

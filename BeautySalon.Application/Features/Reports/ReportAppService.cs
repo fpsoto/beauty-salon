@@ -24,13 +24,25 @@ public sealed class ReportAppService : IReportAppService
         var appointmentsInRange = await _unitOfWork.Appointments.GetByDateRangeAsync(from, to, professionalId, cancellationToken);
         var completed = appointmentsInRange.Where(a => a.Status == AppointmentStatus.Completed).ToList();
 
-        var totalRevenue = completed.Sum(a => a.ChargedPrice ?? 0m);
-        var averageRevenue = completed.Count > 0 ? totalRevenue / completed.Count : 0m;
+        var productSalesInRange = await _unitOfWork.ProductSales.GetByDateRangeAsync(from, to, professionalId, cancellationToken);
+        var productRevenue = productSalesInRange.Sum(s => s.Quantity * s.SnapshotUnitPrice);
 
-        var revenueByPaymentMethod = completed
+        var totalRevenue = completed.Sum(a => a.ChargedPrice ?? 0m) + productRevenue;
+        var averageRevenue = completed.Count > 0 ? completed.Sum(a => a.ChargedPrice ?? 0m) / completed.Count : 0m;
+
+        var appointmentRevenueByMethod = completed
             .Where(a => a.PaymentMethod is not null)
             .GroupBy(a => a.PaymentMethod!.Name)
-            .Select(g => new RevenueByPaymentMethodDto(g.Key, g.Sum(a => a.ChargedPrice ?? 0m)))
+            .ToDictionary(g => g.Key, g => g.Sum(a => a.ChargedPrice ?? 0m));
+
+        var productRevenueByMethod = productSalesInRange
+            .GroupBy(s => s.PaymentMethod!.Name)
+            .ToDictionary(g => g.Key, g => g.Sum(s => s.Quantity * s.SnapshotUnitPrice));
+
+        var revenueByPaymentMethod = appointmentRevenueByMethod.Keys
+            .Union(productRevenueByMethod.Keys)
+            .Select(name => new RevenueByPaymentMethodDto(
+                name, appointmentRevenueByMethod.GetValueOrDefault(name) + productRevenueByMethod.GetValueOrDefault(name)))
             .OrderByDescending(r => r.Amount)
             .ToList();
 
@@ -46,9 +58,8 @@ public sealed class ReportAppService : IReportAppService
             return createdDate >= from && createdDate <= to;
         });
 
-        var allAppointments = await _unitOfWork.Appointments.GetAllAsync(cancellationToken);
-        var lastVisitByClient = allAppointments
-            .Where(a => a.Status == AppointmentStatus.Completed)
+        var completedAppointments = await _unitOfWork.Appointments.GetCompletedAsync(cancellationToken);
+        var lastVisitByClient = completedAppointments
             .GroupBy(a => a.ClientId)
             .ToDictionary(g => g.Key, g => g.Max(a => a.Date));
 
@@ -56,12 +67,20 @@ public sealed class ReportAppService : IReportAppService
         var inactiveClientsCount = allClients.Count(c =>
             c.IsActive && (!lastVisitByClient.TryGetValue(c.Id, out var lastVisit) || lastVisit < inactivityCutoff));
 
+        // Product revenue folds into an existing appointment client's TotalSpent below.
+        // A client who *only* ever bought products (no appointment) won't surface here -
+        // an accepted gap for this pass, since the ranking source is appointment history.
+        var productRevenueByClient = productSalesInRange
+            .Where(s => s.ClientId is not null)
+            .GroupBy(s => s.ClientId!.Value)
+            .ToDictionary(g => g.Key, g => g.Sum(s => s.Quantity * s.SnapshotUnitPrice));
+
         var topClients = completed
             .GroupBy(a => a.ClientId)
             .Select(g => new
             {
                 ClientId = g.Key,
-                TotalSpent = g.Sum(a => a.ChargedPrice ?? 0m),
+                TotalSpent = g.Sum(a => a.ChargedPrice ?? 0m) + productRevenueByClient.GetValueOrDefault(g.Key),
                 VisitCount = g.Count()
             })
             .OrderByDescending(x => x.TotalSpent)
@@ -95,6 +114,13 @@ public sealed class ReportAppService : IReportAppService
             .Take(TopListSize)
             .ToList();
 
+        var topProducts = productSalesInRange
+            .GroupBy(s => s.ProductId)
+            .Select(g => new TopProductDto(g.Key, g.First().SnapshotProductName, g.Sum(s => s.Quantity), g.Sum(s => s.Quantity * s.SnapshotUnitPrice)))
+            .OrderByDescending(p => p.QuantitySold)
+            .Take(TopListSize)
+            .ToList();
+
         var busiestHours = appointmentsInRange
             .Where(a => a.Status != AppointmentStatus.Cancelled)
             .GroupBy(a => a.StartTime.Hour)
@@ -106,6 +132,7 @@ public sealed class ReportAppService : IReportAppService
             from,
             to,
             totalRevenue,
+            productRevenue,
             completed.Count,
             averageRevenue,
             newClientsCount,
@@ -116,6 +143,7 @@ public sealed class ReportAppService : IReportAppService
             topClients,
             topServices,
             topCategories,
+            topProducts,
             busiestHours);
 
         return Result.Success(summary);

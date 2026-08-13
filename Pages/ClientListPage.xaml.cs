@@ -39,4 +39,7 @@ public partial class ClientListPage : ContentPage
 
     private async void OnAddClientClicked(object? sender, EventArgs e) =>
         await Shell.Current.GoToAsync("client-form");
+
+    private async void OnFiadoClicked(object? sender, EventArgs e) =>
+        await Shell.Current.GoToAsync("client-debts");
 }

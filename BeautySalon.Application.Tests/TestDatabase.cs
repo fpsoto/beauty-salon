@@ -41,6 +41,8 @@ public sealed class TestDatabase : IDisposable
             new PaymentMethodRepository(Context),
             new UserRepository(Context),
             new ProductRepository(Context),
+            new ProductSaleRepository(Context),
+            new ClientDebtRepository(Context),
             new AppSettingsRepository(Context));
     }
 

@@ -24,6 +24,8 @@ public class BeautySalonDbContext : DbContext
     public DbSet<AppSettings> AppSettings => Set<AppSettings>();
     public DbSet<NotificationRule> NotificationRules => Set<NotificationRule>();
     public DbSet<Product> Products => Set<Product>();
+    public DbSet<ProductSale> ProductSales => Set<ProductSale>();
+    public DbSet<ClientDebtEntry> ClientDebtEntries => Set<ClientDebtEntry>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

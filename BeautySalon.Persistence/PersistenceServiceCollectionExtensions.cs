@@ -28,6 +28,8 @@ public static class PersistenceServiceCollectionExtensions
         services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IProductSaleRepository, ProductSaleRepository>();
+        services.AddScoped<IClientDebtRepository, ClientDebtRepository>();
         services.AddScoped<IAppSettingsRepository, AppSettingsRepository>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.ProductSaleFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:products="clr-namespace:BeautySalon.Application.Features.Products;assembly=BeautySalon.Application"
+    xmlns:payments="clr-namespace:BeautySalon.Application.Features.Payments;assembly=BeautySalon.Application"
+    xmlns:clients="clr-namespace:BeautySalon.Application.Features.Clients;assembly=BeautySalon.Application"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
+    x:DataType="viewModels:ProductSaleFormViewModel"
+    Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{StaticResource Space16}" Spacing="{StaticResource Space12}">
+
+            <Label Text="{x:Static strings:AppResources.ProductLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Picker ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" VerticalOptions="Center">
+                    <Picker.ItemDisplayBinding>
+                        <Binding Path="Name" x:DataType="products:ProductDto" />
+                    </Picker.ItemDisplayBinding>
+                </Picker>
+            </Border>
+
+            <Label Text="{x:Static strings:AppResources.SaleQuantityLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding Quantity}" Keyboard="Numeric" VerticalOptions="Center" />
+            </Border>
+
+            <Label Text="{x:Static strings:AppResources.SaleUnitPriceLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding UnitPrice}" Keyboard="Numeric" Placeholder="0" VerticalOptions="Center" />
+            </Border>
+
+            <Label Text="{Binding Total, StringFormat='${0}'}" Style="{StaticResource H3}" />
+
+            <BoxView HeightRequest="1" />
+
+            <Label Text="{x:Static strings:AppResources.ClientOptionalLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Placeholder="{x:Static strings:AppResources.SearchClientPlaceholder}" Text="{Binding ClientSearchTerm}" TextChanged="OnClientSearchTextChanged" VerticalOptions="Center" />
+            </Border>
+
+            <Button
+                Text="{x:Static strings:AppResources.ClearSelection}"
+                Command="{Binding ClearSelectedClientCommand}"
+                IsVisible="{Binding SelectedClient, Converter={StaticResource IsNotNullConverter}}"
+                Style="{StaticResource SecondaryButton}"
+                HorizontalOptions="Start" />
+
+            <CollectionView
+                ItemsSource="{Binding ClientResults}"
+                SelectionMode="Single"
+                SelectionChanged="OnClientSelected"
+                HeightRequest="150"
+                IsVisible="{Binding ClientResults.Count, Converter={StaticResource CountToBoolConverter}}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="clients:ClientDto">
+                        <Grid Padding="{StaticResource Space8}">
+                            <Label>
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} {1} · {2}">
+                                        <Binding Path="Name" />
+                                        <Binding Path="LastName" />
+                                        <Binding Path="Phone" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <BoxView HeightRequest="1" />
+
+            <Label Text="{x:Static strings:AppResources.PaymentMethodLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Picker ItemsSource="{Binding PaymentMethods}" SelectedItem="{Binding SelectedPaymentMethod}" VerticalOptions="Center">
+                    <Picker.ItemDisplayBinding>
+                        <Binding Path="Name" x:DataType="payments:PaymentMethodDto" />
+                    </Picker.ItemDisplayBinding>
+                </Picker>
+            </Border>
+
+            <Label Text="{x:Static strings:AppResources.SaleDateLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <DatePicker Date="{Binding SaleDate}" VerticalOptions="Center" />
+            </Border>
+
+            <Border
+                Padding="{StaticResource Space12}"
+                StrokeShape="{StaticResource RadiusInputShape}"
+                Stroke="Transparent"
+                BackgroundColor="{AppThemeBinding Light={StaticResource StatusCancelledContainer}, Dark={StaticResource StatusCancelledContainerDark}}"
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                <Label
+                    Text="{Binding ErrorMessage}"
+                    Style="{StaticResource BodySmall}"
+                    TextColor="{AppThemeBinding Light={StaticResource StatusCancelledOnContainer}, Dark={StaticResource StatusCancelledOnContainerDark}}"
+                    HorizontalTextAlignment="Center" />
+            </Border>
+
+            <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

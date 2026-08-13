@@ -19,6 +19,8 @@ public class UnitOfWork : IUnitOfWork
         IPaymentMethodRepository paymentMethods,
         IUserRepository users,
         IProductRepository products,
+        IProductSaleRepository productSales,
+        IClientDebtRepository clientDebts,
         IAppSettingsRepository appSettings)
     {
         _context = context;
@@ -31,6 +33,8 @@ public class UnitOfWork : IUnitOfWork
         PaymentMethods = paymentMethods;
         Users = users;
         Products = products;
+        ProductSales = productSales;
+        ClientDebts = clientDebts;
         AppSettings = appSettings;
     }
 
@@ -43,6 +47,8 @@ public class UnitOfWork : IUnitOfWork
     public IPaymentMethodRepository PaymentMethods { get; }
     public IUserRepository Users { get; }
     public IProductRepository Products { get; }
+    public IProductSaleRepository ProductSales { get; }
+    public IClientDebtRepository ClientDebts { get; }
     public IAppSettingsRepository AppSettings { get; }
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

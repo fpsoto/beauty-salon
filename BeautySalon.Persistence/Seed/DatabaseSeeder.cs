@@ -75,43 +75,75 @@ public class DatabaseSeeder
         }
     }
 
+    // Placeholder price for every seeded service - the real catalog (given by the user) has no
+    // pricing yet, so every service starts at this flat value and gets edited later from Catalog.
+    private const decimal PlaceholderPrice = 15_000m;
+
+    // Default duration for services with no explicit timing in the source catalog; the three
+    // "Masaje Mixto" services DO carry an explicit duration in their own name (40/60/80 min).
+    private const int DefaultDurationMinutes = 60;
+
     private async Task SeedCatalogAsync(CancellationToken cancellationToken)
     {
         if (await _context.ServiceCategories.AnyAsync(cancellationToken))
             return;
 
-        var categories = new (string Name, string ColorHex, string[] Services)[]
+        // Real catalog provided by the user. The source list has a two-level structure
+        // (e.g. Estética > Pestañas > Lifting de pestañas) but ServiceCategory/SalonService is
+        // flat, so each subsection name is folded into its services' names ("Pestañas: ...").
+        var categories = new (string Name, string ColorHex, (string Service, int? DurationMinutes)[] Services)[]
         {
-            ("Cabello", "#8E44AD", ["Corte Hombre", "Corte Mujer", "Balayage", "Tintura"]),
-            ("Manicure", "#E91E63", ["Permanente", "Tradicional"]),
-            ("Masajes", "#16A085", ["Relajación", "Descontracturante"])
-        };
-
-        // Starting durations/prices per the brief - editable later, only unblocks day-one usability.
-        var defaults = new Dictionary<string, (int DurationMinutes, decimal Price)>
-        {
-            ["Corte Hombre"] = (30, 8_000m),
-            ["Corte Mujer"] = (45, 12_000m),
-            ["Balayage"] = (240, 60_000m),
-            ["Tintura"] = (120, 35_000m),
-            ["Permanente"] = (60, 15_000m),
-            ["Tradicional"] = (45, 10_000m),
-            ["Relajación"] = (60, 20_000m),
-            ["Descontracturante"] = (60, 22_000m)
+            ("Estética", "#8E44AD",
+            [
+                ("Pestañas: Lifting de pestañas (Protocolo Coreano)", null),
+                ("Pestañas: Lifting de pestañas Tradicional", null),
+                ("Pestañas: Tratamiento Nutritivo para Pestañas", null),
+                ("Cejas: Brow Lamination + Perfilado", null),
+                ("Cejas: Perfilado + Henna", null),
+                ("Cejas: Brow Lamination + Perfilado + Henna", null),
+                ("Faciales: Spa Facial", null),
+                ("Faciales: Limpieza Facial Básica", null),
+                ("Faciales: Limpieza Facial Profunda", null),
+                ("Espalda: Spa y Limpieza de Espalda", null),
+                ("Espalda: Spa y Limpieza Profunda de Espalda", null)
+            ]),
+            ("Depilación con Cera", "#E91E63",
+            [
+                ("Rostro: Cejas", null),
+                ("Rostro: Bozo", null),
+                ("Rostro: Mentón", null),
+                ("Rostro: Rostro Completo", null),
+                ("Cuerpo: Axilas", null),
+                ("Cuerpo: Brazos Completos", null),
+                ("Cuerpo: Media Pierna", null),
+                ("Cuerpo: Piernas Completas", null),
+                ("Zona Íntima: Rebaje Corto (Simple)", null),
+                ("Zona Íntima: Rebaje Completo", null)
+            ]),
+            ("Depilación Semidefinitiva", "#F39C12",
+            [
+                ("Zona Cuerpo", null),
+                ("Zona Íntima", null)
+            ]),
+            ("Masajes", "#16A085",
+            [
+                ("Masaje Mixto: Express", 40),
+                ("Masaje Mixto: Normal", 60),
+                ("Masaje Mixto: Premium", 80)
+            ])
         };
 
         foreach (var (name, colorHex, services) in categories)
         {
             var category = new ServiceCategory { Name = name, ColorHex = colorHex, IsActive = true };
 
-            foreach (var serviceName in services)
+            foreach (var (serviceName, durationMinutes) in services)
             {
-                var (durationMinutes, price) = defaults[serviceName];
                 category.Services.Add(new SalonService
                 {
                     Name = serviceName,
-                    DurationMinutes = durationMinutes,
-                    SuggestedPrice = price,
+                    DurationMinutes = durationMinutes ?? DefaultDurationMinutes,
+                    SuggestedPrice = PlaceholderPrice,
                     IsActive = true
                 });
             }

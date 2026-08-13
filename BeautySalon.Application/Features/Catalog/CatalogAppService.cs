@@ -42,6 +42,10 @@ public sealed class CatalogAppService : ICatalogAppService
         if (!validation.IsValid)
             return Result.Failure<ServiceCategoryDto>(Error.Validation("Category.Invalid", validation.ToString(" ")));
 
+        var existing = await _unitOfWork.ServiceCategories.GetByNameAsync(request.Name, cancellationToken);
+        if (existing is not null)
+            return Result.Failure<ServiceCategoryDto>(Error.Conflict("Category.DuplicateName", "Ya existe una categoría con ese nombre."));
+
         var category = new ServiceCategory { Name = request.Name, ColorHex = request.ColorHex, IsActive = true };
         _unitOfWork.ServiceCategories.Add(category);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -58,6 +62,13 @@ public sealed class CatalogAppService : ICatalogAppService
         var category = await _unitOfWork.ServiceCategories.GetByIdAsync(categoryId, cancellationToken);
         if (category is null)
             return Result.Failure<ServiceCategoryDto>(Error.NotFound("Category.NotFound", "Categoría no encontrada."));
+
+        if (!string.Equals(category.Name, request.Name, StringComparison.OrdinalIgnoreCase))
+        {
+            var existing = await _unitOfWork.ServiceCategories.GetByNameAsync(request.Name, cancellationToken);
+            if (existing is not null && existing.Id != categoryId)
+                return Result.Failure<ServiceCategoryDto>(Error.Conflict("Category.DuplicateName", "Ya existe una categoría con ese nombre."));
+        }
 
         category.Name = request.Name;
         category.ColorHex = request.ColorHex;
@@ -109,6 +120,10 @@ public sealed class CatalogAppService : ICatalogAppService
         if (category is null)
             return Result.Failure<SalonServiceDto>(Error.NotFound("Category.NotFound", "Categoría no encontrada."));
 
+        var existingService = await _unitOfWork.SalonServices.GetByNameInCategoryAsync(request.Name, request.CategoryId, cancellationToken);
+        if (existingService is not null)
+            return Result.Failure<SalonServiceDto>(Error.Conflict("Service.DuplicateName", "Ya existe un servicio con ese nombre en esta categoría."));
+
         var service = new SalonService
         {
             Name = request.Name,
@@ -139,6 +154,15 @@ public sealed class CatalogAppService : ICatalogAppService
         var category = await _unitOfWork.ServiceCategories.GetByIdAsync(request.CategoryId, cancellationToken);
         if (category is null)
             return Result.Failure<SalonServiceDto>(Error.NotFound("Category.NotFound", "Categoría no encontrada."));
+
+        // Re-check if either the name or the category changed - the uniqueness scope is
+        // per-category, so moving a service into a different category needs the same guard.
+        if (!string.Equals(service.Name, request.Name, StringComparison.OrdinalIgnoreCase) || service.CategoryId != request.CategoryId)
+        {
+            var existingService = await _unitOfWork.SalonServices.GetByNameInCategoryAsync(request.Name, request.CategoryId, cancellationToken);
+            if (existingService is not null && existingService.Id != serviceId)
+                return Result.Failure<SalonServiceDto>(Error.Conflict("Service.DuplicateName", "Ya existe un servicio con ese nombre en esta categoría."));
+        }
 
         service.Name = request.Name;
         service.CategoryId = request.CategoryId;

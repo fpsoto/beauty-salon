@@ -36,36 +36,51 @@
 
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate x:DataType="viewModels:DayAgendaGroup">
-                        <Label
-                            Text="{Binding DayLabel}"
-                            Style="{StaticResource FieldCaption}"
+                        <Grid
+                            ColumnDefinitions="*,Auto"
                             BackgroundColor="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundDark}}"
-                            Padding="16,10" />
+                            Padding="16,10">
+                            <Label Grid.Column="0" Text="{Binding DayLabel}" Style="{StaticResource FieldCaption}" VerticalOptions="Center" />
+                            <Border Grid.Column="1" Style="{StaticResource Chip}" IsVisible="{Binding IsToday}" VerticalOptions="Center">
+                                <Label
+                                    Text="{x:Static strings:AppResources.Today}"
+                                    Style="{StaticResource Caption}"
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                    VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.GroupHeaderTemplate>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:AgendaEntry">
-                        <Border Style="{StaticResource Card}" Margin="16,6" Padding="0">
-                            <Grid ColumnDefinitions="4,*" ColumnSpacing="12">
-                                <BoxView Grid.Column="0" Color="{Binding AccentColor}" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="4" Padding="12,12,16,12">
-                                    <Label Text="{Binding TimeRangeLabel}" Style="{StaticResource Caption}" />
-                                    <Label Text="{Binding Title}" Style="{StaticResource H3}" />
-                                    <Label
-                                        Text="{Binding Subtitle}"
-                                        Style="{StaticResource BodySmall}"
-                                        IsVisible="{Binding Subtitle, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
-                                    <Border
-                                        Style="{StaticResource Badge}"
-                                        BackgroundColor="{Binding BadgeBackgroundColor}"
-                                        HorizontalOptions="Start"
-                                        IsVisible="{Binding IsBlock, Converter={StaticResource InvertedBoolConverter}}">
-                                        <Label Text="{Binding StatusLabel}" TextColor="{Binding BadgeTextColor}" FontSize="11" FontFamily="InterSemibold" VerticalOptions="Center" />
-                                    </Border>
-                                </VerticalStackLayout>
-                            </Grid>
-                        </Border>
+                        <Grid>
+                            <Border Style="{StaticResource Card}" Margin="16,6" Padding="0" IsVisible="{Binding IsPlaceholder, Converter={StaticResource InvertedBoolConverter}}">
+                                <Grid ColumnDefinitions="4,*" ColumnSpacing="12">
+                                    <BoxView Grid.Column="0" Color="{Binding AccentColor}" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="4" Padding="12,12,16,12">
+                                        <Label Text="{Binding TimeRangeLabel}" Style="{StaticResource Caption}" />
+                                        <Label Text="{Binding Title}" Style="{StaticResource H3}" />
+                                        <Label
+                                            Text="{Binding Subtitle}"
+                                            Style="{StaticResource BodySmall}"
+                                            IsVisible="{Binding Subtitle, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+                                        <Border
+                                            Style="{StaticResource Badge}"
+                                            BackgroundColor="{Binding BadgeBackgroundColor}"
+                                            HorizontalOptions="Start"
+                                            IsVisible="{Binding IsBlock, Converter={StaticResource InvertedBoolConverter}}">
+                                            <Label Text="{Binding StatusLabel}" TextColor="{Binding BadgeTextColor}" FontSize="11" FontFamily="InterSemibold" VerticalOptions="Center" />
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                            <Label
+                                Text="{x:Static strings:AppResources.NoAppointmentsThisDay}"
+                                Style="{StaticResource Caption}"
+                                Margin="16,2,16,14"
+                                IsVisible="{Binding IsPlaceholder}" />
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

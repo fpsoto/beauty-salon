@@ -36,6 +36,10 @@ public partial class PaymentMethodsPage : ContentPage
         if (choice == AppResources.Edit)
             await Shell.Current.GoToAsync("paymentmethod-form", new Dictionary<string, object> { ["PaymentMethod"] = method });
         else if (choice == AppResources.Delete)
-            await _viewModel.DeleteCommand.ExecuteAsync(method);
+        {
+            var confirmed = await DisplayAlertAsync(method.Name, AppResources.DeleteConfirmMessage, AppResources.Delete, AppResources.Close);
+            if (confirmed)
+                await _viewModel.DeleteCommand.ExecuteAsync(method);
+        }
     }
 }

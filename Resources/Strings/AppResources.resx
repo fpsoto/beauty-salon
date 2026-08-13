@@ -127,6 +127,12 @@
 
   <data name="AppName" xml:space="preserve"><value>Beauty Salon</value></data>
   <data name="LoginSubtitle" xml:space="preserve"><value>Ingresa tus credenciales</value></data>
+  <data name="AppVersionFormat" xml:space="preserve"><value>Versión {0}</value></data>
+  <data name="ShowPassword" xml:space="preserve"><value>Mostrar</value></data>
+  <data name="HidePassword" xml:space="preserve"><value>Ocultar</value></data>
+  <data name="NoAppointmentsThisDay" xml:space="preserve"><value>Sin citas agendadas</value></data>
+  <data name="NoSalesInPeriod" xml:space="preserve"><value>No hay ventas registradas en este período</value></data>
+  <data name="NoDataInPeriod" xml:space="preserve"><value>Sin datos en este período</value></data>
   <data name="UsernamePlaceholder" xml:space="preserve"><value>Usuario</value></data>
   <data name="PasswordPlaceholder" xml:space="preserve"><value>Contraseña</value></data>
   <data name="LoginButton" xml:space="preserve"><value>Ingresar</value></data>
@@ -135,6 +141,33 @@
   <data name="PaymentMethodsTitle" xml:space="preserve"><value>Métodos de pago</value></data>
   <data name="Inactive" xml:space="preserve"><value>Inactivo</value></data>
   <data name="PaymentsTabTitle" xml:space="preserve"><value>Pagos</value></data>
+
+  <data name="SalesTitle" xml:space="preserve"><value>Ventas</value></data>
+  <data name="ProductsTitle" xml:space="preserve"><value>Productos</value></data>
+  <data name="ProductSalePriceLabel" xml:space="preserve"><value>Precio de venta</value></data>
+  <data name="ProductLabel" xml:space="preserve"><value>Producto</value></data>
+  <data name="SaleQuantityLabel" xml:space="preserve"><value>Cantidad</value></data>
+  <data name="SaleUnitPriceLabel" xml:space="preserve"><value>Precio unitario</value></data>
+  <data name="ClientOptionalLabel" xml:space="preserve"><value>Cliente (opcional)</value></data>
+  <data name="SaleDateLabel" xml:space="preserve"><value>Fecha de venta</value></data>
+  <data name="WalkInClient" xml:space="preserve"><value>Cliente de paso</value></data>
+  <data name="SelectProductRequired" xml:space="preserve"><value>Selecciona un producto.</value></data>
+
+  <data name="FiadoTitle" xml:space="preserve"><value>Fiado</value></data>
+  <data name="OutstandingBalanceLabel" xml:space="preserve"><value>Saldo pendiente</value></data>
+  <data name="OutstandingBalanceFormat" xml:space="preserve"><value>Saldo pendiente: ${0}</value></data>
+  <data name="AddChargeAction" xml:space="preserve"><value>Fiar</value></data>
+  <data name="RegisterPaymentAction" xml:space="preserve"><value>Registrar abono</value></data>
+  <data name="NewChargeTitle" xml:space="preserve"><value>Nuevo cargo</value></data>
+  <data name="NewPaymentTitle" xml:space="preserve"><value>Nuevo abono</value></data>
+  <data name="AmountLabel" xml:space="preserve"><value>Monto</value></data>
+  <data name="DateLabel" xml:space="preserve"><value>Fecha</value></data>
+  <data name="NoOutstandingDebts" xml:space="preserve"><value>Nadie tiene fiado pendiente</value></data>
+  <data name="NoDebtHistory" xml:space="preserve"><value>Sin movimientos registrados</value></data>
+  <data name="DebtChargeLabel" xml:space="preserve"><value>Cargo</value></data>
+  <data name="DebtPaymentLabel" xml:space="preserve"><value>Abono</value></data>
+  <data name="NoItemsRegistered" xml:space="preserve"><value>No hay elementos registrados</value></data>
+  <data name="NoClientsFound" xml:space="preserve"><value>No se encontraron clientes</value></data>
 
   <data name="ReportsTitle" xml:space="preserve"><value>Reportes</value></data>
   <data name="Week" xml:space="preserve"><value>Semana</value></data>
@@ -154,6 +187,8 @@
   <data name="TopServices" xml:space="preserve"><value>Servicios más vendidos</value></data>
   <data name="TopCategories" xml:space="preserve"><value>Categorías más usadas</value></data>
   <data name="BusiestHours" xml:space="preserve"><value>Horas más ocupadas</value></data>
+  <data name="ProductRevenue" xml:space="preserve"><value>Ingresos por productos</value></data>
+  <data name="TopProducts" xml:space="preserve"><value>Productos más vendidos</value></data>
 
   <data name="RescheduleTitle" xml:space="preserve"><value>Reagendar cita</value></data>
   <data name="NewDateLabel" xml:space="preserve"><value>Nueva fecha</value></data>
@@ -178,6 +213,8 @@
   <data name="InvalidBackupMessage" xml:space="preserve"><value>El archivo seleccionado no es un respaldo válido de Beauty Salon.</value></data>
   <data name="LogoutButton" xml:space="preserve"><value>Cerrar sesión</value></data>
   <data name="LogoutConfirmMessage" xml:space="preserve"><value>¿Seguro que quieres cerrar sesión?</value></data>
+  <data name="DeleteConfirmMessage" xml:space="preserve"><value>Esta acción no se puede deshacer.</value></data>
+  <data name="HelpIntro" xml:space="preserve"><value>Todo lo que necesitas para sacarle el máximo partido a la app, explicado simple.</value></data>
   <data name="HelpSectionAgendaTitle" xml:space="preserve"><value>Agenda</value></data>
   <data name="HelpSectionAgendaBody" xml:space="preserve"><value>• Las acciones disponibles al tocar una cita dependen de su estado actual (por ejemplo, "Cancelar" desaparece después de Finalizar).
 • Reagendar crea una cita nueva y marca la original como "Reagendada" — no la edita en el mismo lugar. Esto afecta los conteos de Reportes.
@@ -189,7 +226,12 @@
   <data name="HelpSectionCatalogTitle" xml:space="preserve"><value>Catálogo</value></data>
   <data name="HelpSectionCatalogBody" xml:space="preserve"><value>• El color de una categoría es solo decorativo, no afecta ninguna regla de negocio.
 • Si borras una categoría o servicio que ya tiene citas asociadas, el historial de esas citas no cambia (queda una copia guardada del precio y nombre al momento de la cita).</value></data>
-  <data name="HelpSectionPaymentsTitle" xml:space="preserve"><value>Pagos</value></data>
+  <data name="HelpSectionSalesTitle" xml:space="preserve"><value>Ventas</value></data>
+  <data name="HelpSectionSalesBody" xml:space="preserve"><value>• Puedes registrar una venta sin cliente asociado (venta a un cliente de paso) — el campo de cliente es opcional.
+• El precio de una venta queda fijo al momento de registrarla, aunque después cambies el precio del producto en el catálogo — igual que el precio de un servicio en una cita.
+• Los productos se administran desde el botón "Productos" de esta misma pantalla — no tienen su propia pestaña.
+• Si un producto ya tiene ventas registradas, no se puede eliminar del catálogo — solo desactivar.</value></data>
+  <data name="HelpSectionPaymentsTitle" xml:space="preserve"><value>Métodos de pago</value></data>
   <data name="HelpSectionPaymentsBody" xml:space="preserve"><value>• Renombrar un método de pago no actualiza el historial ya registrado — los reportes por método de pago pueden quedar divididos entre el nombre viejo y el nuevo.
 • Puedes desactivar un método de pago sin borrarlo, para dejar de usarlo sin perder el historial.</value></data>
   <data name="HelpSectionReportsTitle" xml:space="preserve"><value>Reportes</value></data>
@@ -205,7 +247,7 @@
   <data name="HelpSectionFaqBody" xml:space="preserve"><value>• ¿Por qué no llegó el recordatorio de una cita? Puede ser que el cliente no tenga teléfono, que la regla esté desactivada en Ajustes, o que la hora del recordatorio ya haya pasado.
 • ¿Por qué no puedo crear un cliente con este RUT? El dígito verificador no es válido — revisa que el RUT esté bien escrito.
 • ¿Por qué reagendar creó una cita que parece duplicada? Es el comportamiento esperado: la cita original queda marcada como "Reagendada" y se crea una nueva (ver sección Agenda).
-• ¿Por qué los reportes se ven raros después de renombrar un método de pago? El historial no se actualiza retroactivamente (ver sección Pagos).</value></data>
+• ¿Por qué los reportes se ven raros después de renombrar un método de pago? El historial no se actualiza retroactivamente (ver sección Métodos de pago).</value></data>
   <data name="LanguageLabel" xml:space="preserve"><value>Idioma</value></data>
   <data name="ThemeLabel" xml:space="preserve"><value>Tema</value></data>
   <data name="CurrencyLabel" xml:space="preserve"><value>Moneda</value></data>

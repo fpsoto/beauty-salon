@@ -2,9 +2,21 @@
 
 	<PropertyGroup>
 		<!-- Android is the only actively supported target today; iOS is kept for a future
-		     release but only buildable from a macOS host (the iOS workload isn't available on Linux). -->
+		     release but only buildable AND archivable/exportable from a macOS host (Apple
+		     requires Xcode on macOS to sign a distributable iOS package). Windows can't
+		     produce a usable iOS archive either way, so it's excluded there too - not just on
+		     Linux - which also sidesteps a recurring flaky NuGet copy of the Google Firebase iOS
+		     packages (AdamE.Google.iOS.GoogleDataTransport/GoogleUtilities) that otherwise blocks
+		     Visual Studio's "Archive All" on Windows even though the Android side builds fine. -->
+		<!-- Android is the only actively supported target today; iOS is kept for a future
+		     release but only buildable AND archivable/exportable from a macOS host (Apple
+		     requires Xcode on macOS to sign a distributable iOS package). Windows can't
+		     produce a usable iOS archive either way, so it's excluded there too - not just on
+		     Linux - which also sidesteps a recurring flaky NuGet copy of the Google Firebase iOS
+		     packages (AdamE.Google.iOS.GoogleDataTransport/GoogleUtilities) that otherwise blocks
+		     Visual Studio's "Archive All" on Windows even though the Android side builds fine. -->
 		<TargetFrameworks>net10.0-android</TargetFrameworks>
-		<TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('linux'))">$(TargetFrameworks);net10.0-ios</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('osx'))">$(TargetFrameworks);net10.0-ios</TargetFrameworks>
 
 		<OutputType>Exe</OutputType>
 		<RootNamespace>Beauty_Salon</RootNamespace>
@@ -28,8 +40,8 @@
 		<ApplicationId>com.felipeparrasoto.beautysalon</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>1.1</ApplicationDisplayVersion>
+		<ApplicationVersion>2</ApplicationVersion>
 
 		<!-- Assembly/publisher metadata -->
 		<Company>FelipeParraSoto</Company>
@@ -41,12 +53,20 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<!-- Not conditioned on $(Platform) too (it used to also require '|AnyCPU') - Visual Studio's
+	     Archive Manager doesn't necessarily set Platform to exactly that value, which silently
+	     fell back to the .NET-for-Android default (.aab) and made Archive fail with "Invalid
+	     Android Archive (no .apk files)" even though the build itself succeeded. -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Release' AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#2563EB" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#2563EB" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Images\logo_resplandecer.png" Color="#FFFFFF" BaseSize="300,300" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -64,6 +84,15 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
 		<PackageReference Include="Plugin.LocalNotification" Version="14.1.1" />
+		<PackageReference Include="Plugin.Firebase.Core" Version="4.2.0" />
+		<PackageReference Include="Plugin.Firebase.Crashlytics" Version="4.0.0" />
+	</ItemGroup>
+
+	<!-- Firebase config file, Android only - the file itself is downloaded from the Firebase
+	     console (Project settings > your Android app) and its android_client_info.package_name
+	     must match ApplicationId above. -->
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+		<GoogleServicesJson Include="google-services.json" />
 	</ItemGroup>
 
 	<ItemGroup>

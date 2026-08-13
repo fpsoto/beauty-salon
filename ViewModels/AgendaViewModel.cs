@@ -218,7 +218,8 @@ public partial class AgendaViewModel : ViewModelBase
         DayGroups.Clear();
         for (var date = WeekStart; date <= WeekEnd; date = date.AddDays(1))
         {
-            DayGroups.Add(new DayAgendaGroup(date, byDay.TryGetValue(date, out var dayEntries) ? dayEntries : []));
+            var dayEntries = byDay.TryGetValue(date, out var found) ? found : [AgendaEntry.Empty()];
+            DayGroups.Add(new DayAgendaGroup(date, dayEntries));
         }
     }
 }

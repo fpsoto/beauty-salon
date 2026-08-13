@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.DebtChargeFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
+    x:DataType="viewModels:DebtChargeFormViewModel"
+    Title="{x:Static strings:AppResources.NewChargeTitle}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{StaticResource Space16}" Spacing="{StaticResource Space12}">
+
+            <Label Text="{Binding ClientName}" Style="{StaticResource H3}" />
+
+            <Label Text="{x:Static strings:AppResources.AmountLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding Amount}" Keyboard="Numeric" Placeholder="0" VerticalOptions="Center" />
+            </Border>
+
+            <Label Text="{x:Static strings:AppResources.DescriptionLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <Entry Text="{Binding Description}" VerticalOptions="Center" />
+            </Border>
+
+            <Label Text="{x:Static strings:AppResources.DateLabel}" Style="{StaticResource FieldCaption}" />
+            <Border Style="{StaticResource InputContainer}">
+                <DatePicker Date="{Binding EntryDate}" VerticalOptions="Center" />
+            </Border>
+
+            <Border
+                Padding="{StaticResource Space12}"
+                StrokeShape="{StaticResource RadiusInputShape}"
+                Stroke="Transparent"
+                BackgroundColor="{AppThemeBinding Light={StaticResource StatusCancelledContainer}, Dark={StaticResource StatusCancelledContainerDark}}"
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                <Label
+                    Text="{Binding ErrorMessage}"
+                    Style="{StaticResource BodySmall}"
+                    TextColor="{AppThemeBinding Light={StaticResource StatusCancelledOnContainer}, Dark={StaticResource StatusCancelledOnContainerDark}}"
+                    HorizontalTextAlignment="Center" />
+            </Border>
+
+            <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

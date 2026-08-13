@@ -13,13 +13,15 @@ public partial class SettingsPage : ContentPage
     private readonly ISessionService _sessionService;
     private readonly IPersistedSessionStore _persistedSessionStore;
     private readonly IServiceProvider _serviceProvider;
+    private readonly IDemoDataSeeder _demoDataSeeder;
 
     public SettingsPage(
         SettingsViewModel viewModel,
         IDataBackupService dataBackupService,
         ISessionService sessionService,
         IPersistedSessionStore persistedSessionStore,
-        IServiceProvider serviceProvider)
+        IServiceProvider serviceProvider,
+        IDemoDataSeeder demoDataSeeder)
     {
         InitializeComponent();
         _viewModel = viewModel;
@@ -27,7 +29,13 @@ public partial class SettingsPage : ContentPage
         _sessionService = sessionService;
         _persistedSessionStore = persistedSessionStore;
         _serviceProvider = serviceProvider;
+        _demoDataSeeder = demoDataSeeder;
         BindingContext = viewModel;
+
+#if DEBUG
+        DemoSeedButton.IsVisible = true;
+        CrashTestButton.IsVisible = true;
+#endif
     }
 
     protected override void OnAppearing()
@@ -85,6 +93,23 @@ public partial class SettingsPage : ContentPage
 
         await DisplayAlertAsync(AppResources.RestoreTitle, AppResources.RestoreSuccessMessage, AppResources.Close);
     }
+
+    private async void OnSeedDemoDataClicked(object? sender, EventArgs e)
+    {
+        DemoSeedButton.IsEnabled = false;
+        try
+        {
+            var summary = await _demoDataSeeder.SeedAsync();
+            await DisplayAlertAsync("Datos de demo", summary, AppResources.Close);
+        }
+        finally
+        {
+            DemoSeedButton.IsEnabled = true;
+        }
+    }
+
+    private async void OnCrashTestClicked(object? sender, EventArgs e) =>
+        await Shell.Current.GoToAsync("crash-test");
 
     private async void OnLogoutClicked(object? sender, EventArgs e)
     {

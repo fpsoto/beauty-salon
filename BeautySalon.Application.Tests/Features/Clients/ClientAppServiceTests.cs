@@ -1,4 +1,6 @@
 using BeautySalon.Application.Features.Clients;
+using BeautySalon.Domain.Entities;
+using BeautySalon.Domain.Enums;
 using Xunit;
 
 namespace BeautySalon.Application.Tests.Features.Clients;
@@ -112,5 +114,65 @@ public sealed class ClientAppServiceTests : IDisposable
 
         Assert.True(searchResult.IsSuccess);
         Assert.DoesNotContain(searchResult.Value, c => c.Id == created.Value.Id);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_WithAppointmentHistory_ReturnsConflict()
+    {
+        var created = await _sut.CreateAsync(ValidCreateRequest());
+
+        var professional = new User
+        {
+            Id = Guid.CreateVersion7(),
+            Username = "test-pro",
+            PasswordHash = "hash",
+            FullName = "Test Professional"
+        };
+        _db.Context.Users.Add(professional);
+        _db.Context.Appointments.Add(new Appointment
+        {
+            ClientId = created.Value.Id,
+            ProfessionalId = professional.Id,
+            Date = DateOnly.FromDateTime(DateTime.Today).AddDays(-30),
+            StartTime = new TimeOnly(10, 0),
+            EndTime = new TimeOnly(11, 0),
+            Status = AppointmentStatus.Completed,
+            SuggestedPrice = 10000m
+        });
+        await _db.Context.SaveChangesAsync();
+
+        var result = await _sut.DeleteAsync(created.Value.Id);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal("Client.HasAppointments", result.Error.Code);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_WithDebtHistory_ReturnsConflict()
+    {
+        var created = await _sut.CreateAsync(ValidCreateRequest());
+
+        var professional = new User
+        {
+            Id = Guid.CreateVersion7(),
+            Username = "test-pro-2",
+            PasswordHash = "hash",
+            FullName = "Test Professional"
+        };
+        _db.Context.Users.Add(professional);
+        _db.Context.Add(new ClientDebtEntry
+        {
+            ClientId = created.Value.Id,
+            ProfessionalId = professional.Id,
+            Type = DebtEntryType.Charge,
+            Amount = 5000m,
+            EntryDate = DateOnly.FromDateTime(DateTime.Today)
+        });
+        await _db.Context.SaveChangesAsync();
+
+        var result = await _sut.DeleteAsync(created.Value.Id);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal("Client.HasDebtHistory", result.Error.Code);
     }
 }

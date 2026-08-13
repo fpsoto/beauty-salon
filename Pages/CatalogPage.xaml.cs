@@ -37,7 +37,11 @@ public partial class CatalogPage : ContentPage
         if (choice == AppResources.Edit)
             await Shell.Current.GoToAsync("category-form", new Dictionary<string, object> { ["Category"] = category });
         else if (choice == AppResources.Delete)
-            await _viewModel.DeleteCategoryCommand.ExecuteAsync(category);
+        {
+            var confirmed = await DisplayAlertAsync(category.Name, AppResources.DeleteConfirmMessage, AppResources.Delete, AppResources.Close);
+            if (confirmed)
+                await _viewModel.DeleteCategoryCommand.ExecuteAsync(category);
+        }
     }
 
     private async void OnServiceSelected(object? sender, SelectionChangedEventArgs e)
@@ -52,6 +56,10 @@ public partial class CatalogPage : ContentPage
         if (choice == AppResources.Edit)
             await Shell.Current.GoToAsync("service-form", new Dictionary<string, object> { ["Service"] = service });
         else if (choice == AppResources.Delete)
-            await _viewModel.DeleteServiceCommand.ExecuteAsync(service);
+        {
+            var confirmed = await DisplayAlertAsync(service.Name, AppResources.DeleteConfirmMessage, AppResources.Delete, AppResources.Close);
+            if (confirmed)
+                await _viewModel.DeleteServiceCommand.ExecuteAsync(service);
+        }
     }
 }

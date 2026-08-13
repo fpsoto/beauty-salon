@@ -35,6 +35,11 @@ public class AppointmentRepository : EfRepository<Appointment>, IAppointmentRepo
             .OrderByDescending(a => a.Date).ThenByDescending(a => a.StartTime)
             .ToListAsync(cancellationToken);
 
+    public async Task<IReadOnlyList<Appointment>> GetCompletedAsync(CancellationToken cancellationToken = default) =>
+        await DbSet
+            .Where(a => a.Status == AppointmentStatus.Completed)
+            .ToListAsync(cancellationToken);
+
     public async Task<bool> HasOverlapAsync(
         Guid professionalId, DateOnly date, TimeOnly startTime, TimeOnly endTime,
         Guid? excludeAppointmentId = null, CancellationToken cancellationToken = default) =>

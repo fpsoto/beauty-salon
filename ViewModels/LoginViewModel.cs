@@ -33,6 +33,16 @@ public partial class LoginViewModel : ViewModelBase
     [ObservableProperty]
     private bool loginSucceeded;
 
+    [ObservableProperty]
+    private bool isPasswordVisible;
+
+    // Reads the version/build the csproj's ApplicationDisplayVersion/ApplicationVersion were
+    // set to at build time - shown in the login footer so a screenshot/APK build is traceable.
+    public string VersionLabel => $"{AppInfo.Current.VersionString} ({AppInfo.Current.BuildString})";
+
+    [RelayCommand]
+    private void TogglePasswordVisibility() => IsPasswordVisible = !IsPasswordVisible;
+
     [RelayCommand]
     private Task LoginAsync() => SafeExecuteAsync(async () =>
     {

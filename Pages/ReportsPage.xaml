@@ -21,19 +21,35 @@
             </HorizontalStackLayout>
 
             <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
-                <VerticalStackLayout Grid.Column="0">
-                    <Label Text="{x:Static strings:AppResources.FromLabel}" Style="{StaticResource Caption}" />
-                    <DatePicker Date="{Binding FromDate}" />
+                <VerticalStackLayout Grid.Column="0" Spacing="{StaticResource Space8}">
+                    <Label Text="{x:Static strings:AppResources.FromLabel}" Style="{StaticResource FieldCaption}" />
+                    <Border Style="{StaticResource InputContainer}" HeightRequest="48">
+                        <DatePicker Date="{Binding FromDate}" VerticalOptions="Center" />
+                    </Border>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="1">
-                    <Label Text="{x:Static strings:AppResources.ToLabel}" Style="{StaticResource Caption}" />
-                    <DatePicker Date="{Binding ToDate}" />
+                <VerticalStackLayout Grid.Column="1" Spacing="{StaticResource Space8}">
+                    <Label Text="{x:Static strings:AppResources.ToLabel}" Style="{StaticResource FieldCaption}" />
+                    <Border Style="{StaticResource InputContainer}" HeightRequest="48">
+                        <DatePicker Date="{Binding ToDate}" VerticalOptions="Center" />
+                    </Border>
                 </VerticalStackLayout>
             </Grid>
 
             <Button Text="{x:Static strings:AppResources.Apply}" Command="{Binding LoadCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
-            <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+
+            <Border
+                Padding="{StaticResource Space12}"
+                StrokeShape="{StaticResource RadiusInputShape}"
+                Stroke="Transparent"
+                BackgroundColor="{AppThemeBinding Light={StaticResource StatusCancelledContainer}, Dark={StaticResource StatusCancelledContainerDark}}"
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                <Label
+                    Text="{Binding ErrorMessage}"
+                    Style="{StaticResource BodySmall}"
+                    TextColor="{AppThemeBinding Light={StaticResource StatusCancelledOnContainer}, Dark={StaticResource StatusCancelledOnContainerDark}}"
+                    HorizontalTextAlignment="Center" />
+            </Border>
 
             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="12" ColumnSpacing="12">
                 <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource Card}">
@@ -62,6 +78,13 @@
                 </Border>
             </Grid>
 
+            <Border Style="{StaticResource Card}">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0" Text="{x:Static strings:AppResources.ProductRevenue}" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="{Binding Summary.ProductRevenue, StringFormat='${0}'}" Style="{StaticResource H3}" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
             <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
                 <Border Grid.Column="0" Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="2">
@@ -89,6 +112,9 @@
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
                         <charts:DonutChartView Grid.Column="0" ItemsSource="{Binding Summary.RevenueByPaymentMethod}" WidthRequest="96" HeightRequest="96" />
                         <CollectionView Grid.Column="1" ItemsSource="{Binding Summary.RevenueByPaymentMethod}" HeightRequest="96" VerticalOptions="Center">
+                            <CollectionView.EmptyView>
+                                <Label Text="{x:Static strings:AppResources.NoDataInPeriod}" Style="{StaticResource Caption}" VerticalOptions="Center" />
+                            </CollectionView.EmptyView>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="reports:RevenueByPaymentMethodDto">
                                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Padding="0,4">
@@ -107,6 +133,9 @@
                 <VerticalStackLayout Spacing="8">
                     <Label Text="{x:Static strings:AppResources.TopClients}" Style="{StaticResource H3}" />
                     <CollectionView ItemsSource="{Binding Summary.TopClients}" HeightRequest="150">
+                        <CollectionView.EmptyView>
+                            <Label Text="{x:Static strings:AppResources.NoDataInPeriod}" Style="{StaticResource BodySmall}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </CollectionView.EmptyView>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="reports:TopClientDto">
                                 <Grid ColumnDefinitions="*,Auto,Auto" Padding="0,6" ColumnSpacing="8">
@@ -124,6 +153,9 @@
                 <VerticalStackLayout Spacing="8">
                     <Label Text="{x:Static strings:AppResources.TopServices}" Style="{StaticResource H3}" />
                     <CollectionView ItemsSource="{Binding Summary.TopServices}" HeightRequest="150">
+                        <CollectionView.EmptyView>
+                            <Label Text="{x:Static strings:AppResources.NoDataInPeriod}" Style="{StaticResource BodySmall}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </CollectionView.EmptyView>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="reports:TopServiceDto">
                                 <Grid ColumnDefinitions="*,Auto,Auto" Padding="0,6" ColumnSpacing="8">
@@ -139,8 +171,31 @@
 
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static strings:AppResources.TopProducts}" Style="{StaticResource H3}" />
+                    <CollectionView ItemsSource="{Binding Summary.TopProducts}" HeightRequest="150">
+                        <CollectionView.EmptyView>
+                            <Label Text="{x:Static strings:AppResources.NoDataInPeriod}" Style="{StaticResource BodySmall}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="reports:TopProductDto">
+                                <Grid ColumnDefinitions="*,Auto,Auto" Padding="0,6" ColumnSpacing="8">
+                                    <Label Grid.Column="0" Text="{Binding ProductName}" Style="{StaticResource BodySmall}" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource TextPrimaryDark}}" />
+                                    <Label Grid.Column="1" Text="{Binding QuantitySold, StringFormat='x{0}'}" Style="{StaticResource Caption}" />
+                                    <Label Grid.Column="2" Text="{Binding Revenue, StringFormat='${0}'}" Style="{StaticResource FieldCaption}" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
                     <Label Text="{x:Static strings:AppResources.TopCategories}" Style="{StaticResource H3}" />
                     <CollectionView ItemsSource="{Binding Summary.TopCategories}" HeightRequest="150">
+                        <CollectionView.EmptyView>
+                            <Label Text="{x:Static strings:AppResources.NoDataInPeriod}" Style="{StaticResource BodySmall}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </CollectionView.EmptyView>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="reports:TopCategoryDto">
                                 <Grid ColumnDefinitions="*,Auto" Padding="0,6">
@@ -158,6 +213,9 @@
                     <Label Text="{x:Static strings:AppResources.BusiestHours}" Style="{StaticResource H3}" />
                     <charts:HourHistogramView ItemsSource="{Binding Summary.BusiestHours}" HeightRequest="80" />
                     <CollectionView ItemsSource="{Binding Summary.BusiestHours}" HeightRequest="120">
+                        <CollectionView.EmptyView>
+                            <Label Text="{x:Static strings:AppResources.NoDataInPeriod}" Style="{StaticResource BodySmall}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </CollectionView.EmptyView>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="reports:HourCountDto">
                                 <Grid ColumnDefinitions="*,Auto" Padding="0,4">

@@ -4,6 +4,7 @@ public sealed record ReportSummaryDto(
     DateOnly From,
     DateOnly To,
     decimal TotalRevenue,
+    decimal ProductRevenue,
     int CompletedAppointmentsCount,
     decimal AverageRevenuePerAppointment,
     int NewClientsCount,
@@ -14,4 +15,5 @@ public sealed record ReportSummaryDto(
     IReadOnlyList<TopClientDto> TopClients,
     IReadOnlyList<TopServiceDto> TopServices,
     IReadOnlyList<TopCategoryDto> TopCategories,
+    IReadOnlyList<TopProductDto> TopProducts,
     IReadOnlyList<HourCountDto> BusiestHours);

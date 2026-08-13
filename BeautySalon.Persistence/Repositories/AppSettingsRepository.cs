@@ -24,4 +24,6 @@ public class AppSettingsRepository : IAppSettingsRepository
     }
 
     public void Update(AppSettings appSettings) => _context.AppSettings.Update(appSettings);
+
+    public void AddNotificationRule(NotificationRule rule) => _context.NotificationRules.Add(rule);
 }

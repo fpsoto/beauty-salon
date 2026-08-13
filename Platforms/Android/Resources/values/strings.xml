@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- Works around a known .NET MAUI issue where Crashlytics crashes on startup with
+         "The Crashlytics build ID is missing" - MSBuild doesn't run the Gradle-based build
+         step that normally generates this id, so it's declared as "none" instead. -->
+    <string name="com.google.firebase.crashlytics.mapping_file_id">none</string>
+</resources>

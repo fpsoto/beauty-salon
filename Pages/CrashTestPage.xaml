@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.CrashTestPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Prueba de crashes (Crashlytics)">
+
+    <!-- Temporary, DEBUG-only screen to verify Firebase Crashlytics is wired up correctly.
+         Delete this page + its route/DI registration + the Settings button once confirmed
+         working in the Firebase console. -->
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Label
+                Text="Cada botón genera un error distinto y lo envía a Crashlytics como excepción no fatal - la app no se cierra. Puede demorar unos minutos en aparecer en la consola de Firebase."
+                Style="{StaticResource BodySmall}" />
+
+            <Button Text="Dividir por cero" Style="{StaticResource SecondaryButton}" Clicked="OnDivideByZeroClicked" />
+            <Button Text="Referencia nula" Style="{StaticResource SecondaryButton}" Clicked="OnNullReferenceClicked" />
+            <Button Text="Índice fuera de rango" Style="{StaticResource SecondaryButton}" Clicked="OnIndexOutOfRangeClicked" />
+            <Button Text="Excepción genérica" Style="{StaticResource SecondaryButton}" Clicked="OnGenericExceptionClicked" />
+            <Button Text="Excepción en hilo secundario" Style="{StaticResource SecondaryButton}" Clicked="OnBackgroundThreadExceptionClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

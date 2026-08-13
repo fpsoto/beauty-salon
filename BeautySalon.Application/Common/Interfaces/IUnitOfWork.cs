@@ -14,6 +14,8 @@ public interface IUnitOfWork
     IPaymentMethodRepository PaymentMethods { get; }
     IUserRepository Users { get; }
     IProductRepository Products { get; }
+    IProductSaleRepository ProductSales { get; }
+    IClientDebtRepository ClientDebts { get; }
     IAppSettingsRepository AppSettings { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

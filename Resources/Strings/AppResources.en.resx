@@ -127,6 +127,12 @@
 
   <data name="AppName" xml:space="preserve"><value>Beauty Salon</value></data>
   <data name="LoginSubtitle" xml:space="preserve"><value>Enter your credentials</value></data>
+  <data name="AppVersionFormat" xml:space="preserve"><value>Version {0}</value></data>
+  <data name="ShowPassword" xml:space="preserve"><value>Show</value></data>
+  <data name="HidePassword" xml:space="preserve"><value>Hide</value></data>
+  <data name="NoAppointmentsThisDay" xml:space="preserve"><value>No appointments scheduled</value></data>
+  <data name="NoSalesInPeriod" xml:space="preserve"><value>No sales recorded in this period</value></data>
+  <data name="NoDataInPeriod" xml:space="preserve"><value>No data in this period</value></data>
   <data name="UsernamePlaceholder" xml:space="preserve"><value>Username</value></data>
   <data name="PasswordPlaceholder" xml:space="preserve"><value>Password</value></data>
   <data name="LoginButton" xml:space="preserve"><value>Log in</value></data>
@@ -135,6 +141,33 @@
   <data name="PaymentMethodsTitle" xml:space="preserve"><value>Payment methods</value></data>
   <data name="Inactive" xml:space="preserve"><value>Inactive</value></data>
   <data name="PaymentsTabTitle" xml:space="preserve"><value>Payments</value></data>
+
+  <data name="SalesTitle" xml:space="preserve"><value>Sales</value></data>
+  <data name="ProductsTitle" xml:space="preserve"><value>Products</value></data>
+  <data name="ProductSalePriceLabel" xml:space="preserve"><value>Sale price</value></data>
+  <data name="ProductLabel" xml:space="preserve"><value>Product</value></data>
+  <data name="SaleQuantityLabel" xml:space="preserve"><value>Quantity</value></data>
+  <data name="SaleUnitPriceLabel" xml:space="preserve"><value>Unit price</value></data>
+  <data name="ClientOptionalLabel" xml:space="preserve"><value>Client (optional)</value></data>
+  <data name="SaleDateLabel" xml:space="preserve"><value>Sale date</value></data>
+  <data name="WalkInClient" xml:space="preserve"><value>Walk-in client</value></data>
+  <data name="SelectProductRequired" xml:space="preserve"><value>Select a product.</value></data>
+
+  <data name="FiadoTitle" xml:space="preserve"><value>Credit</value></data>
+  <data name="OutstandingBalanceLabel" xml:space="preserve"><value>Outstanding balance</value></data>
+  <data name="OutstandingBalanceFormat" xml:space="preserve"><value>Outstanding balance: ${0}</value></data>
+  <data name="AddChargeAction" xml:space="preserve"><value>Add charge</value></data>
+  <data name="RegisterPaymentAction" xml:space="preserve"><value>Register payment</value></data>
+  <data name="NewChargeTitle" xml:space="preserve"><value>New charge</value></data>
+  <data name="NewPaymentTitle" xml:space="preserve"><value>New payment</value></data>
+  <data name="AmountLabel" xml:space="preserve"><value>Amount</value></data>
+  <data name="DateLabel" xml:space="preserve"><value>Date</value></data>
+  <data name="NoOutstandingDebts" xml:space="preserve"><value>No one has an outstanding balance</value></data>
+  <data name="NoDebtHistory" xml:space="preserve"><value>No entries recorded</value></data>
+  <data name="DebtChargeLabel" xml:space="preserve"><value>Charge</value></data>
+  <data name="DebtPaymentLabel" xml:space="preserve"><value>Payment</value></data>
+  <data name="NoItemsRegistered" xml:space="preserve"><value>No items registered</value></data>
+  <data name="NoClientsFound" xml:space="preserve"><value>No clients found</value></data>
 
   <data name="ReportsTitle" xml:space="preserve"><value>Reports</value></data>
   <data name="Week" xml:space="preserve"><value>Week</value></data>
@@ -154,6 +187,8 @@
   <data name="TopServices" xml:space="preserve"><value>Top services</value></data>
   <data name="TopCategories" xml:space="preserve"><value>Top categories</value></data>
   <data name="BusiestHours" xml:space="preserve"><value>Busiest hours</value></data>
+  <data name="ProductRevenue" xml:space="preserve"><value>Product revenue</value></data>
+  <data name="TopProducts" xml:space="preserve"><value>Top-selling products</value></data>
 
   <data name="RescheduleTitle" xml:space="preserve"><value>Reschedule appointment</value></data>
   <data name="NewDateLabel" xml:space="preserve"><value>New date</value></data>
@@ -178,6 +213,8 @@
   <data name="InvalidBackupMessage" xml:space="preserve"><value>The selected file isn't a valid Beauty Salon backup.</value></data>
   <data name="LogoutButton" xml:space="preserve"><value>Log out</value></data>
   <data name="LogoutConfirmMessage" xml:space="preserve"><value>Are you sure you want to log out?</value></data>
+  <data name="DeleteConfirmMessage" xml:space="preserve"><value>This action can't be undone.</value></data>
+  <data name="HelpIntro" xml:space="preserve"><value>Everything you need to get the most out of the app, explained simply.</value></data>
   <data name="HelpSectionAgendaTitle" xml:space="preserve"><value>Agenda</value></data>
   <data name="HelpSectionAgendaBody" xml:space="preserve"><value>• The actions available when tapping an appointment depend on its current status (for example, "Cancel" disappears after Finish).
 • Rescheduling creates a new appointment and marks the original as "Rescheduled" — it doesn't edit it in place. This affects Reports counts.
@@ -189,6 +226,11 @@
   <data name="HelpSectionCatalogTitle" xml:space="preserve"><value>Catalog</value></data>
   <data name="HelpSectionCatalogBody" xml:space="preserve"><value>• A category's color is purely decorative and doesn't affect any business rule.
 • If you delete a category or service that already has appointments linked to it, the history of those appointments doesn't change (a snapshot of the price and name at the time of the appointment is kept).</value></data>
+  <data name="HelpSectionSalesTitle" xml:space="preserve"><value>Sales</value></data>
+  <data name="HelpSectionSalesBody" xml:space="preserve"><value>• You can record a sale with no client attached (a walk-in sale) — the client field is optional.
+• A sale's price is locked in the moment you record it, even if you later change the product's catalog price — same as a service's price on an appointment.
+• Products are managed from the "Products" button on this same screen — it has no tab of its own.
+• A product that already has recorded sales can't be deleted from the catalog — only deactivated.</value></data>
   <data name="HelpSectionPaymentsTitle" xml:space="preserve"><value>Payment methods</value></data>
   <data name="HelpSectionPaymentsBody" xml:space="preserve"><value>• Renaming a payment method doesn't update already-recorded history — revenue-by-payment-method reports can end up split between the old and new name.
 • You can disable a payment method without deleting it, to stop using it without losing its history.</value></data>
@@ -205,7 +247,7 @@
   <data name="HelpSectionFaqBody" xml:space="preserve"><value>• Why didn't an appointment's reminder arrive? The client may not have a phone number, the rule may be disabled in Settings, or the reminder time may have already passed.
 • Why can't I create a client with this RUT? The check digit isn't valid — double-check the RUT was typed correctly.
 • Why did rescheduling create what looks like a duplicate appointment? That's expected: the original is marked "Rescheduled" and a new one is created (see the Agenda section).
-• Why do reports look off after renaming a payment method? History isn't updated retroactively (see the Payments section).</value></data>
+• Why do reports look off after renaming a payment method? History isn't updated retroactively (see the Payment methods section).</value></data>
   <data name="LanguageLabel" xml:space="preserve"><value>Language</value></data>
   <data name="ThemeLabel" xml:space="preserve"><value>Theme</value></data>
   <data name="CurrencyLabel" xml:space="preserve"><value>Currency</value></data>

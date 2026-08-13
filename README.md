@@ -1,12 +1,12 @@
 # Beauty Salon
 
-A .NET MAUI app for managing a single-owner beauty salon: weekly agenda, clients, service catalog, payments, and reports. Built with Clean Architecture, EF Core/SQLite, and CommunityToolkit.Mvvm, targeting Android (iOS planned for a future release).
+A .NET MAUI app for managing a single-owner beauty salon: weekly agenda, clients, service catalog, product sales, client credit (fiado), payments, and reports. Built with Clean Architecture, EF Core/SQLite, and CommunityToolkit.Mvvm, targeting Android (iOS planned for a future release).
 
 The weekly agenda is the app's home screen — not a dashboard. Creating, confirming, starting, finishing, cancelling, and rescheduling an appointment are all one tap away from the agenda itself.
 
 ## Features
 
-- **Weekly agenda** — navigate weeks, jump to today, and drive the full appointment lifecycle (booked → confirmed → in progress → completed/cancelled/no-show/rescheduled) from one screen.
+- **Weekly agenda** — navigate weeks, jump to today, and drive the full appointment lifecycle (booked → confirmed → in progress → completed/cancelled/no-show/rescheduled) from one screen, with a status badge (soft background + accent text, distinct per state in both light and dark mode) on every appointment card.
 - **Clients** — CRUD, real-time search (name/phone/RUT), favorites, and a client detail view with visit history, total spent, and quick call/WhatsApp/email actions.
 - **Service catalog** — categories and services, each with price, duration, and color.
 - **Payments** — configurable payment methods; charged price, discount, and tip are recorded when an appointment is finished.
@@ -14,9 +14,12 @@ The weekly agenda is the app's home screen — not a dashboard. Creating, confir
 - **Reports** — revenue, completions/cancellations/no-shows, new vs. inactive clients, revenue by payment method, and top clients/services/categories/hours over any date range.
 - **Local notifications & WhatsApp reminders** — configurable appointment reminders (15 min/30 min/1 h/1 day before), plus a one-tap WhatsApp reminder message from the agenda.
 - **Settings** — language (Spanish/English), theme, currency, date/time format, working hours, and notification rules, all saved together.
+- **Product sales** — record a standalone retail sale (no appointment involved), with its own sales-history tab and product catalog.
+- **Fiado (client credit/tab)** — extend informal credit to a client, track charges and payments (abonos) against a running balance, and see who currently owes money.
 - **In-app manual** — a collapsible reference page covering the business-rule quirks an owner would actually need to look up (why rescheduling creates a new appointment, RUT validation, etc.), not a step-by-step tutorial.
 - **Data backup/restore** — export the live database to the platform share sheet, or restore from a previously shared backup file.
 - **Session** — sign in once and stay signed in across app restarts for up to 30 days.
+- **Crash reporting** — non-fatal errors are reported to Firebase Crashlytics (Android only); the app is designed to never crash outright.
 - **Full i18n** — every user-facing string goes through `.resx` (Spanish default, English satellite); no hardcoded UI text.
 
 ## Tech stack
@@ -25,6 +28,7 @@ The weekly agenda is the app's home screen — not a dashboard. Creating, confir
 - EF Core + SQLite
 - FluentValidation
 - Plugin.LocalNotification
+- Firebase Crashlytics (Android)
 - xUnit
 
 ## Architecture
@@ -50,6 +54,13 @@ See `CLAUDE.md` for a detailed breakdown of each layer, key patterns (Result pat
 dotnet build "Beauty Salon.slnx"                       # build everything
 dotnet build "Beauty Salon.csproj" -f net10.0-android  # build the app for Android
 dotnet test "BeautySalon.Application.Tests/BeautySalon.Application.Tests.csproj"  # run the test suite
+
+# Release APK (sideload-ready). Bump ApplicationDisplayVersion/ApplicationVersion in
+# Beauty Salon.csproj first. With no signing keystore configured, .NET for Android
+# auto-generates a temporary signing key - fine for installing directly on a device,
+# not for Play Store (that needs a real keystore, kept out of git).
+dotnet build "Beauty Salon.csproj" -f net10.0-android -c Release
+# -> bin/Release/net10.0-android/com.felipeparrasoto.beautysalon-Signed.apk
 ```
 
 Database migrations and seed data (admin user, starter catalog, payment methods, default working hours) are applied automatically on first launch.
@@ -65,7 +76,9 @@ Database migrations and seed data (admin user, starter catalog, payment methods,
 | 3 | Application services, DTOs, validators, core ViewModels | ✅ Done |
 | 4 | MAUI UI — pages and Shell navigation for every screen | ✅ Done |
 | 5 | Reports, local notifications, settings, i18n (es/en) | ✅ Done |
-| 6 | Testing, optimization, documentation | 🚧 In progress |
+| 6 | Testing, optimization, documentation | ✅ Done |
+| 7 | Product sales — standalone retail sales, no appointment needed | ✅ Done |
+| 8 | Fiado — per-client credit/tab ledger | ✅ Done |
 
 ## License
 

@@ -16,9 +16,22 @@ public sealed class AgendaEntry
     public AppointmentDto? Appointment { get; init; }
     public ScheduleBlockDto? Block { get; init; }
 
+    public bool IsPlaceholder { get; private init; }
+
     public bool IsBlock => Block is not null;
     public string TimeRangeLabel => $"{StartTime:HH:mm} - {EndTime:HH:mm}";
     public string StatusLabel => Appointment is not null ? AppointmentStatusDisplay.ToLabel(Appointment.Status) : string.Empty;
+
+    // Stands in for a day with zero appointments/blocks, so an empty day reads as
+    // "intentionally empty" in the CollectionView instead of a header with nothing under it.
+    public static AgendaEntry Empty() => new()
+    {
+        StartTime = default,
+        EndTime = default,
+        Title = string.Empty,
+        AccentColor = Colors.Transparent,
+        IsPlaceholder = true
+    };
 
     public static AgendaEntry FromAppointment(AppointmentDto appointment) => new()
     {

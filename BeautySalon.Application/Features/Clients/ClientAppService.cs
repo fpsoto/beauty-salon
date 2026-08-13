@@ -163,6 +163,24 @@ public sealed class ClientAppService : IClientAppService
         if (client is null)
             return Result.Failure(Error.NotFound("Client.NotFound", "Cliente no encontrado."));
 
+        // A client with any appointment history (past or future, any status) can't be
+        // deleted - soft-delete would hide the client from the global query filter, silently
+        // breaking historical reports/appointment lookups that reference it.
+        var appointments = await _unitOfWork.Appointments.GetByClientAsync(clientId, cancellationToken);
+        if (appointments.Count > 0)
+            return Result.Failure(Error.Conflict("Client.HasAppointments", "No se puede eliminar un cliente con citas asociadas (pasadas o futuras)."));
+
+        // Same reasoning as the appointments check above - a soft-deleted client would
+        // vanish from any product sale still referencing it via the global query filter.
+        var productSales = await _unitOfWork.ProductSales.GetByClientAsync(clientId, cancellationToken);
+        if (productSales.Count > 0)
+            return Result.Failure(Error.Conflict("Client.HasProductSales", "No se puede eliminar un cliente con ventas de productos asociadas."));
+
+        // Same reasoning again - a soft-deleted client would vanish from its own fiado ledger.
+        var debtEntries = await _unitOfWork.ClientDebts.GetByClientAsync(clientId, cancellationToken);
+        if (debtEntries.Count > 0)
+            return Result.Failure(Error.Conflict("Client.HasDebtHistory", "No se puede eliminar un cliente con fiado registrado."));
+
         _unitOfWork.Clients.Remove(client);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

@@ -9,8 +9,13 @@ using Beauty_Salon.ViewModels;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
+using Plugin.Firebase.Crashlytics;
 using Plugin.LocalNotification;
 using Plugin.LocalNotification.Core.Models.AndroidOption;
+#if ANDROID
+using Plugin.Firebase.Core.Platforms.Android;
+#endif
 
 namespace Beauty_Salon
 {
@@ -21,6 +26,9 @@ namespace Beauty_Salon
             // Must run before any DbContext touches Sqlite - required on iOS/MacCatalyst
             // where the native provider isn't auto-registered.
             SQLitePCL.Batteries_V2.Init();
+
+            RegisterGlobalCrashReporting();
+            RemoveNativeUnderlines();
 
             var builder = MauiApp.CreateBuilder();
             builder
@@ -38,6 +46,21 @@ namespace Beauty_Salon
                             Importance = AndroidImportance.High
                         });
                     });
+                })
+                .ConfigureLifecycleEvents(events =>
+                {
+                    // Crashlytics-only setup (no Analytics/Auth/etc.) - the mapping_file_id
+                    // string resource in Platforms/Android/Resources/values/strings.xml works
+                    // around a known .NET MAUI issue where Crashlytics otherwise crashes on
+                    // startup with "The Crashlytics build ID is missing" (Gradle normally
+                    // generates that id, and MSBuild doesn't run that step).
+#if ANDROID
+                    events.AddAndroid(android => android.OnCreate((activity, _) =>
+                    {
+                        CrossFirebase.Initialize(activity, () => Platform.CurrentActivity!);
+                        CrossFirebaseCrashlytics.Current.SetCrashlyticsCollectionEnabled(true);
+                    }));
+#endif
                 })
                 .ConfigureFonts(fonts =>
                 {
@@ -67,6 +90,10 @@ namespace Beauty_Salon
             builder.Services.AddSingleton<IDataBackupService, DataBackupService>();
             builder.Services.AddSingleton<IPersistedSessionStore, PersistedSessionStore>();
 
+            // Temporary - for a one-off LinkedIn demo recording. Delete this registration plus
+            // Services/IDemoDataSeeder.cs/DemoDataSeeder.cs and the Settings button once done.
+            builder.Services.AddTransient<IDemoDataSeeder, DemoDataSeeder>();
+
             // ViewModels are transient - each page navigation gets its own instance.
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<AgendaViewModel>();
@@ -83,6 +110,13 @@ namespace Beauty_Salon
             builder.Services.AddTransient<PaymentMethodFormViewModel>();
             builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<ReportsViewModel>();
+            builder.Services.AddTransient<SalesViewModel>();
+            builder.Services.AddTransient<ProductListViewModel>();
+            builder.Services.AddTransient<ProductFormViewModel>();
+            builder.Services.AddTransient<ProductSaleFormViewModel>();
+            builder.Services.AddTransient<ClientDebtsViewModel>();
+            builder.Services.AddTransient<DebtChargeFormViewModel>();
+            builder.Services.AddTransient<DebtPaymentFormViewModel>();
 
             // Pages are transient too - Shell/DI resolves a fresh one per navigation.
             builder.Services.AddTransient<AppShell>();
@@ -101,6 +135,14 @@ namespace Beauty_Salon
             builder.Services.AddTransient<PaymentMethodFormPage>();
             builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<ReportsPage>();
+            builder.Services.AddTransient<SalesPage>();
+            builder.Services.AddTransient<ProductListPage>();
+            builder.Services.AddTransient<ProductFormPage>();
+            builder.Services.AddTransient<ProductSaleFormPage>();
+            builder.Services.AddTransient<ClientDebtsPage>();
+            builder.Services.AddTransient<DebtChargeFormPage>();
+            builder.Services.AddTransient<DebtPaymentFormPage>();
+            builder.Services.AddTransient<CrashTestPage>();
             builder.Services.AddTransient<HelpPage>();
 
             var app = builder.Build();
@@ -114,6 +156,80 @@ namespace Beauty_Salon
             ApplySavedCulture(app.Services);
 
             return app;
+        }
+
+        // A safety net for real, unexpected bugs - separate from CrashTestPage's deliberately
+        // caught test exceptions. Some .NET exceptions (an unobserved Task fault, certain
+        // managed/Java boundary crossings) don't always reach Android's native crash handler
+        // on their own, so Crashlytics would silently miss them without these global hooks.
+        private static void RegisterGlobalCrashReporting()
+        {
+            AppDomain.CurrentDomain.UnhandledException += (_, args) =>
+            {
+                if (args.ExceptionObject is Exception exception)
+                    ReportToCrashlytics(exception);
+            };
+
+            TaskScheduler.UnobservedTaskException += (_, args) =>
+            {
+                ReportToCrashlytics(args.Exception);
+                args.SetObserved();
+            };
+
+#if ANDROID
+            Android.Runtime.AndroidEnvironment.UnhandledExceptionRaiser += (_, args) =>
+            {
+                ReportToCrashlytics(args.Exception);
+                args.Handled = true;
+            };
+#endif
+        }
+
+        // Every boxed-looking input in this app is a plain Entry/Editor nested inside our own
+        // InputContainer Border (see CLAUDE.md's design-system notes) - but Android's native
+        // Material text field still draws its own underline via the platform view's Background
+        // drawable regardless, giving every field a double-border look. Setting BackgroundColor
+        // in XAML doesn't touch that native drawable, so it has to be cleared here instead.
+        private static void RemoveNativeUnderlines()
+        {
+#if ANDROID
+            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("RemoveUnderline", (handler, _) =>
+            {
+                handler.PlatformView.Background = null;
+            });
+
+            Microsoft.Maui.Handlers.EditorHandler.Mapper.AppendToMapping("RemoveUnderline", (handler, _) =>
+            {
+                handler.PlatformView.Background = null;
+            });
+
+            Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping("RemoveUnderline", (handler, _) =>
+            {
+                handler.PlatformView.Background = null;
+            });
+
+            Microsoft.Maui.Handlers.TimePickerHandler.Mapper.AppendToMapping("RemoveUnderline", (handler, _) =>
+            {
+                handler.PlatformView.Background = null;
+            });
+
+            Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping("RemoveUnderline", (handler, _) =>
+            {
+                handler.PlatformView.Background = null;
+            });
+#endif
+        }
+
+        private static void ReportToCrashlytics(Exception exception)
+        {
+            try
+            {
+                CrossFirebaseCrashlytics.Current.RecordException(exception);
+            }
+            catch
+            {
+                // Never let crash reporting itself become the crash.
+            }
         }
 
         private static void ApplySavedCulture(IServiceProvider services)

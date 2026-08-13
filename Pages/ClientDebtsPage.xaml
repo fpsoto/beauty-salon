@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.ClientDebtsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:debts="clr-namespace:BeautySalon.Application.Features.Debts;assembly=BeautySalon.Application"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
+    x:DataType="viewModels:ClientDebtsViewModel"
+    Title="{x:Static strings:AppResources.FiadoTitle}">
+
+    <RefreshView IsRefreshing="{Binding IsBusy}" Command="{Binding LoadCommand}">
+        <CollectionView x:Name="BalancesCollectionView" ItemsSource="{Binding Balances}" SelectionMode="Single" SelectionChanged="OnClientSelected">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="32">
+                    <Label
+                        Text="{x:Static strings:AppResources.NoOutstandingDebts}"
+                        Style="{StaticResource BodyLarge}"
+                        HorizontalTextAlignment="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource TextSecondaryDark}}" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="debts:ClientBalanceDto">
+                    <Border Style="{StaticResource Card}" Margin="16,4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="{Binding ClientFullName}" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="{Binding Balance, StringFormat='${0}'}" Style="{StaticResource H3}" TextColor="{StaticResource Warning}" VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

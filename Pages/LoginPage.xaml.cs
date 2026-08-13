@@ -16,6 +16,12 @@ public partial class LoginPage : ContentPage
         BindingContext = viewModel;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        UsernameEntry.Focus();
+    }
+
     private async void OnPasswordCompleted(object? sender, EventArgs e) => await LoginAsync();
 
     private async void OnLoginClicked(object? sender, EventArgs e) => await LoginAsync();

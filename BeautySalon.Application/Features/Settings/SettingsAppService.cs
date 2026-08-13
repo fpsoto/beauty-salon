@@ -59,7 +59,13 @@ public sealed class SettingsAppService : ISettingsAppService
             }
             else
             {
-                settings.NotificationRules.Add(new NotificationRule
+                // Explicit AddNotificationRule (not settings.NotificationRules.Add(...)): the
+                // new rule's Id is a non-default client-generated Guid (BaseEntity), and adding
+                // it to an already-tracked parent's collection lets EF's automatic change
+                // detection misread it as an existing row to update rather than a new one to
+                // insert - SaveChanges would then update 0 rows and throw a concurrency
+                // exception. An explicit Add forces the correct Added state.
+                _unitOfWork.AppSettings.AddNotificationRule(new NotificationRule
                 {
                     AppSettingsId = settings.Id,
                     MinutesBefore = input.MinutesBefore,
@@ -68,7 +74,6 @@ public sealed class SettingsAppService : ISettingsAppService
             }
         }
 
-        _unitOfWork.AppSettings.Update(settings);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();

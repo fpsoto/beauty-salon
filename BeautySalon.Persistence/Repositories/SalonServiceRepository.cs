@@ -18,4 +18,7 @@ public class SalonServiceRepository : EfRepository<SalonService>, ISalonServiceR
 
     public async Task<bool> HasAppointmentHistoryAsync(Guid serviceId, CancellationToken cancellationToken = default) =>
         await Context.Set<AppointmentServiceItem>().AnyAsync(i => i.ServiceId == serviceId, cancellationToken);
+
+    public Task<SalonService?> GetByNameInCategoryAsync(string name, Guid categoryId, CancellationToken cancellationToken = default) =>
+        DbSet.FirstOrDefaultAsync(s => s.CategoryId == categoryId && s.Name.ToLower() == name.ToLower(), cancellationToken);
 }

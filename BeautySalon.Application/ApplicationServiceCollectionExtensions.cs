@@ -3,8 +3,11 @@ using BeautySalon.Application.Common.Interfaces;
 using BeautySalon.Application.Features.Auth;
 using BeautySalon.Application.Features.Catalog;
 using BeautySalon.Application.Features.Clients;
+using BeautySalon.Application.Features.Debts;
 using BeautySalon.Application.Features.Payments;
+using BeautySalon.Application.Features.Products;
 using BeautySalon.Application.Features.Reports;
+using BeautySalon.Application.Features.Sales;
 using BeautySalon.Application.Features.Schedule;
 using BeautySalon.Application.Features.Settings;
 using FluentValidation;
@@ -29,6 +32,9 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<IScheduleBlockAppService, ScheduleBlockAppService>();
         services.AddScoped<ISettingsAppService, SettingsAppService>();
         services.AddScoped<IReportAppService, ReportAppService>();
+        services.AddScoped<IProductAppService, ProductAppService>();
+        services.AddScoped<IProductSaleAppService, ProductSaleAppService>();
+        services.AddScoped<IClientDebtAppService, ClientDebtAppService>();
 
         return services;
     }

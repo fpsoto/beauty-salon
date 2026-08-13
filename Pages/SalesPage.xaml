@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.SalesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:sales="clr-namespace:BeautySalon.Application.Features.Sales;assembly=BeautySalon.Application"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
+    x:DataType="viewModels:SalesViewModel"
+    Title="{x:Static strings:AppResources.SalesTitle}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{x:Static strings:AppResources.ProductsTitle}" Clicked="OnProductsClicked" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto, *">
+        <VerticalStackLayout Grid.Row="0" Padding="16,12,16,8" Spacing="8">
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="{x:Static strings:AppResources.Today}" Command="{Binding SetTodayCommand}" Style="{StaticResource SecondaryButton}" FontSize="13" Padding="12,4" HeightRequest="36" MinimumHeightRequest="36" />
+                <Button Text="{x:Static strings:AppResources.Week}" Command="{Binding SetThisWeekCommand}" Style="{StaticResource SecondaryButton}" FontSize="13" Padding="12,4" HeightRequest="36" MinimumHeightRequest="36" />
+                <Button Text="{x:Static strings:AppResources.Month}" Command="{Binding SetThisMonthCommand}" Style="{StaticResource SecondaryButton}" FontSize="13" Padding="12,4" HeightRequest="36" MinimumHeightRequest="36" />
+            </HorizontalStackLayout>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                <VerticalStackLayout Grid.Column="0" Spacing="{StaticResource Space8}">
+                    <Label Text="{x:Static strings:AppResources.FromLabel}" Style="{StaticResource FieldCaption}" />
+                    <Border Style="{StaticResource InputContainer}" HeightRequest="48">
+                        <DatePicker Date="{Binding FromDate}" VerticalOptions="Center" />
+                    </Border>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" Spacing="{StaticResource Space8}">
+                    <Label Text="{x:Static strings:AppResources.ToLabel}" Style="{StaticResource FieldCaption}" />
+                    <Border Style="{StaticResource InputContainer}" HeightRequest="48">
+                        <DatePicker Date="{Binding ToDate}" VerticalOptions="Center" />
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+
+            <Button Text="{x:Static strings:AppResources.Apply}" Command="{Binding LoadCommand}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+
+            <Border
+                Padding="{StaticResource Space12}"
+                StrokeShape="{StaticResource RadiusInputShape}"
+                Stroke="Transparent"
+                BackgroundColor="{AppThemeBinding Light={StaticResource StatusCancelledContainer}, Dark={StaticResource StatusCancelledContainerDark}}"
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                <Label
+                    Text="{Binding ErrorMessage}"
+                    Style="{StaticResource BodySmall}"
+                    TextColor="{AppThemeBinding Light={StaticResource StatusCancelledOnContainer}, Dark={StaticResource StatusCancelledOnContainerDark}}"
+                    HorizontalTextAlignment="Center" />
+            </Border>
+        </VerticalStackLayout>
+
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsBusy}" Command="{Binding LoadCommand}">
+            <CollectionView x:Name="SalesCollectionView" ItemsSource="{Binding Sales}" SelectionMode="Single" SelectionChanged="OnSaleSelected">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="32" Spacing="{StaticResource Space8}">
+                        <Label
+                            Text="{x:Static strings:AppResources.NoSalesInPeriod}"
+                            Style="{StaticResource BodyLarge}"
+                            HorizontalTextAlignment="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource TextSecondaryDark}}" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="sales:ProductSaleDto">
+                        <Border Style="{StaticResource Card}" Margin="16,6">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding ProductName}" Style="{StaticResource H3}" VerticalOptions="Center" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Total, StringFormat='${0}'}" Style="{StaticResource H3}" VerticalOptions="Center" />
+                                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Caption}">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0:dd/MM/yyyy} · x{1} · {2}">
+                                            <Binding Path="SaleDate" />
+                                            <Binding Path="Quantity" />
+                                            <Binding Path="PaymentMethodName" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding ClientFullName, TargetNullValue={x:Static strings:AppResources.WalkInClient}}" Style="{StaticResource Caption}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <Button
+            Grid.Row="1"
+            Text="+"
+            Style="{StaticResource Fab}"
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            Margin="0,0,20,20"
+            Clicked="OnAddSaleClicked" />
+    </Grid>
+</ContentPage>

@@ -36,6 +36,10 @@ public sealed class PaymentMethodAppService : IPaymentMethodAppService
         if (!validation.IsValid)
             return Result.Failure<PaymentMethodDto>(Error.Validation("PaymentMethod.Invalid", validation.ToString(" ")));
 
+        var existing = await _unitOfWork.PaymentMethods.GetByNameAsync(request.Name, cancellationToken);
+        if (existing is not null)
+            return Result.Failure<PaymentMethodDto>(Error.Conflict("PaymentMethod.DuplicateName", "Ya existe un método de pago con ese nombre."));
+
         var method = new PaymentMethod { Name = request.Name, SortOrder = request.SortOrder, IsActive = true };
         _unitOfWork.PaymentMethods.Add(method);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -52,6 +56,13 @@ public sealed class PaymentMethodAppService : IPaymentMethodAppService
         var method = await _unitOfWork.PaymentMethods.GetByIdAsync(paymentMethodId, cancellationToken);
         if (method is null)
             return Result.Failure<PaymentMethodDto>(Error.NotFound("PaymentMethod.NotFound", "Método de pago no encontrado."));
+
+        if (!string.Equals(method.Name, request.Name, StringComparison.OrdinalIgnoreCase))
+        {
+            var existing = await _unitOfWork.PaymentMethods.GetByNameAsync(request.Name, cancellationToken);
+            if (existing is not null && existing.Id != paymentMethodId)
+                return Result.Failure<PaymentMethodDto>(Error.Conflict("PaymentMethod.DuplicateName", "Ya existe un método de pago con ese nombre."));
+        }
 
         method.Name = request.Name;
         method.SortOrder = request.SortOrder;

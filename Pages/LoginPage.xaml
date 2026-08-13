@@ -10,20 +10,82 @@
 
     <Grid RowDefinitions="*, Auto, *" Padding="{StaticResource Space32}">
         <VerticalStackLayout Grid.Row="1" Spacing="{StaticResource Space24}" VerticalOptions="Center">
-            <Label Text="{x:Static strings:AppResources.AppName}" Style="{StaticResource H1}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            <Border BackgroundColor="White" Stroke="Transparent" StrokeShape="{StaticResource RadiusCardShape}" Shadow="{StaticResource CardShadow}" Padding="{StaticResource Space16}" HorizontalOptions="Center">
+                <Image Source="logo_resplandecer.png" Aspect="AspectFit" HeightRequest="150" WidthRequest="150" />
+            </Border>
             <Label Text="{x:Static strings:AppResources.LoginSubtitle}" Style="{StaticResource BodyLarge}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
 
-            <Entry Placeholder="{x:Static strings:AppResources.UsernamePlaceholder}" Text="{Binding Username}" ReturnType="Next" />
-            <Entry Placeholder="{x:Static strings:AppResources.PasswordPlaceholder}" Text="{Binding Password}" IsPassword="True" ReturnType="Done" Completed="OnPasswordCompleted" />
+            <VerticalStackLayout Spacing="{StaticResource Space8}">
+                <Label Text="{x:Static strings:AppResources.UsernamePlaceholder}" Style="{StaticResource FieldCaption}" />
+                <Border Style="{StaticResource InputContainer}">
+                    <Entry
+                        x:Name="UsernameEntry"
+                        Placeholder="{x:Static strings:AppResources.UsernamePlaceholder}"
+                        Text="{Binding Username}"
+                        ReturnType="Next"
+                        IsSpellCheckEnabled="False"
+                        IsTextPredictionEnabled="False"
+                        VerticalOptions="Center" />
+                </Border>
+            </VerticalStackLayout>
 
-            <Label
-                Text="{Binding ErrorMessage}"
-                TextColor="{StaticResource Error}"
-                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
-                HorizontalTextAlignment="Center" />
+            <VerticalStackLayout Spacing="{StaticResource Space8}">
+                <Label Text="{x:Static strings:AppResources.PasswordPlaceholder}" Style="{StaticResource FieldCaption}" />
+                <Border Style="{StaticResource InputContainer}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Entry
+                            Grid.Column="0"
+                            Placeholder="{x:Static strings:AppResources.PasswordPlaceholder}"
+                            Text="{Binding Password}"
+                            IsPassword="{Binding IsPasswordVisible, Converter={StaticResource InvertedBoolConverter}}"
+                            ReturnType="Done"
+                            Completed="OnPasswordCompleted"
+                            VerticalOptions="Center" />
+                        <ImageButton
+                            Grid.Column="1"
+                            Source="icon_eye.svg"
+                            Command="{Binding TogglePasswordVisibilityCommand}"
+                            IsVisible="{Binding IsPasswordVisible, Converter={StaticResource InvertedBoolConverter}}"
+                            SemanticProperties.Description="{x:Static strings:AppResources.ShowPassword}"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            VerticalOptions="Center" />
+                        <ImageButton
+                            Grid.Column="1"
+                            Source="icon_eye_off.svg"
+                            Command="{Binding TogglePasswordVisibilityCommand}"
+                            IsVisible="{Binding IsPasswordVisible}"
+                            SemanticProperties.Description="{x:Static strings:AppResources.HidePassword}"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <Border
+                Padding="{StaticResource Space12}"
+                StrokeShape="{StaticResource RadiusInputShape}"
+                Stroke="Transparent"
+                BackgroundColor="{AppThemeBinding Light={StaticResource StatusCancelledContainer}, Dark={StaticResource StatusCancelledContainerDark}}"
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                <Label
+                    Text="{Binding ErrorMessage}"
+                    Style="{StaticResource BodySmall}"
+                    TextColor="{AppThemeBinding Light={StaticResource StatusCancelledOnContainer}, Dark={StaticResource StatusCancelledOnContainerDark}}"
+                    HorizontalTextAlignment="Center" />
+            </Border>
 
             <Button Text="{x:Static strings:AppResources.LoginButton}" Clicked="OnLoginClicked" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
         </VerticalStackLayout>
+
+        <Label
+            Grid.Row="2"
+            Text="{Binding VersionLabel, StringFormat={x:Static strings:AppResources.AppVersionFormat}}"
+            Style="{StaticResource Caption}"
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+            Margin="0,0,0,16" />
     </Grid>
 </ContentPage>

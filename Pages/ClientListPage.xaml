@@ -9,6 +9,10 @@
     x:DataType="viewModels:ClientListViewModel"
     Title="{x:Static strings:AppResources.ClientsTitle}">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{x:Static strings:AppResources.FiadoTitle}" Clicked="OnFiadoClicked" />
+    </ContentPage.ToolbarItems>
+
     <Grid RowDefinitions="Auto,*">
         <SearchBar
             Grid.Row="0"
@@ -23,6 +27,9 @@
                 SelectionMode="Single"
                 SelectionChanged="OnClientSelected"
                 Margin="0,0,0,80">
+                <CollectionView.EmptyView>
+                    <Label Text="{x:Static strings:AppResources.NoClientsFound}" Style="{StaticResource BodyLarge}" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,32,0,0" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource TextSecondaryDark}}" />
+                </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="clients:ClientDto">
                         <Border Style="{StaticResource Card}" Margin="16,6">

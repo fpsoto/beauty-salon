@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Beauty_Salon.Pages.ProductListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:Beauty_Salon.ViewModels"
+    xmlns:products="clr-namespace:BeautySalon.Application.Features.Products;assembly=BeautySalon.Application"
+    xmlns:strings="clr-namespace:Beauty_Salon.Resources.Strings"
+    x:DataType="viewModels:ProductListViewModel"
+    Title="{x:Static strings:AppResources.ProductsTitle}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="+" Clicked="OnAddClicked" />
+    </ContentPage.ToolbarItems>
+
+    <RefreshView IsRefreshing="{Binding IsBusy}" Command="{Binding LoadCommand}">
+        <CollectionView x:Name="ProductsCollectionView" ItemsSource="{Binding Products}" SelectionMode="Single" SelectionChanged="OnProductSelected">
+            <CollectionView.EmptyView>
+                <Label Text="{x:Static strings:AppResources.NoItemsRegistered}" Style="{StaticResource BodyLarge}" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,32,0,0" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource TextSecondaryDark}}" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="products:ProductDto">
+                    <Border Style="{StaticResource Card}" Margin="16,4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                <Label Text="{Binding Name}" VerticalOptions="Center" />
+                                <Label Text="{Binding SalePrice, StringFormat='${0}'}" Style="{StaticResource Caption}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="{x:Static strings:AppResources.Inactive}" Style="{StaticResource Caption}" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource TextSecondaryDark}}" VerticalOptions="Center" IsVisible="{Binding IsActive, Converter={StaticResource InvertedBoolConverter}}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
